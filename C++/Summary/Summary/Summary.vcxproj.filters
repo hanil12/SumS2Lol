@@ -36,5 +36,8 @@
     <ClCompile Include="6_1_Hidng.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Casting.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
