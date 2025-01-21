@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Creature\Boss.cpp" />
     <ClCompile Include="Creature\Archer.cpp" />
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="Creature\Creature.cpp" />
@@ -162,8 +163,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Creature\Boss.h" />
     <ClInclude Include="Creature\Archer.h" />
     <ClInclude Include="Creature\Creature.h" />
     <ClInclude Include="Creature\Player.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Creature\Goblin.h" />
     <ClInclude Include="Creature\Monster.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

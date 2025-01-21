@@ -13,8 +13,10 @@ Knight::~Knight()
 {
 }
 
-void Knight::Attack(Creature* other)
+void Knight::Attack(shared_ptr<Creature> other)
 {
+	if (IsDead()) return;
+
 	cout << _name << " Knight Attack!!!" << endl;
-	other->TakeDamage(_atk);
+	other->TakeDamage(_atk, shared_from_this());
 }

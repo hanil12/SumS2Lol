@@ -30,13 +30,19 @@
     <ClCompile Include="Creature\Knight.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Creature\Archer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Creature\Monster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Creature\Goblin.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature\Archer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature\Boss.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,13 +59,19 @@
     <ClInclude Include="Creature\Knight.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Creature\Archer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Creature\Monster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Creature\Goblin.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature\Archer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature\Boss.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,7 +26,7 @@ void Goblin::DeadSound()
 	cout << "²Ù¿¡¿¢!!!" << endl;
 }
 
-void Goblin::Attack(Creature* other)
+void Goblin::Attack(shared_ptr<Creature> other)
 {
 	cout << _name << " Goblin Attack!!!" << endl;
 	other->TakeDamage(_atk);

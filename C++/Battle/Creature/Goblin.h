@@ -9,7 +9,7 @@ public:
 	Goblin(int hp, int atk, string name);
 	~Goblin();
 
-	virtual void Attack(Creature* other) override;
+	virtual void Attack(shared_ptr<Creature> other) override;
 	void DeadSound();
 	//void Attack(Knight* other);
 	//void Attack(Archer* other);
