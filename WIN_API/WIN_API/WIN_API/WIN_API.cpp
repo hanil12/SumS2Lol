@@ -139,7 +139,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 // 윈도우에서 발생하는 메시지를 처리하는 곳
 
 Vector mousePos;
-Vector circleCenter;
+shared_ptr<Program> program;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -166,6 +166,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     // 처음 창이 생성됬을 때 나오는 메시지
     case WM_CREATE:
     {
+        program = make_shared<Program>();
         SetTimer(hWnd, 1, 1, nullptr); // 1ms 마다 WM_TIMER msg 생성
         break;
     }
@@ -173,6 +174,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     // 타이머를(Delay) 설정하면 Delay마다 WM_TIMER메시지 호출
     case WM_TIMER:
     {
+        program->Update();
         InvalidateRect(hWnd, nullptr, true); // WM_PAINT 메시지와 관련있는 얘
 
         break;
@@ -192,21 +194,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            // 매개변수 정수인자 => 픽셀단위
-             
-            // 천천히 따라오게?
-            // 선형보간 = s + (e - s) * t;
-            circleCenter = LERP(circleCenter, mousePos, 0.02f);
-
-            // 원그리기
-            Ellipse(hdc, circleCenter.x - 35, circleCenter.y - 35, circleCenter.x + 35, circleCenter.y + 35); // 원 반지름 : 70
-
-            // 사각형 그리기
-            Rectangle(hdc, mousePos.x - 25, mousePos.y - 25, mousePos.x + 25, mousePos.y + 25); // 크기 50,50
-
-            // 선 그리기
-            MoveToEx(hdc, 450, 350, nullptr); // 시작
-            LineTo(hdc, mousePos.x, mousePos.y); // 끝점
+            program->Render(hdc);
 
             EndPaint(hWnd, &ps);
         }

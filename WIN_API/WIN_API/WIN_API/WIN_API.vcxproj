@@ -145,13 +145,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Math\Collider\CircleCollider.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Math\Collider\RectCollider.h" />
+    <ClInclude Include="Scene\PaintScene.h" />
+    <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Math\Vector.h" />
     <ClInclude Include="WIN_API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Math\Collider\CircleCollider.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">framework.h</PrecompiledHeaderFile>
@@ -163,6 +169,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">framework.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Math\Vector.cpp" />
+    <ClCompile Include="Math\Collider\RectCollider.cpp" />
+    <ClCompile Include="Scene\PaintScene.cpp" />
+    <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="WIN_API.cpp" />
   </ItemGroup>
   <ItemGroup>
