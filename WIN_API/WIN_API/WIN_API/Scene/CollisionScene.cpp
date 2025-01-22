@@ -7,6 +7,8 @@ CollisionScene::CollisionScene()
 	_movingCircle = make_shared<CircleCollider>(Vector(0, 0), 60);
 
 	// rect, moving 생성
+	_rect = make_shared<RectCollider>(Vector(800, 500), Vector(130, 50));
+	_movingRect = make_shared<RectCollider>(Vector(0, 0), Vector(15, 70));
 }
 
 CollisionScene::~CollisionScene()
@@ -15,10 +17,19 @@ CollisionScene::~CollisionScene()
 
 void CollisionScene::Update()
 {
-	_movingCircle->SetCenter(mousePos);
+	//_movingCircle->SetCenter(mousePos);
 	// movingRect 움직이기
+	_movingRect->SetCenter(mousePos);
 
 	// rect와 movingrect 충돌판정해서 색바꾸기
+	if (_rect->IsCollision(_movingRect))
+	{
+		_rect->SetRed();
+	}
+	else
+	{
+		_rect->SetGreen();
+	}
 
 
 	if (_circle->IsCollision(_movingCircle))
@@ -32,10 +43,16 @@ void CollisionScene::Update()
 
 	_circle->Update();
 	_movingCircle->Update();
+
+	_rect->Update();
+	_movingRect->Update();
 }
 
 void CollisionScene::Render(HDC hdc)
 {
 	_circle->Render(hdc);
 	_movingCircle->Render(hdc);
+
+	_rect->Render(hdc);
+	_movingRect->Render(hdc);
 }

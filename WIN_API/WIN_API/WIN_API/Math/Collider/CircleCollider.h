@@ -13,6 +13,7 @@ public:
 
 	bool IsCollision(const Vector& pos);
 	bool IsCollision(shared_ptr<CircleCollider> other);
+	bool IsCollision(shared_ptr<class RectCollider> rect);
 
 	void SetGreen() { _curPen = 0; }
 	void SetRed() { _curPen = 1; }

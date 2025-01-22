@@ -16,6 +16,12 @@ public:
 
 	bool IsCollision(const Vector& pos);
 	bool IsCollision(shared_ptr<RectCollider> other);
+	bool IsCollision(shared_ptr<class CircleCollider> other);
+
+	int Left() { return _center.x - _halfSize.x; }
+	int Right() { return _center.x + _halfSize.x; }
+	int Top() { return _center.y - _halfSize.y; }
+	int Bottom() { return _center.y + _halfSize.y; }
 
 private:
 	UINT					_curPen = 0;

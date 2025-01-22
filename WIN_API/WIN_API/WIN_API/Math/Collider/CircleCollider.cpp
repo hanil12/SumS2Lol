@@ -48,3 +48,10 @@ bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
 
 	return direction.Length() < _radius + other->_radius;
 }
+
+bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
+{
+	// TODO : 원 사각형 충돌 구현
+
+	return false;
+}

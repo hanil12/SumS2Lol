@@ -36,10 +36,34 @@ void RectCollider::Render(HDC hdc)
 // Rect 회전하지않는다는 조건
 bool RectCollider::IsCollision(const Vector& pos)
 {
+	// x값만 봤을 때 사이에 있다.
+	if (pos.x > Left() && pos.x < Right())
+	{
+		// y값만 봤을 때 사이에 있다.
+		if (pos.y > Top() && pos.y < Bottom())
+		{
+			return true;
+		}
+	}
+
 	return false;
 }
 
 bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
+{
+	if (other->Left() > Right())
+		return false;
+	if (other->Right() < Left())
+		return false;
+	if (other->Top() > Bottom())
+		return false;
+	if (other->Bottom() < Top())
+		return false;
+
+	return true;
+}
+
+bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
 	return false;
 }

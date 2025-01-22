@@ -13,5 +13,7 @@ private:
 	shared_ptr<CircleCollider> _movingCircle;
 
 	// rect¿Í movingRect Ãß°¡
+	shared_ptr<RectCollider> _rect;
+	shared_ptr<RectCollider> _movingRect;
 };
 
