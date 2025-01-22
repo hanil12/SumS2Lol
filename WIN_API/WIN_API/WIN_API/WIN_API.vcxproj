@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\CollisionScene.h" />
+    <ClInclude Include="GMacro.h" />
     <ClInclude Include="Math\Collider\CircleCollider.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Math\Collider\RectCollider.h" />
@@ -157,6 +159,7 @@
     <ClInclude Include="WIN_API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\CollisionScene.cpp" />
     <ClCompile Include="Math\Collider\CircleCollider.cpp" />
     <ClCompile Include="framework.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

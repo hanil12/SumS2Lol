@@ -35,11 +35,6 @@ void PaintScene::Update()
 
 void PaintScene::Render(HDC hdc)
 {
-	SelectObject(hdc, _pens[0]);
-	SelectObject(hdc, _brushes[0]);
 	_rect->Render(hdc);
-
-	SelectObject(hdc, _pens[1]);
-	SelectObject(hdc, _brushes[1]);
 	_circle->Render(hdc);
 }

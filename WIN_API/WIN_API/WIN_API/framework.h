@@ -21,6 +21,9 @@
 
 using namespace std;
 
+// Macro
+#include "GMacro.h"
+
 // Math
 #include "Math/Vector.h"
 
@@ -36,5 +39,3 @@ using namespace std;
 extern Vector mousePos;
 extern HWND hWnd;
 
-// Macro
-#define LERP(s,e,t)		s + (e - s) * t

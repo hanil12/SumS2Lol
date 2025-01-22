@@ -10,7 +10,7 @@ public:
 	}
 	~Vector() {}
 
-	Vector operator+(const Vector& other)
+	Vector operator+(const Vector& other) const
 	{
 		Vector result;
 		result.x = this->x + other.x;
@@ -18,7 +18,7 @@ public:
 
 		return Vector(this->x + other.x, this->y + other.y); // �ӽð�ü
 	}
-	Vector operator-(const Vector& other)
+	Vector operator-(const Vector& other) const
 	{
 		Vector result;
 		result.x = x - other.x;
@@ -26,7 +26,7 @@ public:
 
 		return result;
 	}
-	Vector operator*(float value)
+	Vector operator*(float value) const
 	{
 		Vector result;
 		result.x = this->x * value;
@@ -34,14 +34,14 @@ public:
 
 		return result;
 	}
-	Vector& operator=(const Vector& other)
+	Vector& operator=(const Vector& other) 
 	{
 		this->x = other.x;
 		this->y = other.y;
 
 		return *this;
 	}
-	Vector& operator++()
+	Vector& operator++() 
 	{
 		this->x += 1.0f;
 		this->y += 1.0f;
@@ -60,20 +60,17 @@ public:
 	{
 		return sqrtf(this->x * this->x + this->y * this->y);
 	}
-
 	void Noramlize()
 	{
 		// TODO
 	}
-
-	float Dot(const Vector& other)
+	float Dot(const Vector& other) const
 	{
 		// TODO
 
 		return 0.0f;
 	}
-
-	float Cross(const Vector& other)
+	float Cross(const Vector& other) const
 	{
 		// TODO
 
