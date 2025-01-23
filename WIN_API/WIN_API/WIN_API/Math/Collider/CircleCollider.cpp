@@ -51,7 +51,5 @@ bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
 
 bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
 {
-	// TODO : 원 사각형 충돌 구현
-
-	return false;
+	return other->IsCollision(shared_from_this());
 }

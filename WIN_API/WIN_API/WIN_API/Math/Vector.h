@@ -62,19 +62,33 @@ public:
 	}
 	void Noramlize()
 	{
-		// TODO
+		float length = Length();
+		x /= length;
+		y /= length;
 	}
+
+	Vector NormalVector() const
+	{
+		Vector result = *this;
+		result.Noramlize();
+		return result;
+	}
+
 	float Dot(const Vector& other) const
 	{
-		// TODO
-
-		return 0.0f;
+		return x * other.x + y * other.y;
 	}
 	float Cross(const Vector& other) const
 	{
-		// TODO
+		return x * other.y - y * other.x;
+	}
 
-		return 0.0f;
+	bool IsBetween(const Vector& v1, const Vector& v2)
+	{
+		float cross1 = this->Cross(v1);
+		float cross2 = this->Cross(v2);
+
+		return cross1 * cross2 < 0;
 	}
 
 	float x;

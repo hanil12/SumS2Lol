@@ -65,5 +65,27 @@ bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
-	return false;
+	Vector dir = other->GetCenter() - GetCenter();
+	Vector rightV = Vector(1, 0);
+	Vector upV = Vector(0, - 1);
+
+	// 예외처리
+	float length = dir.Length();
+	float rectHalfLength = _halfSize.Length();
+	float circleRadius = other->GetRadius();
+
+	if (length > rectHalfLength + circleRadius)
+		return false;
+
+	// x축 내적
+	float lengthX = abs(rightV.Dot(dir));
+	if (lengthX > _halfSize.x + circleRadius)
+		return false;
+
+	// y축 내적
+	float lengthY = abs(upV.Dot(dir));
+	if (lengthY > _halfSize.y + circleRadius)
+		return false;
+
+	return true;
 }

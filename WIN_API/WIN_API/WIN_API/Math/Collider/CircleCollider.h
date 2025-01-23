@@ -1,5 +1,5 @@
 #pragma once
-class CircleCollider
+class CircleCollider : public enable_shared_from_this<CircleCollider>
 {
 public:
 	CircleCollider(Vector center, float radius);
@@ -10,6 +10,8 @@ public:
 
 	Vector GetCenter() { return _center; }
 	void SetCenter(const Vector& pos) { _center = pos; }
+	float GetRadius() { return _radius; }
+	void SetRadius(float radius) { _radius = radius; }
 
 	bool IsCollision(const Vector& pos);
 	bool IsCollision(shared_ptr<CircleCollider> other);
