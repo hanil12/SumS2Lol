@@ -2,13 +2,19 @@
 class Line
 {
 public:
+	struct HitResult
+	{
+		bool isCollision = false;
+		Vector hitPoint = Vector();
+	};
+
 	Line(Vector start, Vector end);
 	~Line();
 
 	void Update();
 	void Render(HDC hdc);
 
-	bool IsCollision(shared_ptr<Line> other);
+	HitResult IsCollision(shared_ptr<Line> other);
 
 	Vector start;
 	Vector end;
