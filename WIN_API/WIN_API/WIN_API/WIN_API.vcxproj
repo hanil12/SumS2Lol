@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Cannon\Ball.h" />
+    <ClInclude Include="Objects\Cannon\Barrel.h" />
     <ClInclude Include="Objects\Cannon\Cannon.h" />
     <ClInclude Include="Scene\CannonScene.h" />
     <ClInclude Include="Math\Collider\Collider.h" />
@@ -165,6 +167,8 @@
     <ClInclude Include="WIN_API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Cannon\Ball.cpp" />
+    <ClCompile Include="Objects\Cannon\Barrel.cpp" />
     <ClCompile Include="Objects\Cannon\Cannon.cpp" />
     <ClCompile Include="Scene\CannonScene.cpp" />
     <ClCompile Include="Math\Collider\Collider.cpp" />

@@ -41,21 +41,21 @@ public:
 
 		return *this;
 	}
-	Vector& operator++() 
+	Vector& operator+=(const Vector& other)
 	{
-		this->x += 1.0f;
-		this->y += 1.0f;
+		x += other.x;
+		y += other.y;
 
 		return *this;
 	}
-	Vector operator++(int)
+	Vector& operator-=(const Vector& other)
 	{
-		Vector result(*this);
-		this->x += 1.0f;
-		this->y += 1.0f;
+		x -= other.x;
+		y -= other.y;
 
-		return result;
+		return *this;
 	}
+
 	float Length() const
 	{
 		return sqrtf(this->x * this->x + this->y * this->y);
