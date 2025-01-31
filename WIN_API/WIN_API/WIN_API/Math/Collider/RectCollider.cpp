@@ -2,18 +2,13 @@
 #include "RectCollider.h"
 
 RectCollider::RectCollider(Vector center, Vector size)
-: _center(center), _halfSize(size * 0.5f)
+: Collider(center), _halfSize(size * 0.5f)
 {
-	_pens.push_back(CreatePen(1, 3, GREEN));
-	_pens.push_back(CreatePen(1, 3, RED));
+	_type = ColType::RECT;
 }
 
 RectCollider::~RectCollider()
 {
-	for (auto pen : _pens)
-	{
-		DeleteObject(pen);
-	}
 }
 
 void RectCollider::Update()

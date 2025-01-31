@@ -9,7 +9,7 @@
 
 Program::Program()
 {
-	_scene = make_shared<CannonScene>();
+	_scene = make_shared<CollisionScene>();
 }
 
 Program::~Program()

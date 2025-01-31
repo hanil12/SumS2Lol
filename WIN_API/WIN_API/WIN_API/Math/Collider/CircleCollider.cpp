@@ -2,18 +2,13 @@
 #include "CircleCollider.h"
 
 CircleCollider::CircleCollider(Vector center, float radius)
-: _center(center), _radius(radius)
+: Collider(center),_radius(radius)
 {
-	_pens.push_back(CreatePen(1, 3, GREEN));
-	_pens.push_back(CreatePen(1, 3, RED));
+	_type = ColType::CIRCLE;
 }
 
 CircleCollider::~CircleCollider()
 {
-	for (auto pen : _pens)
-	{
-		DeleteObject(pen);
-	}
 }
 
 void CircleCollider::Update()
