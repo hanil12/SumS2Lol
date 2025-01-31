@@ -16,6 +16,13 @@ void Ball::Update()
 
 	_circle->Update();
 
+	// 진자운동
+
+	// 외적
+
+	_circle->SetCenter(_circle->GetCenter() + _dir);
+
+	// 화면 밖 나가는 예외처리
 	if (_circle->GetCenter().x > WIN_WIDTH || _circle->GetCenter().x < 0
 		|| _circle->GetCenter().y > WIN_HEIGHT || _circle->GetCenter().y < 0)
 	{
@@ -28,6 +35,11 @@ void Ball::Render(HDC hdc)
 	if (isActive == false) return;
 
 	_circle->Render(hdc);
+}
+
+void Ball::Fire(Vector dir)
+{
+	_dir = dir.NormalVector();
 }
 
 void Ball::AddForce(Vector v)

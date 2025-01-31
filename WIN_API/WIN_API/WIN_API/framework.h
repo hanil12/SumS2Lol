@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <algorithm>
 #include <memory>
+#include <functional>
 
 using namespace std;
 
