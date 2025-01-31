@@ -175,7 +175,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_TIMER:
     {
         program->Update();
-        InvalidateRect(hWnd, nullptr, true); // WM_PAINT 메시지와 관련있는 얘
+        InvalidateRect(hWnd, nullptr, false); // WM_PAINT 메시지와 관련있는 얘
 
         break;
     }
