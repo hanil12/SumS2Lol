@@ -12,14 +12,6 @@ public:
 		RECT
 	};
 
-	// enum class는 이름이 겹쳐도 상관없다.
-	enum class TempType
-	{
-		NONE,
-		TEMP1,
-		TEMP2
-	};
-
 	Collider(Vector center);
 	virtual ~Collider();
 
@@ -34,8 +26,8 @@ public:
 	Vector GetCenter() { return _center; }
 	void SetCenter(const Vector& pos) { _center = pos; }
 
-	void SetGreen() { _curPen = 0; }
-	void SetRed() { _curPen = 1; }
+	void SetGreen() { _curPen = 1; }
+	void SetRed() { _curPen = 2; }
 
 protected:
 	UINT					_curPen = 0;

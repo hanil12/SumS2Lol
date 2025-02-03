@@ -3,7 +3,7 @@ class RectCollider : public Collider
 {
 public:
 	RectCollider(Vector center, Vector size);
-	~RectCollider();
+	virtual ~RectCollider();
 
 	virtual void Update() override;
 	virtual void Render(HDC hdc) override;

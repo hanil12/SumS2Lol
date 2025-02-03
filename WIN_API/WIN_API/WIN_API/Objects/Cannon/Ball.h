@@ -10,7 +10,7 @@ public:
 
 	void Fire(Vector dir);
 	void SetPos(Vector pos) { _circle->SetCenter(pos); }
-	void AddForce(Vector v);
+	void AddVector(Vector v);
 	shared_ptr<CircleCollider> GetCollider() { return _circle; }
 
 	bool isActive = false;
@@ -18,6 +18,7 @@ public:
 private:
 	shared_ptr<CircleCollider>  _circle;
 
+	float _ballHasGone = 0.0f;
 	float _ballSpeed = 3;
 	Vector _dir;
 };

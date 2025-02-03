@@ -7,6 +7,7 @@
 Collider::Collider(Vector center)
 : _center(center)
 {
+	_pens.push_back(CreatePen(1, 3, BLACK));
 	_pens.push_back(CreatePen(1, 3, GREEN));
 	_pens.push_back(CreatePen(1, 3, RED));
 }

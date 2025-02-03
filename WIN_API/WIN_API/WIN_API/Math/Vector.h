@@ -66,6 +66,11 @@ public:
 		x /= length;
 		y /= length;
 	}
+	void Rotate(float theta)
+	{
+		x = x * cosf(theta) - y * sinf(theta);
+		y = x * sinf(theta) + y * cosf(theta);
+	}
 
 	Vector NormalVector() const
 	{
