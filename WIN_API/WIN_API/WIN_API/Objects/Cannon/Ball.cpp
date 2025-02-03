@@ -17,7 +17,7 @@ void Ball::Update()
 	_circle->Update();
 	_ballHasGone += _dir.Length();
 
-	// 진자운동
+#pragma region 진자운동
 	// sin(theta)
 	Vector goV;
 	// cos(a+b) = cos(a) * cos(b) - sin(a) * sin(b)
@@ -35,24 +35,27 @@ void Ball::Update()
 
 	//goV.x = 1 * _dir.x - sinf(_ballHasGone) * _dir.y * 10;
 	//goV.y = sinf(_ballHasGone) * _dir.x * 10 + 1 * _dir.y;
+#pragma endregion
 
+#pragma region 유도미사일
 	// 외적
-	_dir;
-	Vector guided = mousePos - _circle->GetCenter();
-	float cross = _dir.Cross(guided);
-	if (abs(cross) < 0.01)
-	{
-	}
-	else if (cross < 0.0f)
-	{
-		_dir.Rotate(-0.1f);
-	}
-	else
-	{
-		_dir.Rotate(0.1f);
-	}
+	//_dir;
+	//Vector guided = mousePos - _circle->GetCenter();
+	//float cross = _dir.Cross(guided);
+	//if (abs(cross) < 0.01)
+	//{
+	//}
+	//else if (cross < 0.0f)
+	//{
+	//	_dir.Rotate(-0.1f);
+	//}
+	//else
+	//{
+	//	_dir.Rotate(0.1f);
+	//}
+#pragma endregion
 
-	_circle->SetCenter(_circle->GetCenter() + _dir * 10);
+	_circle->SetCenter(_circle->GetCenter() + _dir * _ballSpeed);
 
 	// 화면 밖 나가는 예외처리
 	if (_circle->GetCenter().x > WIN_WIDTH || _circle->GetCenter().x < 0

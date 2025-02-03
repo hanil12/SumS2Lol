@@ -24,6 +24,8 @@ Maze::Maze()
 			_blocks[y].push_back(block);
 		}
 	}
+
+	CreateMaze();
 }
 
 Maze::~Maze()
@@ -48,6 +50,72 @@ void Maze::Render(HDC hdc)
 		for (auto block : blockV)
 		{
 			block->Render(hdc);
+		}
+	}
+}
+
+void Maze::CreateMaze()
+{
+	// 프로그래머를 위한 미로 만들기
+
+	// 갈 수 있는 노드 만들기
+	for (int y = 0; y < MAX_Y; y++)
+	{
+		for (int x = 0; x < MAX_X; x++)
+		{
+			if (x % 2 == 0 || y % 2 == 0)
+			{
+				_blocks[y][x]->SetType(Block::Type::BLOCKED);
+			}
+			else
+			{
+				_blocks[y][x]->SetType(Block::Type::ABLE);
+			}
+		}
+	}
+
+	for (int y = 0; y < MAX_Y; y++)
+	{
+		for (int x = 0; x < MAX_X; x++)
+		{
+			// 시작점 뚫기
+			if (x == 1 && y == 1)
+			{
+				_blocks[y][x]->SetType(Block::Type::ABLE);
+			}
+
+			// 끝점 뚫기
+			if (x == MAX_X - 2 && y == MAX_Y - 2)
+			{
+				_blocks[y][x]->SetType(Block::Type::ABLE);
+				continue;
+			}
+
+			if (x % 2 == 0 || y % 2 == 0)
+			{
+				continue;
+			}
+
+			// 맨 아래길 뚫기
+			if (x == MAX_X - 2)
+			{
+				_blocks[y + 1][x]->SetType(Block::Type::ABLE);
+				continue;
+			}
+
+			// 맨 오른쪽 뚫기
+			if (y == MAX_Y - 2)
+			{
+				_blocks[y][x + 1]->SetType(Block::Type::ABLE);
+				continue;
+			}
+
+			// 랜덤하게 아래 혹은 오른쪽으로 길 뚫기
+			int randNum = rand() % 2;
+			if (randNum == 0)
+				_blocks[y + 1][x]->SetType(Block::Type::ABLE);
+			else
+				_blocks[y][x + 1]->SetType(Block::Type::ABLE);
 		}
 	}
 }
