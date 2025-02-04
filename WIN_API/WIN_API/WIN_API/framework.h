@@ -14,6 +14,8 @@
 #include <memory.h>
 #include <tchar.h>
 
+#include <stack>
+#include <queue>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>

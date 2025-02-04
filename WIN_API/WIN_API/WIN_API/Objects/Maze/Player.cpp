@@ -23,12 +23,16 @@ void Player::Update()
 		return;
 	}
 
-	_delayTime += 0.1f;
+	_delayTime += 0.3f;
 	if (_delayTime > 1.0f)
 	{
 		_delayTime = 0.0f;
 		_pos = _path[_pathIndex];
 
+		if (_pathIndex > 0)
+		{
+			_maze.lock()->SetBlockType(_path[_pathIndex - 1], Block::Type::FOOTPRINT);
+		}
 		_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
 
 		_pathIndex++;
@@ -73,6 +77,32 @@ void Player::RightHand()
 			curDir = (curDir + 1 + DIR_COUNT) % DIR_COUNT;
 		}
 	}
+
+	stack<Vector> s;
+	// 사이클 처리
+	for (int i = 0; i < _path.size() - 1; i++)
+	{
+		maze->SetBlockType(_path[i], Block::Type::SEARCHED);
+
+		if (s.empty() == false && s.top() == _path[i + 1])
+		{
+			s.pop();
+		}
+		else
+			s.push(_path[i]);
+	}
+
+	_path.clear();
+	while (true)
+	{
+		if (s.empty() == true)
+			break;
+		Vector top = s.top();
+		_path.push_back(top);
+		s.pop();
+	}
+
+	std::reverse(_path.begin(), _path.end());
 }
 
 bool Player::Cango(Vector pos)
