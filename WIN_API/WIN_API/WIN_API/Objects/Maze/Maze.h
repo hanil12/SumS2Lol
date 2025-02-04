@@ -18,6 +18,9 @@ public:
 	Block::Type GetBlockType(Vector pos);
 	void SetBlockType(Vector pos, Block::Type type);
 
+	Vector StartPos() { return { 1,1 }; }
+	Vector EndPos() { return { MAX_X - 2, MAX_Y - 2 }; }
+
 private:
 	vector<vector<shared_ptr<Block>>> _blocks;
 };

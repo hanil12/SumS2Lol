@@ -9,7 +9,7 @@ Block::Block()
 	_brushes.push_back(CreateSolidBrush(RED)); // BLOCKED
 	_brushes.push_back(CreateSolidBrush(RGB(101, 3, 62))); // Player
 
-	_pens.push_back(CreatePen(1, 1, RGB(101, 3, 62)));
+	_pens.push_back(CreatePen(1, 3, RGB(101, 3, 62)));
 }
 
 Block::~Block()
