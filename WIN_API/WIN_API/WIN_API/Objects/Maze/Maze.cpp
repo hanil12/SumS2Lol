@@ -119,3 +119,13 @@ void Maze::CreateMaze()
 		}
 	}
 }
+
+Block::Type Maze::GetBlockType(Vector pos)
+{
+	return _blocks[pos.y][pos.x]->GetBlockType();
+}
+
+void Maze::SetBlockType(Vector pos, Block::Type type)
+{
+	_blocks[pos.y][pos.x]->SetType(type);
+}

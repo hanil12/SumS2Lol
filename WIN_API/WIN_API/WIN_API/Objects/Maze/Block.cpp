@@ -7,10 +7,17 @@ Block::Block()
 	_brushes.push_back(CreateSolidBrush(BLACK)); // NONE
 	_brushes.push_back(CreateSolidBrush(GREEN)); // ABLE
 	_brushes.push_back(CreateSolidBrush(RED)); // BLOCKED
+	_brushes.push_back(CreateSolidBrush(RGB(101, 3, 62))); // Player
+
+	_pens.push_back(CreatePen(1, 1, RGB(101, 3, 62)));
 }
 
 Block::~Block()
 {
+	for (auto brush : _brushes)
+	{
+		DeleteObject(brush);
+	}
 }
 
 void Block::Update()

@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Objects\Maze\Maze.h" />
     <ClInclude Include="Objects\Maze\Block.h" />
+    <ClInclude Include="Objects\Maze\Player.h" />
     <ClInclude Include="Scene\MazeScene.h" />
     <ClInclude Include="Objects\Cannon\Ball.h" />
     <ClInclude Include="Objects\Cannon\Barrel.h" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="Objects\Maze\Maze.cpp" />
     <ClCompile Include="Objects\Maze\Block.cpp" />
+    <ClCompile Include="Objects\Maze\Player.cpp" />
     <ClCompile Include="Scene\MazeScene.cpp" />
     <ClCompile Include="Objects\Cannon\Ball.cpp" />
     <ClCompile Include="Objects\Cannon\Barrel.cpp" />

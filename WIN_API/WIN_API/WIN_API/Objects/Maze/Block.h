@@ -7,6 +7,7 @@ public:
 		NONE,
 		ABLE,
 		BLOCKED,
+		PLAYER,
 
 		TYPE_COUNT
 	};

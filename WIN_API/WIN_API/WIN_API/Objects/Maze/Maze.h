@@ -1,6 +1,6 @@
 #pragma once
 
-class Block;
+#include "Block.h"
 
 #define MAX_X 25
 #define MAX_Y 25
@@ -15,6 +15,8 @@ public:
 	void Render(HDC hdc);
 
 	void CreateMaze();
+	Block::Type GetBlockType(Vector pos);
+	void SetBlockType(Vector pos, Block::Type type);
 
 private:
 	vector<vector<shared_ptr<Block>>> _blocks;

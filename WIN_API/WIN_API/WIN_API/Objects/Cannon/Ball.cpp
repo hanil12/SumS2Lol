@@ -57,12 +57,12 @@ void Ball::Update()
 
 	_circle->SetCenter(_circle->GetCenter() + _dir * _ballSpeed);
 
-	// 화면 밖 나가는 예외처리
-	if (_circle->GetCenter().x > WIN_WIDTH || _circle->GetCenter().x < 0
-		|| _circle->GetCenter().y > WIN_HEIGHT || _circle->GetCenter().y < 0)
-	{
-		isActive = false;
-	}
+	// 화면 밖 나갈 때 정반사
+	Vector center = _circle->GetCenter();
+	if (center.x < 0 || center.x > WIN_WIDTH)
+		_dir.x *= -1;
+	if (center.y < 0 || center.y > WIN_HEIGHT)
+		_dir.y *= -1;
 }
 
 void Ball::Render(HDC hdc)
