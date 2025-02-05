@@ -9,7 +9,7 @@ Player::Player(shared_ptr<Maze> maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
 
-	RightHand();
+	BFS(_maze.lock()->StartPos());
 }
 
 Player::~Player()
@@ -100,6 +100,58 @@ void Player::RightHand()
 		Vector top = s.top();
 		_path.push_back(top);
 		s.pop();
+	}
+
+	std::reverse(_path.begin(), _path.end());
+}
+
+void Player::BFS(Vector start)
+{
+	_discovered = vector<vector<bool>>(MAX_Y, vector<bool>(MAX_X, false));
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+
+	queue<Vector> q;
+	q.push(start);
+	_discovered[start.y][start.x] = true;
+	_parent[start.y][start.x] = start;
+
+	while (true)
+	{
+		Vector here = q.front();
+		q.pop();
+
+		// 현재 끝점이면 반복 그만.
+		if (here == _maze.lock()->EndPos())
+			break;
+
+		for (int i = 0; i < 4; i++)
+		{
+			Vector there = here + frontPos[i];
+
+			// here와 there가 같냐?
+			if (there == here) continue;
+			// there가 갈 수 있는 곳이냐?
+			if (Cango(there) == false) continue;
+			// there가 방문이 되어있냐?
+			if (_discovered[there.y][there.x] == true) continue;
+
+			q.push(there);
+			_discovered[there.y][there.x] = true;
+			_parent[there.y][there.x] = here;
+			_maze.lock()->SetBlockType(there, Block::Type::SEARCHED);
+		}
+	}
+
+	// 끝점이 누구한테서 발견되었는지 타고 올라가보기
+	Vector vertex = _maze.lock()->EndPos();
+	_path.push_back(vertex);
+	while (true)
+	{
+		// parent가 start지점이면 그만
+		if (vertex == start)
+			break;
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
 	}
 
 	std::reverse(_path.begin(), _path.end());

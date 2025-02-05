@@ -10,6 +10,10 @@ using namespace std;
 // 그래프
 // Vertex와 edge로 이루어진 자료구조
 
+// => 그래프의 순회 방법
+// DFS(Deep First Search), BFS(Breadth First Seartch)
+//  깊이 우선 탐색,           넓이 우선 탐색
+
 // adjacent : 인접해있다.
 
 // 인접리스트
@@ -30,7 +34,7 @@ vector<vector<bool>> adjacent; // 인접행렬
 // - 데이터를 많이 먹더라도, 탐색하는데 상수의 시간이 걸린다.
 void CreateGraph()
 {
-	adjacent = vector<vector<bool>>(7, vector<bool>(false, 7)); // 7x7
+	adjacent = vector<vector<bool>>(7, vector<bool>(7, false)); // 7x7
 	//adjacent.resize(7, vector<bool>(7,false))
 
 	// 양방향은 그래프 A는 A와 전치행렬(A)와 서로 같다.
@@ -80,6 +84,7 @@ int main()
 	if (iter != adjacent_list[0].end())
 		cout << *iter << endl;
 
+	CreateGraph();
 	// 0과 2가 현재 연결되어있냐?
 	if (adjacent[0][2]) // 상수의 시간
 	{
