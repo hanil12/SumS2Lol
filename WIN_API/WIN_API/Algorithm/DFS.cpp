@@ -30,20 +30,20 @@ void CreateGraph()
 
 	adjacent[1][0] = true;
 	adjacent[1][1] = true;
-	adjacent[1][4] = true;
+	//adjacent[1][4] = true;
 
 	adjacent[2][0] = true;
 	adjacent[2][2] = true;
-	adjacent[2][5] = true;
+	//adjacent[2][5] = true;
 	adjacent[2][6] = true;
 
 	adjacent[3][0] = true;
 	adjacent[3][3] = true;
 
-	adjacent[4][1] = true;
+	//adjacent[4][1] = true;
 	adjacent[4][4] = true;
 
-	adjacent[5][2] = true;
+	//adjacent[5][2] = true;
 	adjacent[5][5] = true;
 
 	adjacent[6][2] = true;
@@ -73,7 +73,18 @@ void DFS(int here)
 int main()
 {
 	CreateGraph();
-	DFS(0);
+	
+	int count = 0;
+	for (int i = 0; i < adjacent.size(); i++)
+	{
+		if (visited[i] == false)
+		{
+			count++;
+			DFS(i);
+		}
+	}
+
+	cout << "count : " << count << endl;
 
 	return 0;
 }

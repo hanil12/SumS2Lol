@@ -31,7 +31,10 @@ public:
 	void Update();
 
 	void RightHand();
-	void BFS(Vector start);
+	void BFS(Vector start); // 최소 간선의 개수
+
+	// TODO...  DFS : 비효율적이지만 한번 해볼 것.
+	void DFS(Vector start);
 
 	bool Cango(Vector pos);
 
