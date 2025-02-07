@@ -9,7 +9,7 @@ Player::Player(shared_ptr<Maze> maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
 
-	BFS(_maze.lock()->StartPos());
+	Djikstra(_maze.lock()->StartPos());
 }
 
 Player::~Player()
@@ -124,7 +124,7 @@ void Player::BFS(Vector start)
 		if (here == _maze.lock()->EndPos())
 			break;
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 8; i++)
 		{
 			Vector there = here + frontPos[i];
 
@@ -139,6 +139,75 @@ void Player::BFS(Vector start)
 			_discovered[there.y][there.x] = true;
 			_parent[there.y][there.x] = here;
 			_maze.lock()->SetBlockType(there, Block::Type::SEARCHED);
+		}
+	}
+
+	// 끝점이 누구한테서 발견되었는지 타고 올라가보기
+	Vector vertex = _maze.lock()->EndPos();
+	_path.push_back(vertex);
+	while (true)
+	{
+		// parent가 start지점이면 그만
+		if (vertex == start)
+			break;
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
+	}
+
+	std::reverse(_path.begin(), _path.end());
+}
+
+void Player::Djikstra(Vector start)
+{
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
+	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
+
+	_parent[start.y][start.x] = start;
+	_best[start.y][start.x] = 0;
+	pq.push(Vertex(start, 0));
+
+	while (true)
+	{
+		if (pq.empty())
+			break;
+
+		Vertex hereV = pq.top();
+		pq.pop();
+		Vector herePos = hereV.pos;
+
+		// 끝점
+		if (herePos == _maze.lock()->EndPos())
+			break;
+
+		// 예약걸린 Vertex를 꺼냇는데 더 좋은 best가 있었다.
+		if (_best[herePos.y][herePos.x] < hereV.cost)
+			continue;
+
+		for (int i = 0; i < 8; i++)
+		{
+			Vector therePos = herePos + frontPos[i];
+
+			if (Cango(therePos) == false)
+				continue;
+
+			int thereCost = 0;
+			// thereCost 찾기
+			if (i < 4)
+				thereCost = hereV.cost + 10;
+			else
+				thereCost = hereV.cost + 14;
+
+			// 전에 찾아놓은 best가 더 좋았다 => 예약걸지도 말고 다음거
+			if (_best[therePos.y][therePos.x] < thereCost)
+				continue;
+
+			// 예약
+			Vertex thereV(therePos, thereCost);
+			pq.push(thereV);
+			_parent[therePos.y][therePos.x] = herePos;
+			_best[therePos.y][therePos.x] = thereCost;
+			_maze.lock()->SetBlockType(therePos, Block::Type::SEARCHED);
 		}
 	}
 

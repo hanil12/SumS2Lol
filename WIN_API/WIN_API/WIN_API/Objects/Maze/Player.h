@@ -18,15 +18,35 @@ class Player
 
 	Vector frontPos[8] =
 	{
+
 		{0,-1}, // UP
 		{-1,0}, // LEFT
 		{0,1}, // BOTTOM
 		{1,0}, // RIGHT
 
-		{1,0}, // RIGHT
-		{1,0}, // RIGHT
-		{1,0}, // RIGHT
-		{1,0}, // RIGHT
+		{1,1}, // DOWN RIGHT
+		{-1,-1}, // UP LEFT
+		{1,-1}, // UP RIGHT
+		{-1,1}, // DOWN LEFT
+	};
+
+	struct Vertex
+	{
+		Vertex() {}
+		Vertex(Vector pos, int cost) : pos(pos), cost(cost) {}
+
+		bool operator<(const Vertex& v) const
+		{
+			return cost < v.cost;
+		}
+
+		bool operator>(const Vertex& v) const
+		{
+			return cost > v.cost;
+		}
+
+		Vector pos;
+		int cost;
 	};
 
 public:
@@ -37,10 +57,11 @@ public:
 
 	void RightHand();
 	void BFS(Vector start); // 최소 간선의 개수
+	void Djikstra(Vector start); 
 
 	// TODO...  DFS : 비효율적이지만 한번 해볼 것.
 	void DFS(Vector start);
-
+	 
 	bool Cango(Vector pos);
 
 private:
@@ -57,5 +78,8 @@ private:
 	// BFS
 	vector<vector<bool>> _discovered;
 	vector<vector<Vector>> _parent; // _parent[1][1] = {1,1};
+
+	// Djikstra
+	vector<vector<int>> _best;
 };
 
