@@ -16,11 +16,16 @@ class Player
 		DIR_COUNT = 4
 	};
 
-	Vector frontPos[4] =
+	Vector frontPos[8] =
 	{
 		{0,-1}, // UP
 		{-1,0}, // LEFT
 		{0,1}, // BOTTOM
+		{1,0}, // RIGHT
+
+		{1,0}, // RIGHT
+		{1,0}, // RIGHT
+		{1,0}, // RIGHT
 		{1,0}, // RIGHT
 	};
 

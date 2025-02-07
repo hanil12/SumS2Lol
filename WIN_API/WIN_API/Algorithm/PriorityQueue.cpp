@@ -10,6 +10,11 @@ using namespace std;
 // 1. 완전이진트리
 // 2. 힙이론
 
+// 시간복잡도
+// 삽입 : logN
+// 삭제 : logN
+// 힙정렬 : N x logN
+
 template <typename T, typename Container = vector<T>, typename Pred = less<int>>
 class PriorityQueue
 {
@@ -94,10 +99,10 @@ int main()
 {
 	// 최대힙
 	PriorityQueue<int, vector<int>, Less<int>> pq;
-	pq.push(100);
+	pq.push(50);
 	pq.push(80);
 	pq.push(70);
-	pq.push(50);
+	pq.push(100);
 	pq.push(75);
 
 	while (true)
