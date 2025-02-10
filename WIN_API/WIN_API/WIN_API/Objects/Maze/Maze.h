@@ -2,11 +2,19 @@
 
 #include "Block.h"
 
-#define MAX_X 25
-#define MAX_Y 25
+#define MAX_X 31
+#define MAX_Y 21
 
 class Maze
 {
+	struct Edge
+	{
+		Vector u;
+		Vector v;
+
+		int cost;
+	};
+
 public:
 	Maze();
 	~Maze();
@@ -15,6 +23,8 @@ public:
 	void Render(HDC hdc);
 
 	void CreateMaze();
+	void CreateMaze_Kruskal();
+
 	Block::Type GetBlockType(Vector pos);
 	void SetBlockType(Vector pos, Block::Type type);
 

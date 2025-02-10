@@ -21,11 +21,11 @@ void Player::Update()
 	if (_pathIndex >= _path.size())
 	{
 		_pathIndex = 0;
-		_maze.lock()->CreateMaze();
+		_maze.lock()->CreateMaze_Kruskal();
 
 		_path.clear();
 
-		int randNum = rand() % 4;
+		int randNum = 0;
 		switch (randNum)
 		{
 		case 0:
