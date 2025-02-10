@@ -9,7 +9,7 @@ Player::Player(shared_ptr<Maze> maze)
 {
 	_maze.lock()->SetBlockType(_pos, Block::Type::PLAYER);
 
-	Djikstra(_maze.lock()->StartPos());
+	AStart(_maze.lock()->StartPos(), _maze.lock()->EndPos());
 }
 
 Player::~Player()
@@ -20,6 +20,33 @@ void Player::Update()
 {
 	if (_pathIndex >= _path.size())
 	{
+		_pathIndex = 0;
+		_maze.lock()->CreateMaze();
+
+		_path.clear();
+
+		int randNum = rand() % 4;
+		switch (randNum)
+		{
+		case 0:
+			AStart(_maze.lock()->StartPos(), _maze.lock()->EndPos());
+			break;
+		case 1:
+			BFS(_maze.lock()->StartPos());
+			break;
+		case 2:
+			Djikstra(_maze.lock()->StartPos());
+			break;
+		case 3:
+			RightHand();
+			break;
+
+		default:
+			break;
+		}
+
+
+
 		return;
 	}
 
@@ -161,18 +188,18 @@ void Player::Djikstra(Vector start)
 {
 	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
 	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
-	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
+	priority_queue<Vertex_Djikstra, vector<Vertex_Djikstra>, greater<Vertex_Djikstra>> pq;
 
 	_parent[start.y][start.x] = start;
 	_best[start.y][start.x] = 0;
-	pq.push(Vertex(start, 0));
+	pq.push(Vertex_Djikstra(start, 0));
 
 	while (true)
 	{
 		if (pq.empty())
 			break;
 
-		Vertex hereV = pq.top();
+		Vertex_Djikstra hereV = pq.top();
 		pq.pop();
 		Vector herePos = hereV.pos;
 
@@ -203,11 +230,83 @@ void Player::Djikstra(Vector start)
 				continue;
 
 			// 예약
-			Vertex thereV(therePos, thereCost);
+			Vertex_Djikstra thereV(therePos, thereCost);
 			pq.push(thereV);
 			_parent[therePos.y][therePos.x] = herePos;
 			_best[therePos.y][therePos.x] = thereCost;
 			_maze.lock()->SetBlockType(therePos, Block::Type::SEARCHED);
+		}
+	}
+
+	// 끝점이 누구한테서 발견되었는지 타고 올라가보기
+	Vector vertex = _maze.lock()->EndPos();
+	_path.push_back(vertex);
+	while (true)
+	{
+		// parent가 start지점이면 그만
+		if (vertex == start)
+			break;
+		vertex = _parent[vertex.y][vertex.x];
+		_path.push_back(vertex);
+	}
+
+	std::reverse(_path.begin(), _path.end());
+}
+
+void Player::AStart(Vector start, Vector end)
+{
+	_parent = vector<vector<Vector>>(MAX_Y, vector<Vector>(MAX_X, Vector(-1, -1)));
+	_best = vector<vector<int>>(MAX_Y, vector<int>(MAX_X, INT_MAX));
+	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
+
+	_parent[start.y][start.x] = start;
+	_best[start.y][start.x] = 0 + start.ManhattanDistance(end) * 10;
+	pq.push(Vertex(start, 0, start.ManhattanDistance(end) * 10));
+
+	while (true)
+	{
+		if (pq.empty())
+			break;
+
+		Vertex hereV = pq.top();
+		Vector here = hereV.pos;
+
+		// 끝점 체크
+		if (here == end)
+			break;
+
+		pq.pop();
+
+		// 이전에 더 좋은 경로를 발견 시 다음 꺼
+		if (hereV.f > _best[here.y][here.x])
+			continue;
+
+		for (int i = 0; i < 8; i++)
+		{
+			Vector there = here + frontPos[i];
+
+			if (Cango(there) == false)
+				continue;
+
+			int thereG = 0;
+			// thereCost 찾기
+			if (i < 4)
+				thereG = hereV.g + 10;
+			else
+				thereG = hereV.g + 14;
+
+			float thereH = there.ManhattanDistance(end) * 10;
+			float thereF = thereG + thereH;
+			
+			// 더 좋은 there의 best가 있으면 continue;
+			if (thereF > _best[there.y][there.x])
+				continue;
+
+			Vertex thereV = Vertex(there, thereG, thereH);
+			pq.push(thereV);
+			_best[there.y][there.x] = thereF;
+			_parent[there.y][there.x] = here;
+			_maze.lock()->SetBlockType(there, Block::Type::SEARCHED);
 		}
 	}
 

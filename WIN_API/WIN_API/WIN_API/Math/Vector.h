@@ -110,6 +110,12 @@ public:
 
 		return cross1 * cross2 < 0;
 	}
+	float ManhattanDistance(Vector pos) 
+	{ 
+		Vector temp = pos - *this;  
+
+		return abs(temp.x) + abs(temp.y);
+	}
 
 	float x;
 	float y;

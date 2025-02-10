@@ -30,23 +30,44 @@ class Player
 		{-1,1}, // DOWN LEFT
 	};
 
-	struct Vertex
+	struct Vertex_Djikstra
 	{
-		Vertex() {}
-		Vertex(Vector pos, int cost) : pos(pos), cost(cost) {}
+		Vertex_Djikstra() {}
+		Vertex_Djikstra(Vector pos, int cost) : pos(pos), cost(cost) {}
 
-		bool operator<(const Vertex& v) const
+		bool operator<(const Vertex_Djikstra& v) const
 		{
 			return cost < v.cost;
 		}
 
-		bool operator>(const Vertex& v) const
+		bool operator>(const Vertex_Djikstra& v) const
 		{
 			return cost > v.cost;
 		}
 
 		Vector pos;
 		int cost;
+	};
+
+	struct Vertex
+	{
+		Vertex() {}
+		Vertex(Vector pos, int g, int h) : pos(pos), g(g),h(h), f(g+h) {}
+
+		bool operator<(const Vertex& v) const
+		{
+			return f < v.f;
+		}
+
+		bool operator>(const Vertex& v) const
+		{
+			return f > v.f;
+		}
+
+		Vector pos;
+		int g;
+		int h;
+		int f; // f = g + h;
 	};
 
 public:
@@ -58,10 +79,8 @@ public:
 	void RightHand();
 	void BFS(Vector start); // 최소 간선의 개수
 	void Djikstra(Vector start); 
+	void AStart(Vector start, Vector end);
 
-	// TODO...  DFS : 비효율적이지만 한번 해볼 것.
-	void DFS(Vector start);
-	 
 	bool Cango(Vector pos);
 
 private:

@@ -7,10 +7,13 @@
 #include "Scene/LineCollisionScene.h"
 #include "Scene/CannonScene.h"
 #include "Scene/MazeScene.h"
+#include <time.h>
 
 HDC Program::backbuffer = nullptr;
 Program::Program()
 {
+	srand(time(nullptr));
+
 	_scene = make_shared<MazeScene>();
 
 	HDC hdc = GetDC(hWnd);
