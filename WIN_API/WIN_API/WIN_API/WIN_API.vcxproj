@@ -145,6 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Alkanoid\AlkaMap.h" />
+    <ClInclude Include="Objects\Alkanoid\Brick.h" />
+    <ClInclude Include="Objects\Alkanoid\AlkaBall.h" />
+    <ClInclude Include="Objects\Alkanoid\Bar.h" />
+    <ClInclude Include="Scene\AlkanoidScene.h" />
     <ClInclude Include="Math\DisJointSet.h" />
     <ClInclude Include="Objects\Maze\Maze.h" />
     <ClInclude Include="Objects\Maze\Block.h" />
@@ -172,6 +177,11 @@
     <ClInclude Include="WIN_API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Alkanoid\AlkaMap.cpp" />
+    <ClCompile Include="Objects\Alkanoid\Brick.cpp" />
+    <ClCompile Include="Objects\Alkanoid\AlkaBall.cpp" />
+    <ClCompile Include="Objects\Alkanoid\Bar.cpp" />
+    <ClCompile Include="Scene\AlkanoidScene.cpp" />
     <ClCompile Include="Objects\Maze\Maze.cpp" />
     <ClCompile Include="Objects\Maze\Block.cpp" />
     <ClCompile Include="Objects\Maze\Player.cpp" />

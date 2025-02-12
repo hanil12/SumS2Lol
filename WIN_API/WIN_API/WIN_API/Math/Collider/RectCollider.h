@@ -17,6 +17,8 @@ public:
 	int Top() { return _center.y - _halfSize.y; }
 	int Bottom() { return _center.y + _halfSize.y; }
 
+	Vector GetHalfSize() { return _halfSize; }
+
 private:
 	Vector					_halfSize;
 };
