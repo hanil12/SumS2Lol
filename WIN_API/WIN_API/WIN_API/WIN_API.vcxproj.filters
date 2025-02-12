@@ -105,6 +105,9 @@
     <ClInclude Include="Objects\Alkanoid\AlkaMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Alkanoid\AlkaItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WIN_API.cpp">
@@ -183,6 +186,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Alkanoid\AlkaMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Alkanoid\AlkaItem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

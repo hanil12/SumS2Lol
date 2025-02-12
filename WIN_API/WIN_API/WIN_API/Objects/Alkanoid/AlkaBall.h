@@ -4,6 +4,8 @@ class Bar;
 class AlkaBall
 {
 public:
+	friend class Bar;
+
 	AlkaBall(shared_ptr<Bar> bar);
 	~AlkaBall();
 
@@ -23,6 +25,9 @@ public:
 
 	shared_ptr<CircleCollider> GetCollider() { return _circle; }
 
+	bool IsFired() { return _isFired; }
+	bool& IsActive() { return _isActive; }
+
 private:
 	shared_ptr<CircleCollider> _circle;
 
@@ -33,5 +38,6 @@ private:
 	weak_ptr<Bar> _bar;
 
 	bool _isFired = false;
+	bool _isActive = false;
 };
 

@@ -15,6 +15,9 @@ AlkaBall::~AlkaBall()
 
 void AlkaBall::Update()
 {
+	if (_isActive == false)
+		return;
+
 	_circle->Update();
 
 	_pos += _dir * _speed;
@@ -26,6 +29,9 @@ void AlkaBall::Update()
 
 void AlkaBall::Render(HDC hdc)
 {
+	if (_isActive == false)
+		return;
+
 	_circle->Render(hdc);
 }
 
@@ -56,6 +62,8 @@ void AlkaBall::Reflection_Wall()
 		_dir.x *= -1;
 	if (_pos.y < 0)
 		_dir.y *= -1;
+	if (_pos.y > WIN_HEIGHT)
+		_isActive = false;
 
 	if (_circle->IsCollision(_bar.lock()->GetCollider()))
 	{

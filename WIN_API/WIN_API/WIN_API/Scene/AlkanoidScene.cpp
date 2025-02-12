@@ -9,8 +9,10 @@
 AlkanoidScene::AlkanoidScene()
 {
 	_bar = make_shared<Bar>();
-	_ball = make_shared<AlkaBall>(_bar);
 	_map = make_shared<AlkaMap>();
+	
+	_bar->Init();
+	_map->Init(_bar);
 }
 
 AlkanoidScene::~AlkanoidScene()
@@ -20,16 +22,23 @@ AlkanoidScene::~AlkanoidScene()
 void AlkanoidScene::Update()
 {
 	_bar->Update();
-	_ball->Update();
 	_map->Update();
 
-	_bar->Input(_ball);
-	_map->IsCollision_Bricks(_ball);
+	_bar->Input();
+
+	for (auto ball : _bar->GetBalls())
+	{
+		if (ball->IsFired() == false)
+			continue;
+
+		_map->IsCollision_Bricks(ball);
+	}
+
+	_map->GetItems(_bar);
 }
 
 void AlkanoidScene::Render(HDC hdc)
 {
 	_bar->Render(hdc);
-	_ball->Render(hdc);
 	_map->Render(hdc);
 }

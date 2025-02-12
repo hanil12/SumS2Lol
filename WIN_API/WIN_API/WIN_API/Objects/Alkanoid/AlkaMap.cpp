@@ -3,6 +3,8 @@
 
 #include "Brick.h"
 #include "AlkaBall.h"
+#include "AlkaItem.h"
+#include "Bar.h"
 
 AlkaMap::AlkaMap()
 { 
@@ -26,6 +28,7 @@ AlkaMap::AlkaMap()
 			brickPos.y = (_brickSize.y + _brickGap.y) * y;
 
 			brick->SetPos(brickPos + offset);
+			brick->_isActive = true;
 			_bricks[y].push_back(brick);
 		}
 	}
@@ -33,6 +36,14 @@ AlkaMap::AlkaMap()
 
 AlkaMap::~AlkaMap()
 {
+}
+
+void AlkaMap::Init(shared_ptr<Bar> bar)
+{
+	shared_ptr<AlkaItem> item = make_shared<AlkaItem>();
+	item->SetSkill(std::bind(&Bar::TwoBall_Skill, bar));
+	_items.push_back(item);
+	_bricks[0][0]->SetItem(item);
 }
 
 void AlkaMap::Update()
@@ -44,6 +55,9 @@ void AlkaMap::Update()
 			brick->Update();
 		}
 	}
+
+	for (auto item : _items)
+		item->Update();
 }
 
 void AlkaMap::Render(HDC hdc)
@@ -55,6 +69,9 @@ void AlkaMap::Render(HDC hdc)
 			brick->Render(hdc);
 		}
 	}
+
+	for (auto item : _items)
+		item->Render(hdc);
 }
 
 void AlkaMap::IsCollision_Bricks(shared_ptr<AlkaBall> ball)
@@ -63,8 +80,13 @@ void AlkaMap::IsCollision_Bricks(shared_ptr<AlkaBall> ball)
 	{
 		for (auto brick : bricks)
 		{
-			if (ball->GetCollider()->IsCollision(brick->GetCollider()) == false)
-				return;
+			if (brick->_isActive == false)
+				continue;
+
+			if (brick->GetCollider()->IsCollision(ball->GetCollider()) == false)
+				continue;
+
+			brick->Break_Brick();
 
 			// 좌우 사이에 있었다.
 			if (ball->GetPos().x < brick->GetCollider()->Right() && ball->GetPos().x > brick->GetCollider()->Left())
@@ -83,6 +105,19 @@ void AlkaMap::IsCollision_Bricks(shared_ptr<AlkaBall> ball)
 
 				ball->SetDir(curDir);
 			}
+		}
+	}
+}
+
+void AlkaMap::GetItems(shared_ptr<Bar> bar)
+{
+	for (auto item : _items)
+	{
+		// item과 bar 충돌 했을 때...
+		if (item->GetCollider()->IsCollision(bar->GetCollider()))
+		{
+			// 충돌
+			item->ActiveSkill();
 		}
 	}
 }
