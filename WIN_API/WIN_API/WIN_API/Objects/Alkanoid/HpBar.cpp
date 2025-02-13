@@ -33,5 +33,15 @@ void HpBar::Render(HDC hdc)
 
 void HpBar::SetValue(float value)
 {
+	Vector bg = _bg->GetSize();
+	Vector hp = bg;
+	hp.x = bg.x * value;
 
+	_value->SetSize(hp);
+
+	// center
+	float left = _bg->Left();
+	float centerX = left + _value->GetHalfSize().x;
+	float centerY = _value->GetCenter().y;
+	_value->SetCenter(Vector(centerX, centerY));
 }
