@@ -11,6 +11,15 @@ using namespace std;
 
 // BST
 // 이진탐색트리
+// - 삽입 : logN
+// - (key)탐색 : logN
+// - 삭제 : logN
+// 
+// 자가균형 이진탐색트리
+// - 레드블랙트리 (map)
+// - (B-트리 => DB)
+// - AVL
+
 int main()
 {
 	BinarySearchTree tree;

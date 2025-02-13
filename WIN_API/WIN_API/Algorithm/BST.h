@@ -33,5 +33,8 @@ public:
 	Node* Previous(Node* node); // 매개변수 node보다 한칸 더 작은 얘
 	Node* Next(Node* node); // 매개변수 node보다 한칸 더 큰 얘
 
+	void Replace(Node* node1, Node* node2);
+	void Delete(Node* node);
+
 	Node* root = nullptr;
 };
