@@ -5,6 +5,7 @@
 #include "Objects/Alkanoid/AlkaBall.h"
 #include "Objects/Alkanoid/Brick.h"
 #include "Objects/Alkanoid/AlkaMap.h"
+#include "Objects/Alkanoid/HpBar.h"
 
 AlkanoidScene::AlkanoidScene()
 {
@@ -13,6 +14,10 @@ AlkanoidScene::AlkanoidScene()
 	
 	_bar->Init();
 	_map->Init(_bar);
+
+	_ui_hpBar = make_shared<HpBar>(CENTER + Vector(0, 300), Vector(600, 30));
+
+	_ui_hpBar->SetValue(0.5);
 }
 
 AlkanoidScene::~AlkanoidScene()
@@ -23,6 +28,7 @@ void AlkanoidScene::Update()
 {
 	_bar->Update();
 	_map->Update();
+	_ui_hpBar->Update();
 
 	_bar->Input();
 
@@ -41,4 +47,8 @@ void AlkanoidScene::Render(HDC hdc)
 {
 	_bar->Render(hdc);
 	_map->Render(hdc);
+
+
+	// UI는 항상 최후위
+	_ui_hpBar->Render(hdc);
 }

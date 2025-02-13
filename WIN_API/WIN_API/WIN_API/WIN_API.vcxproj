@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Alkanoid\HpBar.h" />
     <ClInclude Include="Objects\Alkanoid\AlkaItem.h" />
     <ClInclude Include="Objects\Alkanoid\AlkaMap.h" />
     <ClInclude Include="Objects\Alkanoid\Brick.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="WIN_API.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Alkanoid\HpBar.cpp" />
     <ClCompile Include="Objects\Alkanoid\AlkaItem.cpp" />
     <ClCompile Include="Objects\Alkanoid\AlkaMap.cpp" />
     <ClCompile Include="Objects\Alkanoid\Brick.cpp" />

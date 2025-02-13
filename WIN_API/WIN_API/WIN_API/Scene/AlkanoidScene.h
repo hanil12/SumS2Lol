@@ -17,5 +17,7 @@ public:
 private:
 	shared_ptr<AlkaMap> _map;
 	shared_ptr<Bar> _bar;
+
+	shared_ptr<class HpBar> _ui_hpBar;
 };
 
