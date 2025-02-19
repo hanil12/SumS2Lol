@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "SumS2",
+			"Path": "..\\Source\\SumS2.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "SumS2Editor",
+			"Path": "..\\Source\\SumS2Editor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
