@@ -4,6 +4,9 @@
 #include "MyTutoPawn.h"
 
 #include "Kismet/KismetMathLibrary.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
 
 // Sets default values
 AMyTutoPawn::AMyTutoPawn()
@@ -68,6 +71,14 @@ void AMyTutoPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// Pawn
+	// - Controller
+
+	UEnhancedInputComponent* enhancedInputCompnent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if (enhancedInputCompnent)
+	{
+		enhancedInputCompnent->BindAction(_moveAction, ETriggerEvent::Triggered, this, &AMyTutoPawn::Move);
+	}
 }
 
 void AMyTutoPawn::Temp()
@@ -75,3 +86,13 @@ void AMyTutoPawn::Temp()
 	UE_LOG(LogTemp, Error, TEXT("Temp Func is Called"));
 }
 
+void AMyTutoPawn::Move(const FInputActionValue& value)
+{
+	FVector2D moveVector = value.Get<FVector2D>();
+
+	if (Controller != nullptr)
+	{
+		AddMovementInput(GetActorForwardVector(), moveVector.Y);
+		AddMovementInput(GetActorRightVector(), moveVector.X);
+	}
+}
