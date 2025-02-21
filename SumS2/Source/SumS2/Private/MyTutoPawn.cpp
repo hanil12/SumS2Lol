@@ -44,26 +44,6 @@ void AMyTutoPawn::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// DeltaTime : 1번 Update에 걸리는 시간
-
-	if (GetAttachParentActor() == nullptr)
-	{
-		FVector curLocation = GetActorLocation();
-		FVector destLocation = curLocation + FVector(_moveSpeed, 0, 0) * DeltaTime;
-		SetActorLocation(destLocation);
-
-		// Pitch(Y축), Yaw(Z축), roll(X축)
-		FRotator rot = FRotator(0, 1, 0);
-		AddActorLocalRotation(rot * _rotSpeed * DeltaTime);
-	}
-	else
-	{
-		FVector parentV = GetAttachParentActor()->GetActorLocation();
-		FVector myV = GetActorLocation(); // WorldLocation
-
-		FRotator rot = UKismetMathLibrary::FindLookAtRotation(myV, parentV);
-		SetActorRotation(rot);
-	}
-
 }
 
 // Called to bind functionality to input
@@ -71,8 +51,15 @@ void AMyTutoPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	// Pawn
-	// - Controller
+	// 입력
+	// - Action : 콜백함수를 세팅(시그니쳐를 맞춰서)
+	// - MappingContext
+
+	// Pawn : _moveAction
+	// Controller : _mappingContext
+	// Pawn에 Controller를 세팅 => Gamemodebase
+
+	// => Pawn이 GameModeBase가 만들어준 Controller에 '빙의'(Posses)되서 움직일 수 있다.
 
 	UEnhancedInputComponent* enhancedInputCompnent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if (enhancedInputCompnent)
@@ -92,7 +79,12 @@ void AMyTutoPawn::Move(const FInputActionValue& value)
 
 	if (Controller != nullptr)
 	{
-		AddMovementInput(GetActorForwardVector(), moveVector.Y);
-		AddMovementInput(GetActorRightVector(), moveVector.X);
+		if (moveVector.Length() > 0.01f)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Y : %f"), moveVector.Y);
+			UE_LOG(LogTemp, Error, TEXT("X : %f"), moveVector.X);
+		}
+		//AddMovementInput(GetActorForwardVector(), moveVector.Y * 100.0f);
+		//AddMovementInput(GetActorRightVector(), moveVector.X * 100.0f);
 	}
 }

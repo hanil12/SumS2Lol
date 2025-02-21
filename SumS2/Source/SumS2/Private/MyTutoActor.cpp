@@ -2,6 +2,7 @@
 
 
 #include "MyTutoActor.h"
+#include <Kismet/KismetMathLibrary.h>
 
 // Sets default values
 AMyTutoActor::AMyTutoActor()
@@ -25,7 +26,26 @@ void AMyTutoActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	// Pitch(Y축), Yaw(Z축), roll(X축)
-	FRotator rot = FRotator(0, 1, 0);
-	AddActorLocalRotation(rot * _rotSpeed * DeltaTime);
+	//FRotator rot = FRotator(0, 1, 0);
+	//AddActorLocalRotation(rot * _rotSpeed * DeltaTime);
+
+	if (GetAttachParentActor() == nullptr)
+	{
+		FVector curLocation = GetActorLocation();
+		FVector destLocation = curLocation + FVector(_moveSpeed, 0, 0) * DeltaTime;
+		SetActorLocation(destLocation);
+
+		// Pitch(Y축), Yaw(Z축), roll(X축)
+		FRotator rot = FRotator(0, 1, 0);
+		AddActorLocalRotation(rot * _rotSpeed * DeltaTime);
+	}
+	else
+	{
+		FVector parentV = GetAttachParentActor()->GetActorLocation();
+		FVector myV = GetActorLocation(); // WorldLocation
+
+		FRotator rot = UKismetMathLibrary::FindLookAtRotation(myV, parentV);
+		SetActorRotation(rot);
+	}
 }
 

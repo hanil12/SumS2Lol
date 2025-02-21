@@ -45,6 +45,9 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyGameModeBase.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyPlayerController.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoActor.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
@@ -54,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\SumS2\Private\MyGameModeBase.cpp">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyPlayerController.cpp">
       <Filter>Source\SumS2\Public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyTutoActor.cpp">
