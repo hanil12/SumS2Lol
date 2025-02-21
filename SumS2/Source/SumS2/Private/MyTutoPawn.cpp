@@ -83,8 +83,11 @@ void AMyTutoPawn::Move(const FInputActionValue& value)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Y : %f"), moveVector.Y);
 			UE_LOG(LogTemp, Error, TEXT("X : %f"), moveVector.X);
+
+			FVector forWard = GetActorForwardVector() * moveVector.Y * 10.0f;
+			FVector right = GetActorRightVector() * moveVector.X * 10.0f;
+			FVector newLocation = GetActorLocation() + forWard + right;
+			SetActorLocation(newLocation);
 		}
-		//AddMovementInput(GetActorForwardVector(), moveVector.Y * 100.0f);
-		//AddMovementInput(GetActorRightVector(), moveVector.X * 100.0f);
 	}
 }
