@@ -31,4 +31,12 @@ public:
 // 2. material이 있어야한다.
 // 3. transform(4x4행렬)
 	
+
+private:
+	// 1. 메모리 관리
+	// 2. 리플렉션
+	UPROPERTY()
+	UStaticMeshComponent* _mesh;
+
+	float _rotSpeed = 100.0f;
 };

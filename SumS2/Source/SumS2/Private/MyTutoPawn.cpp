@@ -40,8 +40,6 @@ void AMyTutoPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Error, TEXT("Deltatime : %f"), DeltaTime);
-
 	// DeltaTime : 1번 Update에 걸리는 시간
 
 	if (GetAttachParentActor() == nullptr)
@@ -70,5 +68,10 @@ void AMyTutoPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMyTutoPawn::Temp()
+{
+	UE_LOG(LogTemp, Error, TEXT("Temp Func is Called"));
 }
 
