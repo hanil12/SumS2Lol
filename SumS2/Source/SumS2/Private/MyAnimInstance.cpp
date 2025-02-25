@@ -4,6 +4,8 @@
 #include "MyAnimInstance.h"
 
 #include "MyCharacter.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Animation/AnimMontage.h"
 
 UMyAnimInstance::UMyAnimInstance()
 {
@@ -16,6 +18,17 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (character != nullptr)
 	{
 		_speed = character->GetVelocity().Size();
-		character->Falling();
+		_isFalling = character->GetMovementComponent()->IsFalling();
+	}
+}
+
+void UMyAnimInstance::PlayAnimMontage()
+{
+	if(_animMontage == nullptr)
+		return;
+
+	if (!Montage_IsPlaying(_animMontage))
+	{
+		Montage_Play(_animMontage);
 	}
 }

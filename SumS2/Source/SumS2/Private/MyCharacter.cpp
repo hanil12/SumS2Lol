@@ -12,6 +12,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
+#include "MyAnimInstance.h"
+
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
@@ -37,6 +39,9 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	_animInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	if(_animInstance == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("AnimInstance did not Set"));
 }
 
 // Called every frame
@@ -56,6 +61,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	{
 		enhancedInputCompnent->BindAction(_moveAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 		enhancedInputCompnent->BindAction(_lookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);
+		enhancedInputCompnent->BindAction(_jumpAction, ETriggerEvent::Triggered, this, &AMyCharacter::JumpA);
 	}
 }
 
@@ -86,6 +92,27 @@ void AMyCharacter::Look(const FInputActionValue& value)
 	if (Controller != nullptr)
 	{
 		AddControllerYawInput(lookAxisVector.X);
+	}
+}
+
+void AMyCharacter::JumpA(const FInputActionValue& value)
+{
+	bool isPress = value.Get<bool>();
+
+	if (isPress)
+	{
+		ACharacter::Jump();
+	}
+}
+
+void AMyCharacter::Attack(const FInputActionValue& value)
+{
+	bool isPress = value.Get<bool>();
+
+	if (isPress)
+	{
+		_isAttack = true;
+		_animInstance->PlayAnimMontage();
 	}
 }
 
