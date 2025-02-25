@@ -29,6 +29,11 @@ void UMyAnimInstance::PlayAnimMontage()
 
 	if (!Montage_IsPlaying(_animMontage))
 	{
+		// Attack Delegate 실행
+		//_attackStart.Execute();
+		//_attackStart2.Execute(1,2);
+		//_attackStart3.Broadcast(); // 멀티캐스트
+
 		Montage_Play(_animMontage);
 	}
 }

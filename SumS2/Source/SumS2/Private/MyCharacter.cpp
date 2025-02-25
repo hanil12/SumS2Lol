@@ -42,6 +42,12 @@ void AMyCharacter::BeginPlay()
 	_animInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
 	if(_animInstance == nullptr)
 		UE_LOG(LogTemp, Error, TEXT("AnimInstance did not Set"));
+
+	// Delegate 바인딩 연습
+	_animInstance->_attackStart.BindUObject(this, &AMyCharacter::TestDelegate);
+	_animInstance->_attackStart2.BindUObject(this, &AMyCharacter::TestDelegate2);
+	_animInstance->_attackStart3.AddDynamic(this, &AMyCharacter::TestDelegate);
+	_animInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::AttackEnd);
 }
 
 // Called every frame
@@ -62,11 +68,14 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		enhancedInputCompnent->BindAction(_moveAction, ETriggerEvent::Triggered, this, &AMyCharacter::Move);
 		enhancedInputCompnent->BindAction(_lookAction, ETriggerEvent::Triggered, this, &AMyCharacter::Look);
 		enhancedInputCompnent->BindAction(_jumpAction, ETriggerEvent::Triggered, this, &AMyCharacter::JumpA);
+		enhancedInputCompnent->BindAction(_attackAction, ETriggerEvent::Triggered, this, &AMyCharacter::Attack);
 	}
 }
 
 void AMyCharacter::Move(const FInputActionValue& value)
 {
+	if (_isAttack) return;
+
 	FVector2D moveVector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
@@ -97,6 +106,8 @@ void AMyCharacter::Look(const FInputActionValue& value)
 
 void AMyCharacter::JumpA(const FInputActionValue& value)
 {
+	if (_isAttack) return;
+
 	bool isPress = value.Get<bool>();
 
 	if (isPress)
@@ -107,6 +118,8 @@ void AMyCharacter::JumpA(const FInputActionValue& value)
 
 void AMyCharacter::Attack(const FInputActionValue& value)
 {
+	if(_isAttack) return;
+
 	bool isPress = value.Get<bool>();
 
 	if (isPress)
@@ -114,5 +127,22 @@ void AMyCharacter::Attack(const FInputActionValue& value)
 		_isAttack = true;
 		_animInstance->PlayAnimMontage();
 	}
+}
+
+void AMyCharacter::TestDelegate()
+{
+	UE_LOG(LogTemp, Log, TEXT("Attack Start Delegate Test"));
+}
+
+int32 AMyCharacter::TestDelegate2(int32 a, int32 b)
+{
+	UE_LOG(LogTemp, Log, TEXT("Attack Start Delegate Test, %d, %d"), a, b);
+
+	return -1;
+}
+
+void AMyCharacter::AttackEnd(UAnimMontage* Montage, bool bInterrupted)
+{
+	_isAttack = false;
 }
 

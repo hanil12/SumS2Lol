@@ -12,6 +12,22 @@
  // AMyActor : A... Actor
  // UMyAnim : U... Actor가 아닌 것=> UObject
 
+
+ // 0. Delegate란 무엇인지, 콜백함수 재조사
+ // 1. 싱글캐스트 Delegate
+ // 2. 멀티캐스트 Delegate
+ // 3. Dynamic Delegate
+
+// 싱글캐스트 Delegate
+// void(void)
+DECLARE_DELEGATE(AnimDelegateTest);
+
+// int(int,int)
+DECLARE_DELEGATE_RetVal_TwoParams(int32, AnimDelegateTest2, int32, int32);
+
+// 멀티캐스트 다이나믹 Delegate
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAnimDelegateTest3);
+
 UCLASS()
 class SUMS2_API UMyAnimInstance : public UAnimInstance
 {
@@ -23,6 +39,12 @@ public:
 
 	UFUNCTION()
 	void PlayAnimMontage();
+
+	AnimDelegateTest _attackStart;
+	AnimDelegateTest2 _attackStart2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
+	FAnimDelegateTest3 _attackStart3;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
