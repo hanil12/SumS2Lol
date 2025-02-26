@@ -153,8 +153,32 @@ void AMyCharacter::AttackEnd(UAnimMontage* Montage, bool bInterrupted)
 
 void AMyCharacter::Attack_Hit()
 {
-	// 이 함수를 호출한 객체의 이름
-	auto name = GetName();
-	UE_LOG(LogTemp, Error, TEXT("Attacker : %s"), *name);
+	FHitResult hitResult;
+	FCollisionQueryParams params(NAME_None,false, this);
+
+	float attackRange = 500.0f;
+	float attackRadius = 100.0f;
+
+	bool bResult = GetWorld()->SweepSingleByChannel
+	(
+		OUT hitResult,
+		GetActorLocation(),
+		GetActorLocation() + GetActorForwardVector() * attackRange,
+		FQuat::Identity,
+		ECC_GameTraceChannel2,
+		FCollisionShape::MakeCapsule(attackRadius, attackRange),
+		params
+	);
+
+	FColor drawColor = FColor::Green;
+
+	if (bResult && hitResult.GetActor()->IsValidLowLevel())
+	{
+		drawColor = FColor::Red;
+	}
+
+	// 충돌체 그리기
+	DrawDebugCapsule(GetWorld(), GetActorLocation(),
+	attackRange* 0.5f, attackRadius, FQuat::Identity, drawColor, false, 1.0f);
 }
 
