@@ -40,6 +40,8 @@ public:
 	UFUNCTION()
 	void PlayAnimMontage();
 
+	void JumpToSection(int32 sectionIndex);
+
 	AnimDelegateTest _attackStart;
 	AnimDelegateTest2 _attackStart2;
 

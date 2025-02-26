@@ -125,7 +125,11 @@ void AMyCharacter::Attack(const FInputActionValue& value)
 	if (isPress)
 	{
 		_isAttack = true;
+
+		_curAttackSection = (_curAttackSection) % 3 + 1;
 		_animInstance->PlayAnimMontage();
+
+		_animInstance->JumpToSection(_curAttackSection);
 	}
 }
 

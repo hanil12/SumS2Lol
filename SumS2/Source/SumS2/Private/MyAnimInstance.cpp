@@ -37,3 +37,12 @@ void UMyAnimInstance::PlayAnimMontage()
 		Montage_Play(_animMontage);
 	}
 }
+
+void UMyAnimInstance::JumpToSection(int32 sectionIndex)
+{
+	// Section1,Section2, Section3
+	FName sectionName = FName(*FString::Printf(TEXT("Section%d"), sectionIndex));
+	Montage_JumpToSection(sectionName, _animMontage);
+
+	UE_LOG(LogTemp, Error, TEXT("Section%d"), sectionIndex);
+}
