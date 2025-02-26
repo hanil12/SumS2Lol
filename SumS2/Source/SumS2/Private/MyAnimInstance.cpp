@@ -19,6 +19,8 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	{
 		_speed = character->GetVelocity().Size();
 		_isFalling = character->GetMovementComponent()->IsFalling();
+		_vertical = character->My_Vertical();
+		_horizontal = character->My_Horizontal();
 	}
 }
 
@@ -38,11 +40,15 @@ void UMyAnimInstance::PlayAnimMontage()
 	}
 }
 
+void UMyAnimInstance::AnimNotify_Attack_Hit()
+{
+	// 나를 갖고 있는 캐릭터의 AttackHit
+	_hitEvent.Broadcast();
+}
+
 void UMyAnimInstance::JumpToSection(int32 sectionIndex)
 {
 	// Section1,Section2, Section3
 	FName sectionName = FName(*FString::Printf(TEXT("Section%d"), sectionIndex));
 	Montage_JumpToSection(sectionName, _animMontage);
-
-	UE_LOG(LogTemp, Error, TEXT("Section%d"), sectionIndex);
 }

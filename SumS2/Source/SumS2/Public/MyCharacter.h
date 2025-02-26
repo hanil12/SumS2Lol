@@ -44,6 +44,11 @@ public:
 	UFUNCTION()
 	void AttackEnd(class UAnimMontage* Montage, bool bInterrupted);
 
+	float My_Vertical() { return _vertical; }
+	float My_Horizontal() { return _horizontal; }
+
+	void Attack_Hit();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* _moveAction;
@@ -73,4 +78,7 @@ private:
 	class UMyAnimInstance* _animInstance;
 
 	int32 _curAttackSection = 1;
+
+	float _vertical = 0.0f;
+	float _horizontal = 0.0f;
 };

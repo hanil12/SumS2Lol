@@ -48,6 +48,7 @@ void AMyCharacter::BeginPlay()
 	_animInstance->_attackStart2.BindUObject(this, &AMyCharacter::TestDelegate2);
 	_animInstance->_attackStart3.AddDynamic(this, &AMyCharacter::TestDelegate);
 	_animInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::AttackEnd);
+	_animInstance->_hitEvent.AddUObject(this, &AMyCharacter::Attack_Hit);
 }
 
 // Called every frame
@@ -82,11 +83,11 @@ void AMyCharacter::Move(const FInputActionValue& value)
 	{
 		if (moveVector.Length() > 0.01f)
 		{
-			//UE_LOG(LogTemp, Error, TEXT("Y : %f"), moveVector.Y);
-			//UE_LOG(LogTemp, Error, TEXT("X : %f"), moveVector.X);
-
 			FVector forWard = GetActorForwardVector();
 			FVector right = GetActorRightVector();
+
+			_vertical = moveVector.Y;
+			_horizontal = moveVector.X;
 
 			AddMovementInput(forWard, moveVector.Y * _speed);
 			AddMovementInput(right, moveVector.X * _speed);
@@ -148,5 +149,12 @@ int32 AMyCharacter::TestDelegate2(int32 a, int32 b)
 void AMyCharacter::AttackEnd(UAnimMontage* Montage, bool bInterrupted)
 {
 	_isAttack = false;
+}
+
+void AMyCharacter::Attack_Hit()
+{
+	// 이 함수를 호출한 객체의 이름
+	auto name = GetName();
+	UE_LOG(LogTemp, Error, TEXT("Attacker : %s"), *name);
 }
 
