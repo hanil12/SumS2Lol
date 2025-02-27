@@ -14,6 +14,8 @@
 
 #include "MyAnimInstance.h"
 
+#include "Engine/DamageEvents.h"
+
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
@@ -159,14 +161,26 @@ void AMyCharacter::Attack_Hit()
 	float attackRange = 500.0f;
 	float attackRadius = 100.0f;
 
+	// 캡슐
+	// 1. 회전
+	// 2. 캡슐의 Radius, halfHeight
+	// 3. 충돌처리와 DebugDraw 
+	FVector forward = GetActorForwardVector();
+	FQuat quat = FQuat::FindBetweenVectors(FVector(0,0,1), forward);
+
+	FVector center = GetActorLocation() + forward * attackRange * 0.5f;
+	FVector start = GetActorLocation() + forward * attackRange * 0.5f; // 충돌체의 중심 start
+	FVector end = GetActorLocation() + forward * attackRange * 0.5f; // 충돌체의 중심 end
+	// Sweep : start에서 end까지 쓸고가는 형태의 충돌 판정
+
 	bool bResult = GetWorld()->SweepSingleByChannel
 	(
 		OUT hitResult,
-		GetActorLocation(),
-		GetActorLocation() + GetActorForwardVector() * attackRange,
-		FQuat::Identity,
+		start,
+		end,
+		quat,
 		ECC_GameTraceChannel2,
-		FCollisionShape::MakeCapsule(attackRadius, attackRange),
+		FCollisionShape::MakeCapsule(attackRadius, attackRange * 0.5f),
 		params
 	);
 
@@ -175,10 +189,31 @@ void AMyCharacter::Attack_Hit()
 	if (bResult && hitResult.GetActor()->IsValidLowLevel())
 	{
 		drawColor = FColor::Red;
+		AMyCharacter* victim = Cast<AMyCharacter>(hitResult.GetActor());
+		if (victim)
+		{
+			FDamageEvent damageEvent = FDamageEvent();
+
+			victim->TakeDamage(_atk, damageEvent, GetController(), this);
+		}
 	}
 
 	// 충돌체 그리기
-	DrawDebugCapsule(GetWorld(), GetActorLocation(),
-	attackRange* 0.5f, attackRadius, FQuat::Identity, drawColor, false, 1.0f);
+	DrawDebugCapsule(GetWorld(), center,
+	attackRange* 0.5f, attackRadius, quat, drawColor, false, 1.0f);
+}
+
+float AMyCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	_hp -= Damage;
+
+	if(_hp < 0.0f)
+		_hp = 0.0f;
+
+	FString attackName = DamageCauser->GetName();
+	FString victimName = GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s has taken  %.2f from  %s."), *victimName, Damage, *attackName);
+
+	return Damage;
 }
 

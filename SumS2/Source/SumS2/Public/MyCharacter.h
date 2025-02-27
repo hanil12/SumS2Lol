@@ -48,6 +48,7 @@ public:
 	float My_Horizontal() { return _horizontal; }
 
 	void Attack_Hit();
+	virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
@@ -81,4 +82,7 @@ private:
 
 	float _vertical = 0.0f;
 	float _horizontal = 0.0f;
+
+	float _hp = 100;
+	float _atk = 10;
 };
