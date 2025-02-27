@@ -16,6 +16,8 @@
 
 #include "Engine/DamageEvents.h"
 
+#include "MyStatComponent.h"
+
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
@@ -34,6 +36,8 @@ AMyCharacter::AMyCharacter()
 
 	_springArm->TargetArmLength = 500.0f;
 	_springArm->SetRelativeRotation(FRotator(-35.0f,0.0f,0.0f));
+
+	_statComponent = CreateDefaultSubobject<UMyStatComponent>(TEXT("Stat"));
 }
 
 // Called when the game starts or when spawned
@@ -91,8 +95,8 @@ void AMyCharacter::Move(const FInputActionValue& value)
 			_vertical = moveVector.Y;
 			_horizontal = moveVector.X;
 
-			AddMovementInput(forWard, moveVector.Y * _speed);
-			AddMovementInput(right, moveVector.X * _speed);
+			AddMovementInput(forWard, moveVector.Y * _statComponent->GetSpeed());
+			AddMovementInput(right, moveVector.X * _statComponent->GetSpeed());
 		}
 	}
 }
@@ -104,6 +108,7 @@ void AMyCharacter::Look(const FInputActionValue& value)
 	if (Controller != nullptr)
 	{
 		AddControllerYawInput(lookAxisVector.X);
+		//AddControllerPitchInput(lookAxisVector.Y);
 	}
 }
 
@@ -194,7 +199,7 @@ void AMyCharacter::Attack_Hit()
 		{
 			FDamageEvent damageEvent = FDamageEvent();
 
-			victim->TakeDamage(_atk, damageEvent, GetController(), this);
+			victim->TakeDamage(_statComponent->GetAtk(), damageEvent, GetController(), this);
 		}
 	}
 
@@ -205,14 +210,7 @@ void AMyCharacter::Attack_Hit()
 
 float AMyCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	_hp -= Damage;
-
-	if(_hp < 0.0f)
-		_hp = 0.0f;
-
-	FString attackName = DamageCauser->GetName();
-	FString victimName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s has taken  %.2f from  %s."), *victimName, Damage, *attackName);
+	_statComponent->AddCurHp(-Damage);
 
 	return Damage;
 }

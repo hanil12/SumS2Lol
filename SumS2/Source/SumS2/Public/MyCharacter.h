@@ -35,6 +35,9 @@ public:
 	UFUNCTION()
 	void Attack(const struct FInputActionValue& value);
 
+	//UFUNCTION()
+	//void OnMyCharacterOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromWeep, const FHitResult& SweepResult);
+
 	UFUNCTION()
 	void TestDelegate();
 
@@ -69,20 +72,17 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* _springArm;
 
+	UPROPERTY()
+	class UMyAnimInstance* _animInstance;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stat", meta = (AllowPrivateAccess = "true"))
-	float _speed = 10.0f;
+	class UMyStatComponent* _statComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 	bool _isAttack;
-
-	UPROPERTY()
-	class UMyAnimInstance* _animInstance;
 
 	int32 _curAttackSection = 1;
 
 	float _vertical = 0.0f;
 	float _horizontal = 0.0f;
-
-	float _hp = 100;
-	float _atk = 10;
 };
