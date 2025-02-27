@@ -35,8 +35,8 @@ public:
 	UFUNCTION()
 	void Attack(const struct FInputActionValue& value);
 
-	//UFUNCTION()
-	//void OnMyCharacterOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromWeep, const FHitResult& SweepResult);
+	/*UFUNCTION()
+	void OnMyCharacterOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromWeep, const FHitResult& SweepResult);*/
 
 	UFUNCTION()
 	void TestDelegate();
@@ -51,6 +51,9 @@ public:
 	float My_Horizontal() { return _horizontal; }
 
 	void Attack_Hit();
+
+	void AddHp(float amount);
+
 	virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 private:

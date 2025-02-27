@@ -54,7 +54,9 @@ void AMyCharacter::BeginPlay()
 	_animInstance->_attackStart2.BindUObject(this, &AMyCharacter::TestDelegate2);
 	_animInstance->_attackStart3.AddDynamic(this, &AMyCharacter::TestDelegate);
 	_animInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::AttackEnd);
-	_animInstance->_hitEvent.AddUObject(this, &AMyCharacter::Attack_Hit);
+	_animInstance->_hitEvent.AddUObject(this, &AMyCharacter::Attack_Hit);\
+
+	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic()
 }
 
 // Called every frame
@@ -108,7 +110,7 @@ void AMyCharacter::Look(const FInputActionValue& value)
 	if (Controller != nullptr)
 	{
 		AddControllerYawInput(lookAxisVector.X);
-		//AddControllerPitchInput(lookAxisVector.Y);
+		AddControllerPitchInput(-lookAxisVector.Y);
 	}
 }
 
@@ -206,6 +208,11 @@ void AMyCharacter::Attack_Hit()
 	// 충돌체 그리기
 	DrawDebugCapsule(GetWorld(), center,
 	attackRange* 0.5f, attackRadius, quat, drawColor, false, 1.0f);
+}
+
+void AMyCharacter::AddHp(float amount)
+{
+	_statComponent->AddCurHp(amount);
 }
 
 float AMyCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
