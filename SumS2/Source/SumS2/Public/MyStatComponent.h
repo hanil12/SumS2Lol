@@ -19,6 +19,8 @@ struct FMyStatData : public FTableRowBase
 	int32 atk;
 };
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FHpChanged, float);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUMS2_API UMyStatComponent : public UActorComponent
 {
@@ -44,6 +46,7 @@ public:
 
 	bool IsDead() { return _curHp <= 0; }
 
+	FHpChanged _hpChanged;
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Stat", meta = (AllowPrivateAccess = "true"))
 	int32 _level = 0;

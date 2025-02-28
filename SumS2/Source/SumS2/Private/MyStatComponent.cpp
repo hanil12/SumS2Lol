@@ -49,9 +49,10 @@ int32 UMyStatComponent::AddCurHp(float amount)
 	if(_curHp > _maxHp)
 		_curHp = _maxHp;
 
-	auto actor = GetOwner();
+	float ratio = _curHp / (float)_maxHp;
 
-	UE_LOG(LogTemp, Warning, TEXT("Name : %s , HP : %d"), *actor->GetName(), _curHp);
+	if(_hpChanged.IsBound())
+		_hpChanged.Broadcast(ratio);
 
 	return before - _curHp;
 }

@@ -17,6 +17,8 @@
 #include "Engine/DamageEvents.h"
 
 #include "MyStatComponent.h"
+#include "Components/WidgetComponent.h"
+#include "MyHpBar.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -38,6 +40,15 @@ AMyCharacter::AMyCharacter()
 	_springArm->SetRelativeRotation(FRotator(-35.0f,0.0f,0.0f));
 
 	_statComponent = CreateDefaultSubobject<UMyStatComponent>(TEXT("Stat"));
+	_hpBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBar"));
+	_hpBarWidget->SetupAttachment(GetMesh());
+	_hpBarWidget->SetWidgetSpace(EWidgetSpace::World);
+	
+	static ConstructorHelpers::FClassFinder<UMyHpBar> hpBarClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrints/BP_MyHpbar.BP_MyHpbar_C'"));
+	if (hpBarClass.Succeeded())
+	{
+		_hpBarWidget->SetWidgetClass(hpBarClass.Class);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -54,9 +65,14 @@ void AMyCharacter::BeginPlay()
 	_animInstance->_attackStart2.BindUObject(this, &AMyCharacter::TestDelegate2);
 	_animInstance->_attackStart3.AddDynamic(this, &AMyCharacter::TestDelegate);
 	_animInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::AttackEnd);
-	_animInstance->_hitEvent.AddUObject(this, &AMyCharacter::Attack_Hit);\
+	_animInstance->_hitEvent.AddUObject(this, &AMyCharacter::Attack_Hit);
 
-	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic()
+	// HpBar...ProgressBar...Percent변경될 때 호출되는 함수
+	auto hpBar = Cast<UMyHpBar>(_hpBarWidget->GetWidget());
+	if (hpBar)
+	{
+		_statComponent->_hpChanged.AddUObject(hpBar, &UMyHpBar::SetHpBarValue);
+	}
 }
 
 // Called every frame
@@ -64,6 +80,15 @@ void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	auto playerCameraManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+
+	if (playerCameraManager)
+	{
+		FVector hpBarLocation = _hpBarWidget->GetComponentLocation();
+		FVector cameraLocation = playerCameraManager->GetCameraLocation();
+		FRotator rot = UKismetMathLibrary::FindLookAtRotation(hpBarLocation, cameraLocation);
+		_hpBarWidget->SetWorldRotation(rot);
+	}
 }
 
 // Called to bind functionality to input
