@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "MyStatComponent.h"
 #include "MyGameInstance.generated.h"
-
 /**
  * 
  */
@@ -18,6 +18,7 @@ public:
 	UMyGameInstance();
 
 	virtual void Init() override;
+	FMyStatData GetStat_Level(int32 level);
 
 private:
 	UPROPERTY()

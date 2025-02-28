@@ -3,6 +3,8 @@
 
 #include "MyStatComponent.h"
 
+#include "MyGameInstance.h"
+
 // Sets default values for this component's properties
 UMyStatComponent::UMyStatComponent()
 {
@@ -19,8 +21,12 @@ void UMyStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	auto gameInstance = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	_level = 1;
+	auto statInfo = gameInstance->GetStat_Level(_level);
+	_maxHp = statInfo.hp;
+	_curHp = statInfo.hp;
+	_atk = statInfo.atk;
 }
 
 

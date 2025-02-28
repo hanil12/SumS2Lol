@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyGameModeBase.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyHpBar.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyItem.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
@@ -67,9 +70,6 @@
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyTutoPawn.cpp">
-      <Filter>Source\SumS2\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\SumS2\Private\MyWidgetBlueprint.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
     <Filter Include="Source\SumS2\Public">
@@ -87,6 +87,9 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyGameModeBase.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyHpBar.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyItem.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
@@ -100,9 +103,6 @@
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoPawn.h">
-      <Filter>Source\SumS2\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\SumS2\Public\MyWidgetBlueprint.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
   </ItemGroup>
