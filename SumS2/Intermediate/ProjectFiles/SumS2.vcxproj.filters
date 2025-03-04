@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyItem.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyPlayer.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyPlayerController.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
@@ -93,6 +96,9 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyItem.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyPlayer.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyPlayerController.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
@@ -105,5 +111,15 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoPawn.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyEnemy.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyEnemy.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

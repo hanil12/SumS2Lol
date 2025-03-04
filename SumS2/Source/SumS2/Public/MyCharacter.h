@@ -26,15 +26,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION()
-	void Move(const struct FInputActionValue& value);
-	UFUNCTION()
-	void Look(const struct FInputActionValue& value);
-	UFUNCTION()
-	void JumpA(const struct FInputActionValue& value);
-	UFUNCTION()
-	void Attack(const struct FInputActionValue& value);
-
 	/*UFUNCTION()
 	void OnMyCharacterOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromWeep, const FHitResult& SweepResult);*/
 
@@ -51,30 +42,15 @@ public:
 	float My_Horizontal() { return _horizontal; }
 
 	void Attack_Hit();
+	void DeadEvent();
 
 	void AddHp(float amount);
 
 	virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	class UInputAction* _moveAction;
+	bool IsDead();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	class UInputAction* _lookAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	class UInputAction* _jumpAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
-	class UInputAction* _attackAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* _camera;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* _springArm;
-
+protected:
 	UPROPERTY()
 	class UMyAnimInstance* _animInstance;
 
@@ -83,9 +59,6 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 	bool _isAttack;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI", meta = (AllowPrivateAccess = "true"))
-	class UWidgetComponent* _hpBarWidget;
 
 	int32 _curAttackSection = 1;
 

@@ -27,8 +27,8 @@ DECLARE_DELEGATE_RetVal_TwoParams(int32, AnimDelegateTest2, int32, int32);
 
 // 멀티캐스트 다이나믹 Delegate
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAnimDelegateTest3);
-
 DECLARE_MULTICAST_DELEGATE(AttackHitEvent);
+DECLARE_MULTICAST_DELEGATE(DeadEvent);
 
 UCLASS()
 class SUMS2_API UMyAnimInstance : public UAnimInstance
@@ -45,11 +45,15 @@ public:
 	UFUNCTION()
 	void AnimNotify_Attack_Hit();
 
+	UFUNCTION()
+	void AnimNotify_Dead();
+
 	void JumpToSection(int32 sectionIndex);
 
-	AnimDelegateTest _attackStart;
-	AnimDelegateTest2 _attackStart2;
-	AttackHitEvent _hitEvent;
+	AnimDelegateTest	 _attackStart;
+	AnimDelegateTest2	 _attackStart2;
+	AttackHitEvent		 _hitEvent;
+	DeadEvent			 _deadEvent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
 	FAnimDelegateTest3 _attackStart3;
@@ -69,4 +73,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimMontate", meta = (AllowPrivateAccess = "true"))
 	float _horizontal;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimMontate", meta = (AllowPrivateAccess = "true"))
+	bool _isDead = false;
 };
