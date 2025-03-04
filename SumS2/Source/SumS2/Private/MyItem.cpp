@@ -5,6 +5,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "MyCharacter.h"
+#include "MyPlayer.h"
 #include "MyPlayerController.h"
 
 // Sets default values
@@ -43,12 +44,13 @@ void AMyItem::Tick(float DeltaTime)
 
 void AMyItem::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	auto character = Cast<AMyCharacter>(OtherActor);
+	auto character = Cast<AMyPlayer>(OtherActor);
 	auto player = Cast<AMyPlayerController>(character->GetController());
 
 	if (character != nullptr && player != nullptr)
 	{
 		character->AddHp(30.0f);
+		character->AddItem(this);
 
 		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);

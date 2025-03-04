@@ -13,6 +13,7 @@
 
 #include "MyStatComponent.h"
 #include "MyAnimInstance.h"
+#include "MyItem.h"
 
 AMyPlayer::AMyPlayer()
 {
@@ -113,4 +114,10 @@ void AMyPlayer::Attack(const FInputActionValue& value)
 
 		_animInstance->JumpToSection(_curAttackSection);
 	}
+}
+
+void AMyPlayer::AddItem(AMyItem* item)
+{
+	_items.Add(item);
+	UE_LOG(LogTemp, Log, TEXT("Items count : %d"), _items.Num());
 }
