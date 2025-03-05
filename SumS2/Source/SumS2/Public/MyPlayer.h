@@ -16,6 +16,7 @@ class SUMS2_API AMyPlayer : public AMyCharacter
 public:
 	AMyPlayer();
 
+	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

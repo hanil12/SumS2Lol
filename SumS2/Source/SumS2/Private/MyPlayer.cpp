@@ -43,6 +43,15 @@ AMyPlayer::AMyPlayer()
 	_invenComponent = CreateDefaultSubobject<UMyInvenComponent>(TEXT("InvenComponent"));
 }
 
+void AMyPlayer::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	auto invenUI = Cast<UMyInvenUI>(_invenWidget);
+	if(invenUI)
+		_invenComponent->itemAddEvent.AddUObject(invenUI, &UMyInvenUI::SetItem_Index);
+}
+
 void AMyPlayer::BeginPlay()
 {
 	Super::BeginPlay();

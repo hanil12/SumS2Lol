@@ -8,6 +8,7 @@
 
 #include "MyInvenComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FItemAdd, int32, FMyItemInfo)
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SUMS2_API UMyInvenComponent : public UActorComponent
@@ -30,6 +31,7 @@ public:
 	FMyItemInfo DropItem();
 	FMyItemInfo DropItem(int32 index);
 
+	FItemAdd itemAddEvent;
 private:
 	// TODO : itemComponent
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))

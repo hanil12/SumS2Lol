@@ -52,7 +52,14 @@ void UMyInvenComponent::AddItem(int32 itemID, MyItemType type)
 		return;
 
 	*target = addItemInfo;
-	UE_LOG(LogTemp, Error, TEXT("Item ID : %d"), addItemInfo.itemId);
+	// TODO : InventoryUI
+	int32 targetIndex = 0;
+
+	int64 temp1 = (int64)target;
+	int64 temp2 = (int64)(&_items[0]);
+	targetIndex = (temp1 - temp2) / sizeof(int64);
+
+	itemAddEvent.Broadcast(targetIndex, *target);
 }
 
 FMyItemInfo UMyInvenComponent::DropItem()
