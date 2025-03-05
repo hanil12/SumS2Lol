@@ -280,6 +280,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyHpBar.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyInvenComponent.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyInvenUI.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -307,6 +310,7 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyGameInstance.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyGameModeBase.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyHpBar.h"/>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyInvenComponent.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyInvenUI.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyItem.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyPlayer.h"/>

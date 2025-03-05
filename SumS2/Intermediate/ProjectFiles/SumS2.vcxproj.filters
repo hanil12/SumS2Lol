@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyHpBar.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyInvenComponent.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyInvenUI.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
@@ -100,6 +103,9 @@
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyHpBar.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyInvenComponent.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyInvenUI.h">
