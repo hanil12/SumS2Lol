@@ -17,6 +17,9 @@ class SUMS2_API AMyPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 
+	void ShowUI();
+	void HideUI();
+
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	class UInputMappingContext* _inputMappingContext;
