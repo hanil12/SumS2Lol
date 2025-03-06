@@ -5,6 +5,7 @@
 #include "Components/UniformGridPanel.h"
 #include "Components/Image.h"
 #include "Components/Button.h"
+#include "MyButton.h"
 
 bool UMyInvenUI::Initialize()
 {
@@ -12,9 +13,20 @@ bool UMyInvenUI::Initialize()
 
 	auto array = Grid->GetAllChildren();
 
+	int index = 0;
 	for (auto widget : array)
 	{
-		auto button = Cast<UButton>(widget);
+		auto button = Cast<UMyButton>(widget);
+		// 다이나믹 멀티캐스트 델레게이트는 람다식을 쓸 수가 없다.
+		// => UFUNCTION() 키워드를 붙힐 수 없기 때문.
+		//if (button)
+		//{
+		//	button->OnClicked.AddDynamic(button, &UMyButton::SetCurIndex);
+		//	button->widget = this;
+		//	button->_curIndex = index;
+		//	index++;
+		//}
+
 		auto image = Cast<UImage>(button->GetChildAt(0));
 		if (image)
 		{
@@ -37,3 +49,4 @@ void UMyInvenUI::SetItem_Index(int32 index, FMyItemInfo info)
 	if(info.itemId == 1 && info.type == MyItemType::POTION)
 		_slotImages[index]->SetBrushFromTexture(_potionTexture);
 }
+

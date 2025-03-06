@@ -38,4 +38,5 @@ public:
 	UPROPERTY()
 	UTexture2D* _potionTexture;
 
+	int32 _curIndex = -1;
 };
