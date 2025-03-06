@@ -19,13 +19,13 @@ bool UMyInvenUI::Initialize()
 		auto button = Cast<UMyButton>(widget);
 		// 다이나믹 멀티캐스트 델레게이트는 람다식을 쓸 수가 없다.
 		// => UFUNCTION() 키워드를 붙힐 수 없기 때문.
-		//if (button)
-		//{
-		//	button->OnClicked.AddDynamic(button, &UMyButton::SetCurIndex);
-		//	button->widget = this;
-		//	button->_curIndex = index;
-		//	index++;
-		//}
+		if (button)
+		{
+			button->OnClicked.AddDynamic(button, &UMyButton::SetCurIndex);
+			button->widget = this;
+			button->_curIndex = index;
+			index++;
+		}
 
 		auto image = Cast<UImage>(button->GetChildAt(0));
 		if (image)
