@@ -3,6 +3,8 @@
 
 #include "MyInvenComponent.h"
 
+#include "MyItem.h"
+
 // Sets default values for this component's properties
 UMyInvenComponent::UMyInvenComponent()
 {
@@ -33,25 +35,31 @@ void UMyInvenComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	// ...
 }
 
-void UMyInvenComponent::AddItem(int32 itemID, MyItemType type)
+FMyItemInfo UMyInvenComponent::GetItemInfo_Index(int32 index)
 {
-	FMyItemInfo addItemInfo;
-	addItemInfo.itemId = itemID;
-	addItemInfo.type = type;
+	if(index < 0 || index >= _items.Num())
+		return FMyItemInfo();
 
-	FMyItemInfo temp;
-	auto target = _items.FindByPredicate([temp](const FMyItemInfo& info)-> bool
+	if(_items[index] == nullptr)
+		return FMyItemInfo();
+
+	return _items[index]->GetInfo();
+}
+
+void UMyInvenComponent::AddItem(AMyItem* item)
+{
+	auto target = _items.FindByPredicate([](AMyItem* item)-> bool
 	{
-		if(info.itemId == temp.itemId && info.type == temp.type)
+		if(item == nullptr)
 			return true;
 		return false;
 	});
 
-	// 못찾음
+	// 빈칸이 없음
 	if(target == nullptr)
 		return;
 
-	*target = addItemInfo;
+	*target = item;
 	// TODO : InventoryUI
 	int32 targetIndex = 0;
 
@@ -59,16 +67,33 @@ void UMyInvenComponent::AddItem(int32 itemID, MyItemType type)
 	int64 temp2 = (int64)(&_items[0]);
 	targetIndex = (temp1 - temp2) / sizeof(int64);
 
-	itemAddEvent.Broadcast(targetIndex, *target);
+	itemAddEvent.Broadcast(targetIndex, item->GetInfo());
 }
 
-FMyItemInfo UMyInvenComponent::DropItem()
+AMyItem* UMyInvenComponent::DropItem()
 {
-	return FMyItemInfo();
+	return nullptr;
 }
 
-FMyItemInfo UMyInvenComponent::DropItem(int32 index)
+AMyItem* UMyInvenComponent::DropItem(int32 index)
 {
-	return FMyItemInfo();
+	if(index >= _items.Num() || index < 0)
+		return nullptr;
+
+	if(_items[index] == nullptr)
+		return nullptr;
+
+	AMyItem* dropItem = _items[index];
+	_items[index] = nullptr;
+	// TODO : 실제 아이템이 바닥에 떨어지게
+	// 1. GetOwner() -> Player
+	// => Cast<MyPlayer> 
+	// => MyPlayer의 Drop함수를 호출
+	// player->DropItem(dropItem);
+
+	// 2. ItemDropEvent를 만들어서
+	// => MyPlayer의 Drop함수를 바인딩해서 간접호출
+
+	return dropItem;
 }
 

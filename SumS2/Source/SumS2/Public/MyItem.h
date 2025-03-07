@@ -52,8 +52,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, Category = "Mesh")
 	class UStaticMeshComponent* _mesh;
-	
-	
+
 	UPROPERTY(EditAnywhere, Category = "Collider")
 	class UCapsuleComponent* _collider;
 
