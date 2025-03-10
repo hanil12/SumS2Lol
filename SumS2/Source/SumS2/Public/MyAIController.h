@@ -25,6 +25,12 @@ public:
 
 	void RandMove();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UBlackboardData* _blackBoard;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UBehaviorTree* _behaviorTree;
+
 private:
 	UPROPERTY()
 	FTimerHandle _timerHandle;

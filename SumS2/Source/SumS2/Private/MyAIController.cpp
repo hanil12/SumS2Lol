@@ -6,6 +6,10 @@
 #include "NavigationSystem.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 
+#include "BehaviorTree/BlackboardData.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
+
 AMyAIController::AMyAIController()
 {
 }
@@ -15,14 +19,31 @@ void AMyAIController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 
 	// 3초마다 RandMove함수 반복적으로 호출
-	GetWorld()->GetTimerManager().SetTimer(_timerHandle, this, &AMyAIController::RandMove, 3.0f, true);
+	//GetWorld()->GetTimerManager().SetTimer(_timerHandle, this, &AMyAIController::RandMove, 3.0f, true);
+
+	UBlackboardComponent* temp = Blackboard;
+	if (UseBlackboard(_blackBoard, temp))
+	{
+		if (RunBehaviorTree(_behaviorTree))
+		{
+
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("BT Faild"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("BB Faild"));
+	}
 }
 
 void AMyAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
 
-	GetWorld()->GetTimerManager().ClearTimer(_timerHandle);
+	//GetWorld()->GetTimerManager().ClearTimer(_timerHandle);
 }
 
 void AMyAIController::RandMove()
