@@ -23,7 +23,7 @@ void UBT_Service_FindTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 		return;
 
 	FVector pos = currentPawn->GetActorLocation();
-	float sphereRadius = 500.0f;
+	float sphereRadius = 1000;
 
 	TArray<FOverlapResult> overlapResults;
 	FCollisionQueryParams qParams(NAME_None, false, currentPawn);
@@ -54,6 +54,9 @@ void UBT_Service_FindTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(FName(TEXT("Player")), player);
 				DrawDebugSphere(GetWorld(), pos, sphereRadius, 30, FColor::Red, false, 0.3f);
+
+				FRotator rot = (player->GetActorLocation() - currentPawn->GetActorLocation()).GetSafeNormal().Rotation();
+				currentPawn->SetActorRotation(FMath::RInterpTo(currentPawn->GetActorRotation(), rot, DeltaSeconds, 0.5f));
 
 				return;
 			}

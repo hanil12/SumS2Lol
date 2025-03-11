@@ -8,7 +8,10 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BehaviorTree.h"
 
+#include <Kismet/KismetMathLibrary.h>
+
 #include "MyEnemy.h"
+#include "MyPlayer.h"
 
 EBTNodeResult::Type UBT_Task_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -21,6 +24,10 @@ EBTNodeResult::Type UBT_Task_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 	if(currentPawn->IsAttacking())
 		return btNodeResult;
 
+	auto player = Cast<AMyPlayer>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(TEXT("Player")));
+	if(!player->IsValidLowLevel())
+		return EBTNodeResult::Failed;
+	
 	currentPawn->Attack_AI();
 
 	return EBTNodeResult::Succeeded;

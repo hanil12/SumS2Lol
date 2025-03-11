@@ -73,6 +73,8 @@ void AMyCharacter::AttackEnd(UAnimMontage* Montage, bool bInterrupted)
 
 void AMyCharacter::Attack_Hit()
 {
+	if(IsDead()) return;
+
 	FHitResult hitResult;
 	FCollisionQueryParams params(NAME_None,false, this);
 
