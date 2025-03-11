@@ -262,6 +262,9 @@
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClInclude Include="..\..\Source\SumS2\SumS2.h"/>
+    <ClCompile Include="..\..\Source\SumS2\Private\BT_Service_FindTarget.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\BT_Task_FindRandomPos.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -313,6 +316,7 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyTutoPawn.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClInclude Include="..\..\Source\SumS2\Public\BT_Service_FindTarget.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\BT_Task_FindRandomPos.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyAIController.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyAnimInstance.h"/>
