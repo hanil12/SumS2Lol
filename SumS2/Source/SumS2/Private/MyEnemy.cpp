@@ -9,6 +9,9 @@
 #include "MyPlayerController.h"
 #include "MyStatComponent.h"
 
+#include "Animation/AnimInstance.h"
+#include "MyAnimInstance.h"
+
 AMyEnemy::AMyEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -54,4 +57,16 @@ void AMyEnemy::Tick(float DeltaTime)
 void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AMyEnemy::Attack_AI()
+{
+	if (_isAttack) return;
+
+	_isAttack = true;
+
+	_curAttackSection = (_curAttackSection) % 3 + 1;
+	_animInstance->PlayAnimMontage();
+
+	_animInstance->JumpToSection(_curAttackSection);
 }

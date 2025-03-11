@@ -40,6 +40,7 @@ public:
 
 	float My_Vertical() { return _vertical; }
 	float My_Horizontal() { return _horizontal; }
+	float AttackRange() { return _attackRange; }
 
 	void Attack_Hit();
 	void DeadEvent();
@@ -49,6 +50,7 @@ public:
 	virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	bool IsDead();
+	bool IsAttacking() { return _isAttack; }
 
 protected:
 	UPROPERTY()
@@ -64,4 +66,7 @@ protected:
 
 	float _vertical = 0.0f;
 	float _horizontal = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+	float _attackRange = 500.0f;
 };
