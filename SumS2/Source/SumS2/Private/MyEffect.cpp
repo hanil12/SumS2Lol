@@ -18,13 +18,6 @@ AMyEffect::AMyEffect()
 
 	RootComponent = _sceneComponent;
 	_niagaraComponent->SetupAttachment(_sceneComponent);
-
-	static ConstructorHelpers::FObjectFinder<UNiagaraSystem> test(TEXT("/Script/Niagara.NiagaraSystem'/Game/Graphics/Effect/Vefects/Free_Fire/Shared/Particles/NS_Fire_Big.NS_Fire_Big'"));
-
-	if (test.Succeeded())
-	{
-		_niagaraComponent->SetAsset(test.Object);
-	}
 }
 
 // Called when the game starts or when spawned
@@ -39,5 +32,35 @@ void AMyEffect::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyEffect::SetParticle(UNiagaraSystem* particle)
+{
+	if (particle->IsValidLowLevel())
+	{
+		_niagaraComponent->SetAsset(particle);
+		_niagaraComponent->OnSystemFinished.AddDynamic(this, &AMyEffect::Finished);
+	}
+}
+
+void AMyEffect::Stop()
+{
+	_niagaraComponent->DeactivateImmediate();
+}
+
+void AMyEffect::Play(FVector pos)
+{
+	_niagaraComponent->Activate(true);
+	SetActorLocation(pos);
+}
+
+bool AMyEffect::IsActive()
+{
+	return _niagaraComponent->IsActive();
+}
+
+void AMyEffect::Finished(UNiagaraComponent* PSystem)
+{
+	PSystem->DeactivateImmediate();
 }
 

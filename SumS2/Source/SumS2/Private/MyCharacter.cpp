@@ -3,6 +3,8 @@
 
 #include "MyCharacter.h"
 
+#include "MyGameInstance.h"
+
 #include "MyAnimInstance.h"
 
 #include "Engine/DamageEvents.h"
@@ -117,7 +119,7 @@ void AMyCharacter::Attack_Hit()
 
 			// #TODO : Effect Pooling
 			FVector hitPoint = hitResult.ImpactPoint;
-			GetWorld()->SpawnActor<AMyEffect>(hitPoint,FRotator::ZeroRotator);
+			EFFECT_M->PlayEffect("BigFire", hitPoint);
 			victim->TakeDamage(_statComponent->GetAtk(), damageEvent, GetController(), this);
 		}
 	}
