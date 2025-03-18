@@ -6,6 +6,7 @@
 #include "Components/SceneComponent.h"
 #include "NiagaraSystem.h"
 #include "NiagaraComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AMyEffect::AMyEffect()
@@ -15,9 +16,11 @@ AMyEffect::AMyEffect()
 
 	_sceneComponent = CreateDefaultSubobject<USceneComponent>("SceneComponent");
 	_niagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("NiagaraComponent");
+	_particleComponent = CreateDefaultSubobject<UParticleSystemComponent>("ParticleComponent");
 
 	RootComponent = _sceneComponent;
 	_niagaraComponent->SetupAttachment(_sceneComponent);
+	_particleComponent->SetupAttachment(_sceneComponent);
 }
 
 // Called when the game starts or when spawned
@@ -43,24 +46,41 @@ void AMyEffect::SetParticle(UNiagaraSystem* particle)
 	}
 }
 
+void AMyEffect::SetParticle(UParticleSystem* particle)
+{
+	if (particle->IsValidLowLevel())
+	{
+		_particleComponent->SetTemplate(particle);
+		_particleComponent->OnSystemFinished.AddDynamic(this, &AMyEffect::Finished_Particle);
+	}
+}
+
 void AMyEffect::Stop()
 {
 	_niagaraComponent->DeactivateImmediate();
+	_particleComponent->DeactivateSystem();
 }
 
 void AMyEffect::Play(FVector pos)
 {
-	_niagaraComponent->Activate(true);
 	SetActorLocation(pos);
+	_niagaraComponent->Activate(true);
+	_particleComponent->Activate(true);
 }
 
 bool AMyEffect::IsActive()
 {
-	return _niagaraComponent->IsActive();
+	return _niagaraComponent->IsActive() || _particleComponent->IsActive();
 }
 
 void AMyEffect::Finished(UNiagaraComponent* PSystem)
 {
 	PSystem->DeactivateImmediate();
+}
+
+void AMyEffect::Finished_Particle(UParticleSystemComponent* PSystem)
+{
+	if(PSystem)
+		PSystem->DeactivateSystem();
 }
 

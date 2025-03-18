@@ -24,16 +24,24 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void SetParticle(class UNiagaraSystem* particle);
+	void SetParticle(class UParticleSystem* particle);
 	void Stop();
 	void Play(FVector pos);
 	bool IsActive();
 
 	UFUNCTION()
 	void Finished(class UNiagaraComponent* PSystem);
+
+	UFUNCTION()
+	void Finished_Particle(class UParticleSystemComponent* PSystem);
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USceneComponent* _sceneComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UNiagaraComponent* _niagaraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UParticleSystemComponent* _particleComponent;
 };

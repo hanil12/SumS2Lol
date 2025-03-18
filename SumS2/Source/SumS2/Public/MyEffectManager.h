@@ -37,8 +37,10 @@ public:
 	void PlayEffect(FString key, FVector pos);
 
 private:
+	void CreateEffect(FString key, FString path);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TMap<FString, class UNiagaraSystem*> _particleTable;
+	TMap<FString, class UFXSystemAsset*> _particleTable;
 
 	UPROPERTY()
 	TMap<FString, FEffects> _effectTable;
