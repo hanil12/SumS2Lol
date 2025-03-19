@@ -319,6 +319,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyPlayerController.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyProjectile.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyStatComponent.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -347,6 +350,7 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyItem.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyPlayer.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyPlayerController.h"/>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyProjectile.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyStatComponent.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoActor.h"/>
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoPawn.h"/>

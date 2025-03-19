@@ -21,6 +21,8 @@
 #include "Components/Button.h"
 #include "MyInvenComponent.h"
 
+#include "MyProjectile.h"
+
 AMyPlayer::AMyPlayer()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -142,6 +144,10 @@ void AMyPlayer::Attack(const FInputActionValue& value)
 		_animInstance->PlayAnimMontage();
 
 		_animInstance->JumpToSection(_curAttackSection);
+
+		// 투사체
+		auto projectile = GetWorld()->SpawnActor<AMyProjectile>(_projectileClass, GetActorLocation() + GetActorForwardVector() * 300, FRotator::ZeroRotator);
+		projectile->FireDirection(GetActorForwardVector());
 	}
 }
 
