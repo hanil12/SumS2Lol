@@ -32,6 +32,7 @@ public:
 	UFUNCTION()
 	void InvenOpen(const struct FInputActionValue& value);
 
+	virtual void Attack_Hit() override;
 	void AddItem(class AMyItem* item);
 
 	UFUNCTION()

@@ -26,7 +26,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FireDirection(const FVector& direction);
 
+	UFUNCTION()
+	void OnOverlap(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const struct FHitResult& SweepResult);
+
+	void SetOwner(class AMyCharacter* owner );
+
 private:
+	UPROPERTY()
+	class AMyCharacter* _owner;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* _mesh;
 

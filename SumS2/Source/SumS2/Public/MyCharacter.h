@@ -4,6 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
+#include "MyPlayerController.h"
+#include "MyStatComponent.h"
+#include "MyAnimInstance.h"
+#include "MyItem.h"
+
+#include "MyProjectile.h"
+#include "MyGameInstance.h"
+#include "Engine/DamageEvents.h"
+
 #include "MyCharacter.generated.h"
 
 UCLASS()
@@ -42,7 +52,7 @@ public:
 	float My_Horizontal() { return _horizontal; }
 	float AttackRange() { return _attackRange; }
 
-	void Attack_Hit();
+	virtual void Attack_Hit();
 	void DeadEvent();
 
 	void AddHp(float amount);
