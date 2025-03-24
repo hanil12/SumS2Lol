@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyCharacter.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyDecalActor.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SumS2\Private\MyEffect.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
@@ -136,6 +139,9 @@
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyCharacter.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyDecalActor.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyEffect.h">

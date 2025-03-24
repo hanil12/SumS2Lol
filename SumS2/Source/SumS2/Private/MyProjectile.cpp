@@ -51,6 +51,9 @@ void AMyProjectile::FireDirection(const FVector& direction)
 
 void AMyProjectile::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if(_owner == nullptr)
+		return;
+
 	if(OtherActor->GetName() == _owner->GetName())
 		return;
 
