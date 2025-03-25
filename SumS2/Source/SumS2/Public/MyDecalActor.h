@@ -6,7 +6,7 @@
 #include "Engine/DecalActor.h"
 #include "MyDecalActor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FFieldAttack);
+DECLARE_MULTICAST_DELEGATE(FFieldEnd);
 /**
  * 
  */
@@ -21,7 +21,13 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	FFieldAttack _attackEvent;
+	void Play(FVector pos);
+	void DeActiveEvent();
+
+	FFieldEnd _endEvent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DECAL, meta = (AllowPrivateAccess = "true"))
+	bool _bisPlay = false;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = DECAL, meta = (AllowPrivateAccess = "true"))

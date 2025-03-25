@@ -82,8 +82,6 @@ void AMyPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyPlayer::Move(const FInputActionValue& value)
 {
-	if (_isAttack) return;
-
 	FVector2D moveVector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)
@@ -115,8 +113,6 @@ void AMyPlayer::Look(const FInputActionValue& value)
 
 void AMyPlayer::JumpA(const FInputActionValue& value)
 {
-	if (_isAttack) return;
-
 	bool isPress = value.Get<bool>();
 
 	if (isPress)

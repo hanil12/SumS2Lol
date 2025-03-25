@@ -22,6 +22,7 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		_vertical = character->My_Vertical();
 		_horizontal = character->My_Horizontal();
 		_isDead = character->IsDead();
+		_isAttacking = character->IsAttacking();
 	}
 }
 

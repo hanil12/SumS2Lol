@@ -2,6 +2,7 @@
 
 
 #include "MyDecalActor.h"
+#include "MyGameInstance.h"
 
 AMyDecalActor::AMyDecalActor()
 {
@@ -15,11 +16,17 @@ void AMyDecalActor::BeginPlay()
 	FVector scale = FVector(1.0f, 0.0f, 0.0f);
 	SetActorScale3D(scale);
 	_runTime = 0.0f;
+
+	_endEvent.AddUObject(this, &AMyDecalActor::DeActiveEvent);
+	_endEvent.AddLambda([this]()-> void { EFFECT_M->PlayEffect("BigFire", this->GetActorLocation()); });
 }
 
 void AMyDecalActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if(_bisPlay == false)
+		return;
 
 	// runTime을 증가시키면서... delayTime보다 커지면
 	_runTime += DeltaTime;
@@ -28,8 +35,8 @@ void AMyDecalActor::Tick(float DeltaTime)
 	// 이벤트 터짐
 	if (_runTime > _delayTime)
 	{
-		if(_attackEvent.IsBound())
-			_attackEvent.Broadcast();
+		if(_endEvent.IsBound())
+			_endEvent.Broadcast();
 
 		curScale.Y = 0.0f;
 		curScale.Z = 0.0f;
@@ -39,6 +46,7 @@ void AMyDecalActor::Tick(float DeltaTime)
 		if (_bLoop)
 		{
 			_runTime = 0.0f;
+			_bisPlay = true;
 		}
 
 		return;
@@ -49,4 +57,15 @@ void AMyDecalActor::Tick(float DeltaTime)
 	curScale.Z = (_runTime / _delayTime) * _areaRadius;
 
 	SetActorScale3D(curScale);
+}
+
+void AMyDecalActor::Play(FVector pos)
+{
+	_bisPlay = true;
+	SetActorLocation(pos);
+}
+
+void AMyDecalActor::DeActiveEvent()
+{
+	_bisPlay = false;
 }
