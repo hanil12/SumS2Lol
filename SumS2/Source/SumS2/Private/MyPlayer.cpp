@@ -6,10 +6,12 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Math/UnrealMathUtility.h"
 
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 #include "Blueprint/UserWidget.h"
 #include "MyInvenUI.h"
@@ -40,6 +42,8 @@ AMyPlayer::AMyPlayer()
 	}
 
 	_invenComponent = CreateDefaultSubobject<UMyInvenComponent>(TEXT("InvenComponent"));
+
+	bUseControllerRotationYaw = false;
 }
 
 void AMyPlayer::PostInitializeComponents()
@@ -88,14 +92,16 @@ void AMyPlayer::Move(const FInputActionValue& value)
 	{
 		if (moveVector.Length() > 0.01f)
 		{
-			FVector forWard = GetActorForwardVector();
-			FVector right = GetActorRightVector();
+			FVector forWard = GetControlRotation().Vector();
+			FVector right = forWard.RotateAngleAxis(90, FVector(0.0f,0.0f,1.0f));
 
 			_vertical = moveVector.Y;
 			_horizontal = moveVector.X;
 
 			AddMovementInput(forWard, moveVector.Y * _statComponent->GetSpeed());
 			AddMovementInput(right, moveVector.X * _statComponent->GetSpeed());
+
+			GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		}
 	}
 }
@@ -108,6 +114,27 @@ void AMyPlayer::Look(const FInputActionValue& value)
 	{
 		AddControllerYawInput(lookAxisVector.X);
 		AddControllerPitchInput(-lookAxisVector.Y);
+
+		float degree = FMath::FindDeltaAngleDegrees(GetActorRotation().Yaw, GetControlRotation().Yaw);
+
+		if (degree > 90.0f)
+		{
+			// TODO : 도는 애니메이션 삽입
+			GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		}
+		else if (degree < -90.0f)
+		{
+			// TODO
+			GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		}
+		else if (GetCharacterMovement()->Velocity.Size() > 0.1f || _isAttack)
+		{
+			GetCharacterMovement()->bUseControllerDesiredRotation = true;
+		}
+		else
+		{
+			GetCharacterMovement()->bUseControllerDesiredRotation = false;
+		}
 	}
 }
 
@@ -135,6 +162,7 @@ void AMyPlayer::Attack(const FInputActionValue& value)
 		_animInstance->PlayAnimMontage();
 
 		_animInstance->JumpToSection(_curAttackSection);
+		GetCharacterMovement()->bUseControllerDesiredRotation = true;
 
 		// 투사체
 		if (_curAttackSection == 3)

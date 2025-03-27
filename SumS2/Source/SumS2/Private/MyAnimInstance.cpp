@@ -6,6 +6,7 @@
 #include "MyCharacter.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Animation/AnimMontage.h"
+#include "Math/UnrealMathUtility.h"
 
 UMyAnimInstance::UMyAnimInstance()
 {
@@ -23,6 +24,11 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		_horizontal = character->My_Horizontal();
 		_isDead = character->IsDead();
 		_isAttacking = character->IsAttacking();
+
+		FRotator controllRotation = character->GetControlRotation();
+		FRotator actorRotation = character->GetActorRotation();
+		_yaw = FMath::FindDeltaAngleDegrees(actorRotation.Yaw, controllRotation.Yaw);
+		_pitch = FMath::FindDeltaAngleDegrees(actorRotation.Pitch, controllRotation.Pitch);
 	}
 }
 
