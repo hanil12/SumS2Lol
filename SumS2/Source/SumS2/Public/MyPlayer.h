@@ -38,6 +38,9 @@ public:
 	UFUNCTION()
 	void Drop();
 
+	bool _isTurnLeft = false;
+	bool _isTurnRight = false;
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	class UInputAction* _moveAction;
@@ -66,4 +69,5 @@ private:
 	TSubclassOf<class AMyProjectile> _projectileClass;
 
 	bool _isInvenOpen = false;
+
 };

@@ -4,6 +4,7 @@
 #include "MyAnimInstance.h"
 
 #include "MyCharacter.h"
+#include "MyPlayer.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Animation/AnimMontage.h"
 #include "Math/UnrealMathUtility.h"
@@ -29,6 +30,12 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		FRotator actorRotation = character->GetActorRotation();
 		_yaw = FMath::FindDeltaAngleDegrees(actorRotation.Yaw, controllRotation.Yaw);
 		_pitch = FMath::FindDeltaAngleDegrees(actorRotation.Pitch, controllRotation.Pitch);
+		auto player = Cast<AMyPlayer>(character);
+		if(player)
+		{
+			_isTurnLeft = player->_isTurnLeft;
+			_isTurnRight = player->_isTurnRight;
+		}
 	}
 }
 

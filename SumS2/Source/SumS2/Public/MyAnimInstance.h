@@ -81,8 +81,14 @@ private:
 	bool _isAttacking = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimOffset", meta = (AllowPrivateAccess = "true"))
-	float _yaw = false; // 좌우 회전
+	float _yaw = 0.0f; // 좌우 회전
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimOffset", meta = (AllowPrivateAccess = "true"))
-	float _pitch = false; // 위아래 회전
+	float _pitch = 0.0f; // 위아래 회전
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimOffset", meta = (AllowPrivateAccess = "true"))
+	bool _isTurnLeft = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimOffset", meta = (AllowPrivateAccess = "true"))
+	bool _isTurnRight = false;
 };

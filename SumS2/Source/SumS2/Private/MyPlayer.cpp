@@ -117,22 +117,28 @@ void AMyPlayer::Look(const FInputActionValue& value)
 
 		float degree = FMath::FindDeltaAngleDegrees(GetActorRotation().Yaw, GetControlRotation().Yaw);
 
+		// 카메라 오른쪽을 넘어감, 나는 정면
 		if (degree > 90.0f)
 		{
-			// TODO : 도는 애니메이션 삽입
+			_isTurnRight = true;
 			GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		}
+		// 카메라 왼쪽을 넘어감, 나는 정면
 		else if (degree < -90.0f)
 		{
-			// TODO
+			_isTurnLeft = true;
 			GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		}
+		// 움직이거나, 공격
 		else if (GetCharacterMovement()->Velocity.Size() > 0.1f || _isAttack)
 		{
 			GetCharacterMovement()->bUseControllerDesiredRotation = true;
 		}
-		else
+		// 카메라, 정면 각도 차이의 절대값이 90도 미만
+		else if(FMath::Abs(degree) < 0.1f)
 		{
+			_isTurnLeft = false;
+			_isTurnRight = false;
 			GetCharacterMovement()->bUseControllerDesiredRotation = false;
 		}
 	}
