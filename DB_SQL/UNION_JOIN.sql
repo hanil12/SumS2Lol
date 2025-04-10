@@ -25,7 +25,53 @@ UNION
 FROM players
 WHERE birthYear <= 1900)
 
--- players와 salary 테이블을 보면서 평균 연봉이 30만 달러 이상이거나 12월에 태어난 선수들의 playerID를 추출해주세요.
+-- players와 salaries 테이블을 보면서 평균 연봉이 300만 달러 이상이거나 12월에 태어난 선수들의 playerID를 추출해주세요.
 -- 이 때 중복된다면 중복을 허용해주세요.(UNION ALL)
+(SELECT playerID
+FROM salaries
+GROUP BY playerID
+HAVING AVG(salary) >= 3000000)
+UNION ALL
+(SELECT playerID
+FROM players
+WHERE birthMonth = 12 AND playerID IS NOT NULL)
 
 -- JOIN
+-- CROSS JOIN
+
+-- INNER JOIN
+-- OUTER JOIN
+
+USE BaseballData;
+
+SELECT *
+FROM
+((SELECT *
+FROM players
+WHERE lahmanID <= 10) T0
+CROSS JOIN
+(SELECT *
+FROM batting
+WHERE HR > 55) T1);
+
+-- INNER JOIN : 가로로 합친다.
+(SELECT *
+FROM players) 
+(SELECT *
+FROM batting
+WHERE HR > 20)
+
+SELECT *
+FROM players AS pTable
+INNER JOIN 
+batting AS bTable
+ON pTable.playerID = bTable.playerID AND bTable.HR > 20;
+
+-- OUTER JOIN
+-- LEFT JOIN, RIGHT JOIN
+(SELECT playerID, AVG(HR) AS HOMERUN
+FROM batting
+GROUP BY playerID)
+LEFT JOIN 
+(SELECT lahmanID,playerID, nameFirst, nameLast
+FROM players) AS pTable
