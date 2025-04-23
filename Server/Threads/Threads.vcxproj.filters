@@ -15,7 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Threads_1.cpp">
+    <ClCompile Include="Thread_1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_3.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
