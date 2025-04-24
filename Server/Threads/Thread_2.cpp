@@ -8,7 +8,12 @@
 using namespace std;
 
 // CPU 파이프라인 :
-// 세마포어 : 
+// - Fetch : 읽기
+// - Decode : 해석
+// - Excute : 실행
+// - Memory Access : 메모리 접근
+// 
+// 세마포어 : mutex와 다르게 자물쇠 개념이 아니고, 참조할 때 카운트를 하나씩 올리거나 감소시키는 것.
 
 // 1. 원자성 (atomic)
 // - all or nothing
