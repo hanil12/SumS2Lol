@@ -6,6 +6,10 @@
 
 using namespace std;
 
+// 쓰는 이유:
+// 1. 비동기 프로그램, 넌블락킹 (하나의 함수가 끝날 때까지 다른 함수를 실행시키지 못하는 것)
+// 2. 효율적으로 쓰기위해서
+
 void HelloThread()
 {
 	cout << "Hello Thread!" << endl;
