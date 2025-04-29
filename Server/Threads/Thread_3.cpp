@@ -35,6 +35,15 @@ void Push(int num)
 	v.push_back(num);
 }
 
+void Pop()
+{
+	LockGuard<std::mutex> lg(&m);
+	if(v.empty())
+		return;
+
+	v.pop_back();
+}
+
 int main()
 {
 	std::thread t1([]()-> void
