@@ -34,6 +34,10 @@ void Consume()
 	while (true)
 	{
 		unique_lock<std::mutex> lg(m);
+
+		// 조건을 확인하라고 통지하는 얘가 필요하다.
+		// cv에서 조건을 확인하고 만족하지 않으면 mutex 해제
+		// 만족하면 그 때에서 mutex 획득
 		cv.wait(lg, []()-> bool 
 		{
 			return q.empty() == false;
