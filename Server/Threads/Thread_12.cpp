@@ -9,7 +9,7 @@ using namespace std;
 
 // undefined behavior
 
-// 메모리 정책
+// atomic 메모리 정책
 // - memory_order::relaxed
 // => 느슨한, 코드재배치 O, 메모리 가시성 해결X
 // 
@@ -23,14 +23,16 @@ int value;
 
 void Produce()
 {
+
 	value = 10;
-	ready.store(true, memory_order_seq_cst);
+	ready.store(true, memory_order_release);
 	// 절취선
 }
 
 void Consume()
 {
-	while(ready.load(memory_order_seq_cst) == false)
+	// 절취선
+	while(ready.load(memory_order_acquire) == false)
 	;
 
 	cout << value << endl;
