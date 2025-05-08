@@ -1,17 +1,4 @@
-#include <iostream>
-#include <thread>
-#include <mutex>
-#include <queue>
-#include <future>
-#include <stack>
-#include <queue>
-#include <Windows.h>
-
-using namespace std;
-
-// Lock_Based_Stack
-// Lock_Based_Queue
-#include "Lock_Based_Stack.h"
+#include "framework.h"
 
 LockBasedStack<int> s;
 queue<int> q;
