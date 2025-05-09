@@ -68,6 +68,12 @@
     <ClCompile Include="ThreadManager.cpp">
       <Filter>Remain</Filter>
     </ClCompile>
+    <ClCompile Include="RWLock.cpp">
+      <Filter>Remain</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_15.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreTLS.h">
@@ -86,6 +92,9 @@
       <Filter>Remain</Filter>
     </ClInclude>
     <ClInclude Include="Types.h">
+      <Filter>Remain</Filter>
+    </ClInclude>
+    <ClInclude Include="RWLock.h">
       <Filter>Remain</Filter>
     </ClInclude>
   </ItemGroup>
