@@ -148,6 +148,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RefCountable.cpp" />
     <ClCompile Include="RWLock.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="Thread_10.cpp">
@@ -180,7 +181,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="Thread_15.cpp" />
+    <ClCompile Include="Thread_15.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Thread_16.cpp" />
     <ClCompile Include="Thread_4.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -241,6 +248,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GMacro.h" />
     <ClInclude Include="Lock_Based_Stack.h" />
+    <ClInclude Include="RefCountable.h" />
     <ClInclude Include="RWLock.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="Types.h" />

@@ -23,6 +23,9 @@ using namespace std;
 #include "ThreadManager.h"
 #include "RWLock.h"
 
+// RefCount
+#include "RefCountable.h"
+
 
 // Macro
 #include "GMacro.h"
