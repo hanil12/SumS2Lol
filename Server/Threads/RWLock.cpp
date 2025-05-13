@@ -1,8 +1,13 @@
 #include "framework.h"
 #include "RWLock.h"
 
-void RWLock::WriteLock()
+void RWLock::WriteLock(const char* name)
 {
+#if _DEBUG
+	// DEBUG모드에서만 실행되는 코드
+	TM->DeadLockProfile()->PushLock(name);
+#endif
+
 	uint32 lockThreadID = (_lockFlag & WRITE_THREAD_MASK) >> 16;
 
 	// 같은 Thread가 WriteLock 잡았었다.=> 통과
@@ -48,8 +53,13 @@ void RWLock::WriteLock()
 // [wwwwwwww] [wwwwwwww] [rrrrrrrr] [rrrrrrrr]
 // & READ_THREAD_MASK
 // [00000000] [00000000] [rrrrrrrr] [rrrrrrrr] => expected(아무도 WriteLock을 걸지 않은 것)
-void RWLock::ReadLock()
+void RWLock::ReadLock(const char* name)
 {
+#if _DEBUG
+	// DEBUG모드에서만 실행되는 코드
+	TM->DeadLockProfile()->PushLock(name);
+#endif
+
 	// ThreadID 추출
 	uint32 lockThreadID = (_lockFlag & WRITE_THREAD_MASK) >> 16;
 
@@ -86,8 +96,13 @@ void RWLock::ReadLock()
 	}
 }
 
-void RWLock::WriteUnlock()
+void RWLock::WriteUnlock(const char* name)
 {
+#if _DEBUG
+	// DEBUG모드에서만 실행되는 코드
+	TM->DeadLockProfile()->PopLock(name);
+#endif
+
 	// 자기 자신이 ReadLock을 건 다음, WriteLock이 걸리면 안되는데 걸렸을 때 예외처리
 	if ((_lockFlag.load() & READ_COUNT_MASK) != 0)
 	{
@@ -101,8 +116,13 @@ void RWLock::WriteUnlock()
 	}
 }
 
-void RWLock::ReadUnlock()
+void RWLock::ReadUnlock(const char* name)
 {
+#if _DEBUG
+	// DEBUG모드에서만 실행되는 코드
+	TM->DeadLockProfile()->PopLock(name);
+#endif
+
 	if ((_lockFlag.fetch_sub(1) & READ_COUNT_MASK) == 0)
 	{
 		CRASH("MUTIPLE UNLOCK");

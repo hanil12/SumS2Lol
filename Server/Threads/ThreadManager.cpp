@@ -9,6 +9,8 @@ ThreadManager::ThreadManager()
 	// mainThread만 호출가능
 	InitTLS();
 	// mainThread의 아이디 1
+
+	_deadLockProfiler = make_shared<DeadLockProfiler>();
 }
 
 ThreadManager::~ThreadManager()

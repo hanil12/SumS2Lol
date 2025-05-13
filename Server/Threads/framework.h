@@ -8,6 +8,8 @@
 #include <stack>
 #include <vector>
 #include <unordered_map>
+#include <map>
+#include <set>
 
 #include <Windows.h>
 
@@ -20,6 +22,7 @@ using namespace std;
 
 // Multi Thread
 #include "CoreTLS.h"
+#include "DeadLockProfiler.h"
 #include "ThreadManager.h"
 #include "RWLock.h"
 

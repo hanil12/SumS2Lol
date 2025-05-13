@@ -80,6 +80,12 @@
     <ClCompile Include="Thread_16.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="DeadLockProfiler.cpp">
+      <Filter>Remain</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_17.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreTLS.h">
@@ -104,6 +110,9 @@
       <Filter>Remain</Filter>
     </ClInclude>
     <ClInclude Include="RefCountable.h">
+      <Filter>Remain</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadLockProfiler.h">
       <Filter>Remain</Filter>
     </ClInclude>
   </ItemGroup>
