@@ -89,6 +89,15 @@
     <ClCompile Include="Thread_18.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Allocator.cpp">
+      <Filter>Remain</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Remain</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread_19.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoreTLS.h">
@@ -116,6 +125,12 @@
       <Filter>Remain</Filter>
     </ClInclude>
     <ClInclude Include="DeadLockProfiler.h">
+      <Filter>Remain</Filter>
+    </ClInclude>
+    <ClInclude Include="Allocator.h">
+      <Filter>Remain</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
       <Filter>Remain</Filter>
     </ClInclude>
   </ItemGroup>

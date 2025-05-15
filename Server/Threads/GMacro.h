@@ -10,6 +10,15 @@
 #define WRITE_LOCK_IDX(idx)		WriteLockGuard writeLockGuard_##idx(_locks[idx],typeid(this).name());
 #define WRITE_LOCK				WRITE_LOCK_IDX(0)
 
+// Allocation
+#ifdef _DEBUG
+	#define xalloc(size)	StompAllocator::Alloc(size)
+	#define xrelease(ptr)	StompAllocator::Release(ptr)
+#else
+	#define xalloc(size)	BaseAllocator::Alloc(size)
+	#define xrelease(ptr)	BaseAllocator::Release(ptr)
+#endif
+
 #define CRASH(cause)						\
 {											\
 	uint32* crash = nullptr;				\

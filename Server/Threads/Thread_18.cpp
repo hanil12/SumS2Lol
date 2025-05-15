@@ -76,5 +76,7 @@ int main()
 	(*temp) = 10; // 허상포인터, 메모리 오염
 	// new, delete는 바로 VirtualAlloc, Free를 해주지 않는다.
 
+	//int* temp2 = new Player(int,int);
+
 	return 0;
 }
