@@ -15,6 +15,7 @@ using namespace std;
 #include "MyContainer.h"
 #include "RWLock.h"
 #include "Memory.h"
+#include "MemoryPool.h"
 
 // Multi Thread Helper
 #include "DeadLockProfiler.h"
