@@ -15,23 +15,3 @@ using ConditionV = std::condition_variable;
 using UniqueLock = std::unique_lock<Mutex>;
 using LockGuard = std::lock_guard<Mutex>;
 
-template <typename T>
-using TArray = std::vector<T>;
-
-template <typename KTy, typename VTy>
-using TMap = std::unordered_map<KTy, VTy>;
-
-template<typename KTy, typename VTy>
-using TRedBlackTree = std::map<KTy, VTy>;
-
-template<typename T, typename Pred = less<T>>
-using Set = std::set<T>;
-
-template <typename T>
-using Atomic = std::atomic<T>;
-
-template <typename T>
-using SharedPtr = std::shared_ptr<T>;
-
-template <typename T>
-using WeakPtr = std::weak_ptr<T>;

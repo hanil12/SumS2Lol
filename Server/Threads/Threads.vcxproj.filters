@@ -133,5 +133,8 @@
     <ClInclude Include="Memory.h">
       <Filter>Remain</Filter>
     </ClInclude>
+    <ClInclude Include="MyContainer.h">
+      <Filter>Remain</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

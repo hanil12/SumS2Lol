@@ -38,7 +38,6 @@ int main()
 	xdelete(p);
 
 	//p->_hp = 5;
-	cout << p->_hp << endl;
 
 	return 0;
 }

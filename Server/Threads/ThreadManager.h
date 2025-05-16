@@ -43,7 +43,7 @@ private:
 	static ThreadManager* _instance;
 	static Atomic<int> SThreadID;
 
-	TArray<thread> _threads;
+	vector<thread> _threads;
 	Mutex _lock;
 
 	SharedPtr<DeadLockProfiler> _deadLockProfiler;

@@ -272,6 +272,7 @@
     <ClInclude Include="GMacro.h" />
     <ClInclude Include="Lock_Based_Stack.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="MyContainer.h" />
     <ClInclude Include="RefCountable.h" />
     <ClInclude Include="RWLock.h" />
     <ClInclude Include="ThreadManager.h" />
