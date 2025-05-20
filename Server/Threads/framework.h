@@ -1,5 +1,10 @@
 #pragma once
 #include <iostream>
+
+#include <winsock2.h>
+#include <MSWSock.h>
+#include <WS2tcpip.h>
+
 #include <thread>
 #include <mutex>
 #include <future>
@@ -8,6 +13,8 @@
 #include "Types.h"
 
 using namespace std;
+
+#pragma comment(lib,"ws2_32.lib")
 
 // Multi Thread CORE
 #include "CoreTLS.h"
