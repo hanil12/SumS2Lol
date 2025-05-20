@@ -11,6 +11,7 @@ ThreadManager::ThreadManager()
 	// mainThread의 아이디 1
 
 	_deadLockProfiler = make_shared<DeadLockProfiler>();
+	_poolMemory = make_shared<Memory>();
 }
 
 ThreadManager::~ThreadManager()

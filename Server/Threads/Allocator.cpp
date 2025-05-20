@@ -30,3 +30,13 @@ void StompAllocator::Release(void* ptr)
 
     ::VirtualFree(reinterpret_cast<void*>(baseAddress), 0, MEM_RELEASE);
 }
+
+void* PoolAllocator::Alloc(size_t size)
+{
+    return ThreadManager::Instance()->PoolMemory()->Allocate(size);
+}
+
+void PoolAllocator::Release(void* ptr)
+{
+    ThreadManager::Instance()->PoolMemory()->Release(ptr);
+}

@@ -1,5 +1,6 @@
 #pragma once
 
+class PoolAllocator;
 
 class BaseAllocator
 {
@@ -40,3 +41,9 @@ public:
 	}
 };
 
+class PoolAllocator
+{
+public:
+	static void* Alloc(size_t size);
+	static void  Release(void* ptr);
+};
