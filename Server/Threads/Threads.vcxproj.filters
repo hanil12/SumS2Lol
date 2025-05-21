@@ -59,29 +59,14 @@
     <ClCompile Include="Thread_14.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CoreTLS.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
     <ClCompile Include="framework.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
-    <ClCompile Include="ThreadManager.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
-    <ClCompile Include="RWLock.cpp">
       <Filter>Remain</Filter>
     </ClCompile>
     <ClCompile Include="Thread_15.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="RefCountable.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
     <ClCompile Include="Thread_16.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DeadLockProfiler.cpp">
-      <Filter>Remain</Filter>
     </ClCompile>
     <ClCompile Include="Thread_17.cpp">
       <Filter>소스 파일</Filter>
@@ -89,17 +74,8 @@
     <ClCompile Include="Thread_18.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Allocator.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
-    <ClCompile Include="Memory.cpp">
-      <Filter>Remain</Filter>
-    </ClCompile>
     <ClCompile Include="Thread_19.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MemoryPool.cpp">
-      <Filter>Remain</Filter>
     </ClCompile>
     <ClCompile Include="Thread_20.cpp">
       <Filter>소스 파일</Filter>
@@ -107,45 +83,12 @@
     <ClCompile Include="Socket_1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Socket_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CoreTLS.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="GMacro.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="Lock_Based_Stack.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadManager.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="RWLock.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="RefCountable.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="DeadLockProfiler.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="Allocator.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="Memory.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="MyContainer.h">
-      <Filter>Remain</Filter>
-    </ClInclude>
-    <ClInclude Include="MemoryPool.h">
       <Filter>Remain</Filter>
     </ClInclude>
   </ItemGroup>

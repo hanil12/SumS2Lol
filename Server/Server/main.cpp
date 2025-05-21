@@ -1,15 +1,16 @@
-#include <iostream>
-#include <winsock2.h>
-#include <MSWSock.h>
-#include <WS2tcpip.h>
-#include <Windows.h>
 
-#pragma comment(lib,"ws2_32.lib")
+#ifdef _DEBUG
+#pragma comment(lib,"ServerCore\\Debug\\ServerCore.lib")
+#else
+#pragma comment(lib,"ServerCore\\Release\\ServerCore.lib")
+#endif
 
-using namespace std;
+#include "../ServerCore/pch.h"
 
 int main()
 {
+	HelloLib();
+
 	cout << "Hello Server!" << endl;
 
 	WSADATA wsaData;
