@@ -22,8 +22,8 @@ int main()
 
 	// 1. ListenSocket 만들기
 	// ListenSocket : 클라이언트를 받아주는 문지기 역할
-	SOCKET listener = ::socket(AF_INET, SOCK_STREAM, 0);
-	if (listener == INVALID_SOCKET)
+	SOCKET serverSocket = ::socket(AF_INET, SOCK_DGRAM, 0);
+	if (serverSocket == INVALID_SOCKET)
 	{
 		// Error
 		return 0;
@@ -36,42 +36,41 @@ int main()
 	serverAddr.sin_addr.s_addr= ::htonl(INADDR_ANY); // 니가 알아서 IP주소 써줘, 로컬 주소
 	serverAddr.sin_port = ::htons(7777); // 빅엔디언 표기법으로 바꿈
 
-	// 3. Listener 세팅
-	if (::bind(listener, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+	if (::bind(serverSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
 	{
-		// Error
-		return 0;
-	}
-
-	// 4. 연결(listener) 준비
-	if (::listen(listener, 10) == SOCKET_ERROR)
-	{
-		// Error
+		cout <<"Binding Error" << endl;
 		return 0;
 	}
 
 	// 5. Accept
 	while (true)
 	{
-		SOCKADDR_IN clientAddr; // IPv4
-		::memset(&clientAddr, 0, sizeof(clientAddr));
-		int addrLen = sizeof(clientAddr);
-
-		// listener한테 현재 대기 중인 클라이언트를 받아서 정보 추출
-		SOCKET clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen);
-		if (clientSocket == INVALID_SOCKET)
+		while (true)
 		{
-			// Error
-			return 0;
-		}
+			SOCKADDR_IN clientAddr;
+			::memset(&clientAddr, 0, sizeof(clientAddr));
+			int32 addrLen = sizeof(clientAddr);
 
-		// 클라이언트 입장
-		char ipAddress[16];
-		::inet_ntop(AF_INET, &clientAddr.sin_addr, ipAddress, sizeof(ipAddress));
-		cout << "Client Conneted!!! Client IP : " << ipAddress << endl;
+			char recvBuffer[1000];
+
+			memset(recvBuffer,0,1000);
+
+			int recvLen = ::recvfrom(serverSocket, recvBuffer, sizeof(recvBuffer), 0, 
+			(SOCKADDR*)(&clientAddr), &addrLen);
+			if (recvLen <= 0)
+			{
+				int32 errorCode = ::WSAGetLastError();
+				cout << "Recv Error" << endl;
+
+				return 0;
+			}
+
+			cout << "Recv Data : " << recvBuffer << endl;
+			cout << "Recv Len : " << recvLen << endl;
+		}
 	}
 
-	::closesocket(listener);
+	::closesocket(serverSocket);
 	::WSACleanup();
 
 	return 0;
