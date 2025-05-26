@@ -96,6 +96,17 @@ int main()
 
 			cout << "Recv Data : " << recvBuffer << endl;
 			cout << "Recv Len : " << recvLen << endl;
+
+			if (::send(clientSocket, recvBuffer, sizeof(recvBuffer), 0) == SOCKET_ERROR)
+			{
+				if (::WSAGetLastError() == WSAEWOULDBLOCK)
+				{
+					continue;
+				}
+
+				cout << "Send Error" << endl;
+				break;
+			}
 		}
 	}
 

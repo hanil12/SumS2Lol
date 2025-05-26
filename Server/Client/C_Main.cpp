@@ -63,6 +63,8 @@ int main()
 	while (true)
 	{
 		char sendBuffer[100] = "Hello World!";
+		char recvBuffer[1000];
+		memset(recvBuffer, 0, sizeof(recvBuffer));
 
 		if (::send(clientSocket, sendBuffer, sizeof(sendBuffer), 0) == SOCKET_ERROR)
 		{
@@ -74,6 +76,22 @@ int main()
 			break;
 		}
 
+		int32 recvLen = 0;
+		if (recvLen = ::recv(clientSocket, recvBuffer, sizeof(recvBuffer), 0))
+		{
+			if (recvLen <= 0)
+			{
+				if (::WSAGetLastError() == WSAEWOULDBLOCK)
+				{
+					continue;
+				}
+
+				cout << "Recv Error" << endl;
+				break;
+			}
+		}
+
+		cout << recvBuffer << endl;
 		this_thread::sleep_for(1000ms);
 	}
 
