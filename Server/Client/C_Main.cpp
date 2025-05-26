@@ -15,12 +15,18 @@ int main()
 		return 0;
 
 	// 1. Client Socket 만들기
-	SOCKET clientSocket = ::socket(AF_INET, SOCK_DGRAM, 0);
+	SOCKET clientSocket = ::socket(AF_INET, SOCK_STREAM, 0);
 	if (clientSocket == INVALID_SOCKET)
 	{
 		int errorCode = ::WSAGetLastError();
 		cout << "Socket Error : " << errorCode << endl;
 
+		return 0;
+	}
+
+	u_long on = 1;
+	if (::ioctlsocket(clientSocket, FIONBIO, &on) == INVALID_SOCKET)
+	{
 		return 0;
 	}
 
@@ -32,12 +38,24 @@ int main()
 	serverAddr.sin_port = ::htons(7777); // 빅엔디언 표기법으로 바꿈
 
 	// 3. 연결
-	if (::connect(clientSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+	while (true)
 	{
-		int errorCode = ::WSAGetLastError();
-		cout << "Socket Error : " << errorCode << endl;
+		if (::connect(clientSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
+		{
+			if (::WSAGetLastError() == WSAEWOULDBLOCK)
+			{
+				continue;
+			}
 
-		return 0;
+			if (::WSAGetLastError() == WSAEISCONN)
+			{
+				break;
+			}
+
+			cout << "Socket Error : " << endl;
+
+			return 0;
+		}
 	}
 
 	cout << "Connet To Server!!" << endl;
@@ -46,21 +64,17 @@ int main()
 	{
 		char sendBuffer[100] = "Hello World!";
 
-		for (int32 i = 0; i < 10; i++)
+		if (::send(clientSocket, sendBuffer, sizeof(sendBuffer), 0) == SOCKET_ERROR)
 		{
-			int32 resultCode = ::sendto(clientSocket, sendBuffer, sizeof(sendBuffer), 0,
-			(SOCKADDR*)&serverAddr, sizeof(serverAddr));
-
-			if (resultCode == SOCKET_ERROR)
+			if (::WSAGetLastError() == WSAEWOULDBLOCK)
 			{
-				int32 error = ::WSAGetLastError();
-				cout << "Send Error" << endl;
-				return 0;
+				continue;
 			}
-			cout << "Send Data Len : " << sizeof(sendBuffer) << endl;
+
+			break;
 		}
 
-		this_thread::sleep_for(5000ms);
+		this_thread::sleep_for(1000ms);
 	}
 
 	// 소켓 닫기
