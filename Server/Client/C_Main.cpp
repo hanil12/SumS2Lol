@@ -62,7 +62,7 @@ int main()
 
 	while (true)
 	{
-		char sendBuffer[100] = "Hello World!";
+		char sendBuffer[1000] = "Hello World!";
 		char recvBuffer[1000];
 		memset(recvBuffer, 0, sizeof(recvBuffer));
 
