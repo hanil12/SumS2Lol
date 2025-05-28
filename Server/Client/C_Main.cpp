@@ -70,11 +70,15 @@ int main()
 		{
 			if (::WSAGetLastError() == WSAEWOULDBLOCK)
 			{
+				// 다른 작업 잠깐할게.
+
 				continue;
 			}
 
 			break;
 		}
+		this_thread::sleep_for(500ms);
+
 
 		int32 recvLen = 0;
 		if (recvLen = ::recv(clientSocket, recvBuffer, sizeof(recvBuffer), 0))
@@ -92,7 +96,7 @@ int main()
 		}
 
 		cout << recvBuffer << endl;
-		this_thread::sleep_for(1000ms);
+		this_thread::sleep_for(500ms);
 	}
 
 	// 소켓 닫기

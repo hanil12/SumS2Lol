@@ -200,7 +200,7 @@ void AMyPlayer::InvenOpen(const FInputActionValue& value)
 		{
 			if(controller)
 				controller->ShowUI();
-			_invenWidget->AddToViewport();
+			_invenWidget->AddToPlayerScreen();
 		}
 		_isInvenOpen = !_isInvenOpen;
 	}
