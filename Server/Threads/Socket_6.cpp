@@ -16,33 +16,14 @@
 
 struct Session
 {
-	Session(SOCKET s) : socket(s) {}
-
-	WSAOVERLAPPED overlapped = {}; // WSASEND, WSARECV 했을 때 이벤트 감지
 	SOCKET socket = INVALID_SOCKET;
 	char recvBuffer[1000] = {};
 	char sendBuffer[1000] = "Hello Im Sever";
 	int32 recvBytes = 0;
 	int32 sendBytes = 0;
+
+	WSAOVERLAPPED overlapped = {}; // WSASEND, WSARECV 했을 때 이벤트 감지
 };
-
-void CALLBACK RecvCallBack(DWORD error, DWORD recvLen, LPWSAOVERLAPPED overlapped, DWORD flags)
-{
-	cout << "Data Recv Len : " << recvLen << endl;
-
-	Session* session = reinterpret_cast<Session*>(overlapped);
-
-	cout<< "Recv : " << session->recvBuffer << endl;
-}
-
-void CALLBACK SendCallBack(DWORD error, DWORD sendLen, LPWSAOVERLAPPED overlapped, DWORD flags)
-{
-	cout << "Data Send Len : " << sendLen << endl;
-
-	Session* session = reinterpret_cast<Session*>(overlapped);
-
-	cout << "Send : " << session->sendBuffer << endl;
-}
 
 int main()
 {
@@ -98,12 +79,6 @@ int main()
 	// 입출력함수를 호출 => 준비가 되어있으면 실행
 	// 준비가 안되어있으면 => WSA_IO_PENDING
 
-	// Overlapped CallBack 방식
-	// 입출력함수가 성공했을 때 호출되는 함수를 인자로 넘겨준다.
-
-	// => 64개만 관리하던 WSAEvent은 서버에 부적합하다.
-	// ==> Overlapped IO 기반 소켓이 서버에 더 적합하다.
-
 	while (true)
 	{
 		SOCKADDR_IN clientAddr;
@@ -117,15 +92,15 @@ int main()
 			// listener가 넌블로킹 소켓
 			// ::accept => 넌블로킹 동작
 			clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen);
-			if(clientSocket != INVALID_SOCKET)
+			if (clientSocket != INVALID_SOCKET)
 				break;
 
-			if(::WSAGetLastError() == WSAEWOULDBLOCK)
+			if (::WSAGetLastError() == WSAEWOULDBLOCK)
 				continue;
 		}
 
 		// 연결되어있는 상황
-		Session session = Session(clientSocket);
+		Session session = Session{ clientSocket };
 		WSAEVENT wsaEvent = ::WSACreateEvent();
 		session.overlapped.hEvent = wsaEvent;
 
@@ -144,20 +119,16 @@ int main()
 			// Overlapped 기반 출력함수
 			// 이 함수가 호출되면 Event를 확인
 
-			if (::WSARecv(session.socket, &wsaBuf, 1, &recvLen, &flags, (LPWSAOVERLAPPED)&session, &RecvCallBack) == SOCKET_ERROR)
+			if (::WSARecv(clientSocket, &wsaBuf, 1, &recvLen, &flags, &session.overlapped, nullptr) == SOCKET_ERROR)
 			{
 				// SOCKET_ERROR
 				// 1. 아직 Recv버퍼에 다 복사해오지 않았거나, 대기 상태
 				if (::WSAGetLastError() == WSA_IO_PENDING)
 				{
-					// APC (비동기 함수 호출)
-					// Alertable Wait 상태
-
-					// WSARecv
-					// => APC Qeueue에 RecvCallBack 함수를 걸어준다.
-					// (현재 쓰레드 Alertable Wait 상태로 만들어줌)
-					// => WSARecv가 성공하면, APC에서 RecvCallBack 함수를 호출해준다.
-					::SleepEx(INFINITE, TRUE);
+					// 백그라운드로 입출력 실행
+					// Pending : 보류하고 나중에 확인
+					::WSAWaitForMultipleEvents(1, &wsaEvent, TRUE, WSA_INFINITE, FALSE);
+					::WSAGetOverlappedResult(session.socket, &session.overlapped, &recvLen, FALSE, &flags);
 				}
 				// 2. 진짜 실패하거나 이상함
 				else
@@ -167,26 +138,31 @@ int main()
 				}
 			}
 
+			if (recvLen != 0)
+			{
+				cout << session.recvBuffer << endl;
+			}
+
 			WSABUF wsaBuf2;
 			wsaBuf2.buf = session.sendBuffer;
 			wsaBuf2.len = 1000;
 
 			DWORD sendLen = 0;
 
-			if (::WSASend(session.socket, &wsaBuf2, 1, &sendLen, flags, &session.overlapped, &SendCallBack) == SOCKET_ERROR)
+			if (::WSASend(session.socket, &wsaBuf2, 1, &sendLen, flags, &session.overlapped, nullptr) == SOCKET_ERROR)
 			{
-				if (::WSAGetLastError() == WSA_IO_PENDING)
+				if (WSA_IO_PENDING)
 				{
-					::SleepEx(INFINITE, TRUE);
+					::WSAWaitForMultipleEvents(1, &wsaEvent, TRUE, WSA_INFINITE, FALSE);
+					::WSAGetOverlappedResult(session.socket, &session.overlapped, &sendLen, FALSE, &flags);
 				}
 				else
 				{
-					cout << ::WSAGetLastError() << endl;
 					break;
 				}
 			}
 
-			if(sendLen != 0)
+			if (sendLen != 0)
 				cout << "Send Succeed" << endl;
 		}
 
