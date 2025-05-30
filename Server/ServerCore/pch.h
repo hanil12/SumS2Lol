@@ -11,8 +11,3 @@
 #include "framework.h"
 
 #endif //PCH_H
-
-void HelloLib()
-{
-	cout << "Hello Lib" << endl;
-}
