@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyTutoPawn.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\SumS2\Private\MyUIManager.cpp">
+      <Filter>Source\SumS2\Private</Filter>
+    </ClCompile>
     <Filter Include="Source\SumS2\Public">
       <UniqueIdentifier>{24742543-F099-3086-9149-FC3A5B2CF259}</UniqueIdentifier>
     </Filter>
@@ -187,6 +190,9 @@
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoPawn.h">
+      <Filter>Source\SumS2\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SumS2\Public\MyUIManager.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
   </ItemGroup>

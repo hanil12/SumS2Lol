@@ -19,6 +19,7 @@
 #include "MyInvenComponent.h"
 
 #include "MyCharacter.h"
+#include "MyUIManager.h"
 
 AMyPlayer::AMyPlayer()
 {
@@ -189,26 +190,29 @@ void AMyPlayer::InvenOpen(const FInputActionValue& value)
 
 	if (isPress)
 	{
-		auto controller = Cast<AMyPlayerController>(GetController());
-		if (_isInvenOpen)
+		if (GetGameInstance()->GetSubsystem<UMyUIManager>()->IsOpen("Inven"))
 		{
-			if(controller)
-				controller->HideUI();
-			_invenWidget->RemoveFromViewport();
+			GetGameInstance()->GetSubsystem<UMyUIManager>()->ClosePopUp("Inven");
+
+			return;
 		}
-		else
-		{
-			if(controller)
-				controller->ShowUI();
-			_invenWidget->AddToPlayerScreen();
-		}
-		_isInvenOpen = !_isInvenOpen;
+
+		GetGameInstance()->GetSubsystem<UMyUIManager>()->ShowPopUp("Inven");
 	}
 }
 
 void AMyPlayer::Attack_Hit()
 {
 	if (IsDead()) return;
+
+	if (GetGameInstance()->GetSubsystem<UMyUIManager>()->IsOpen("HpBar"))
+	{
+		GetGameInstance()->GetSubsystem<UMyUIManager>()->ClosePopUp("HpBar");
+
+		return;
+	}
+
+	GetGameInstance()->GetSubsystem<UMyUIManager>()->ShowPopUp("HpBar");
 
 	FHitResult hitResult;
 	FCollisionQueryParams params(NAME_None, false, this);
