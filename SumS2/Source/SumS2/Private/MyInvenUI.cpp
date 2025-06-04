@@ -47,6 +47,29 @@ bool UMyInvenUI::Initialize()
 	return true;
 }
 
+void UMyInvenUI::SyncInvenComp(UMyInvenComponent* invenComp)
+{
+	_invenComp = invenComp;
+	if(_invenComp == nullptr)
+		return;
+
+	auto items = _invenComp->GetItems();
+
+	int index = 0;
+	for (auto item : items)
+	{
+		if (item == nullptr)
+		{
+			SetItem_Index(index, FMyItemInfo());
+			index++;
+			continue;
+		}
+
+		SetItem_Index(index, item->GetInfo());
+		index++;
+	}
+}
+
 void UMyInvenUI::SetItem_Index(int32 index, FMyItemInfo info)
 {
 	if (info.itemId == -1 && info.type == MyItemType::NONE)
@@ -58,10 +81,10 @@ void UMyInvenUI::SetItem_Index(int32 index, FMyItemInfo info)
 
 void UMyInvenUI::SetTextBox()
 {
-	if(_invenComponent == nullptr)
+	if(_invenComp == nullptr)
 		return;
 
-	auto info = _invenComponent->GetItemInfo_Index(_curIndex);
+	auto info = _invenComp->GetItemInfo_Index(_curIndex);
 	
 	if (info.itemId == -1 && info.type == MyItemType::NONE)
 	{

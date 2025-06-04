@@ -7,6 +7,7 @@
 #include "MyItem.h"
 #include "MyInvenUI.generated.h"
 
+class UInvenComponent;
 /**
  * 
  */
@@ -18,6 +19,8 @@ class SUMS2_API UMyInvenUI : public UUserWidget
 public:
 	virtual bool Initialize() override;
 
+	// 동기화
+	void SyncInvenComp(UMyInvenComponent* invenComp);
 	void SetItem_Index(int32 index, FMyItemInfo info);
 	UFUNCTION()
 	void SetTextBox();
@@ -43,8 +46,8 @@ public:
 	UPROPERTY()
 	UTexture2D* _potionTexture;
 
-	UPROPERTY()
-	class UMyInvenComponent* _invenComponent;
+	UPROPERTY();
+	UMyInvenComponent* _invenComp;
 
 	int32 _curIndex = -1;
 };

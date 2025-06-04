@@ -3,6 +3,9 @@
 
 #include "MyInvenComponent.h"
 
+#include "MyGameInstance.h"
+#include "UIManager.h"
+#include "MyInvenUI.h"
 #include "MyItem.h"
 
 // Sets default values for this component's properties
@@ -66,6 +69,9 @@ void UMyInvenComponent::AddItem(AMyItem* item)
 	int64 temp1 = (int64)target;
 	int64 temp2 = (int64)(&_items[0]);
 	targetIndex = (temp1 - temp2) / sizeof(int64);
+
+	if(GetWorld()->UI->IsOpen("Inven"))
+		Cast<UMyInvenUI>(GetWorld()->UI->GetOrShowPopUp("Inven"))->SyncInvenComp(this);
 
 	itemAddEvent.Broadcast(targetIndex, item->GetInfo());
 }

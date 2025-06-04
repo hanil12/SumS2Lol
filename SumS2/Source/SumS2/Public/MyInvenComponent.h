@@ -33,6 +33,8 @@ public:
 	AMyItem* DropItem();
 	AMyItem* DropItem(int32 index);
 
+	TArray<AMyItem*> GetItems() { return _items; }
+
 	FItemAdd itemAddEvent;
 
 private:

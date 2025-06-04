@@ -43,14 +43,6 @@ AMyPlayer::AMyPlayer()
 void AMyPlayer::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
-	//auto invenUI = Cast<UMyInvenUI>(_invenWidget);
-	//if (invenUI)
-	//{
-	//	invenUI->_invenComponent = _invenComponent;
-	//	_invenComponent->itemAddEvent.AddUObject(invenUI, &UMyInvenUI::SetItem_Index);
-	//	invenUI->Drop->OnClicked.AddDynamic(this, &AMyPlayer::Drop);
-	//}
 }
 
 void AMyPlayer::BeginPlay()
@@ -195,7 +187,9 @@ void AMyPlayer::InvenOpen(const FInputActionValue& value)
 		if (GetGameInstance()->GetSubsystem<UUIManager>()->IsOpen("Inven"))
 			GetGameInstance()->GetSubsystem<UUIManager>()->ClosePopUp("Inven");
 		else
-			GetGameInstance()->GetSubsystem<UUIManager>()->GetOrShowPopUp("Inven");
+		{
+			Cast<UMyInvenUI>(GetGameInstance()->GetSubsystem<UUIManager>()->GetOrShowPopUp("Inven"))->SyncInvenComp(_invenComponent);
+		}
 	}
 }
 

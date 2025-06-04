@@ -6,6 +6,8 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Blueprint/UserWidget.h"
 
+#define UI GetGameInstance()->GetSubsystem<UUIManager>()
+
 #include "UIManager.generated.h"
 
 /**
