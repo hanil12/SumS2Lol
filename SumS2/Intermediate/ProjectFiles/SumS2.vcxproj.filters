@@ -114,7 +114,7 @@
     <ClCompile Include="..\..\Source\SumS2\Private\MyTutoPawn.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\SumS2\Private\MyUIManager.cpp">
+    <ClCompile Include="..\..\Source\SumS2\Private\UIManager.cpp">
       <Filter>Source\SumS2\Private</Filter>
     </ClCompile>
     <Filter Include="Source\SumS2\Public">
@@ -192,7 +192,7 @@
     <ClInclude Include="..\..\Source\SumS2\Public\MyTutoPawn.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\SumS2\Public\MyUIManager.h">
+    <ClInclude Include="..\..\Source\SumS2\Public\UIManager.h">
       <Filter>Source\SumS2\Public</Filter>
     </ClInclude>
   </ItemGroup>

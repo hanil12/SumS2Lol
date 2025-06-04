@@ -18,8 +18,8 @@
 #include "Components/Button.h"
 #include "MyInvenComponent.h"
 
+#include "UIManager.h"
 #include "MyCharacter.h"
-#include "MyUIManager.h"
 
 AMyPlayer::AMyPlayer()
 {
@@ -35,13 +35,6 @@ AMyPlayer::AMyPlayer()
 	_springArm->TargetArmLength = 500.0f;
 	_springArm->SetRelativeRotation(FRotator(-35.0f, 0.0f, 0.0f));
 
-	// Inventory
-	static ConstructorHelpers::FClassFinder<UMyInvenUI> invenClass(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/BluePrints/BP_MyInven.BP_MyInven_C'"));
-	if (invenClass.Succeeded())
-	{
-		_invenWidget = CreateWidget<UUserWidget>(GetWorld(),invenClass.Class);
-	}
-
 	_invenComponent = CreateDefaultSubobject<UMyInvenComponent>(TEXT("InvenComponent"));
 
 	bUseControllerRotationYaw = false;
@@ -51,13 +44,13 @@ void AMyPlayer::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	auto invenUI = Cast<UMyInvenUI>(_invenWidget);
-	if (invenUI)
-	{
-		invenUI->_invenComponent = _invenComponent;
-		_invenComponent->itemAddEvent.AddUObject(invenUI, &UMyInvenUI::SetItem_Index);
-		invenUI->Drop->OnClicked.AddDynamic(this, &AMyPlayer::Drop);
-	}
+	//auto invenUI = Cast<UMyInvenUI>(_invenWidget);
+	//if (invenUI)
+	//{
+	//	invenUI->_invenComponent = _invenComponent;
+	//	_invenComponent->itemAddEvent.AddUObject(invenUI, &UMyInvenUI::SetItem_Index);
+	//	invenUI->Drop->OnClicked.AddDynamic(this, &AMyPlayer::Drop);
+	//}
 }
 
 void AMyPlayer::BeginPlay()
@@ -151,6 +144,8 @@ void AMyPlayer::JumpA(const FInputActionValue& value)
 
 	if (isPress)
 	{
+		GetGameInstance()->GetSubsystem<UUIManager>()->CloseAll();
+
 		ACharacter::Jump();
 	}
 }
@@ -163,6 +158,8 @@ void AMyPlayer::Attack(const FInputActionValue& value)
 
 	if (isPress)
 	{
+		GetGameInstance()->GetSubsystem<UUIManager>()->GetOrShowPopUp("HpBar");
+
 		_isAttack = true;
 
 		_curAttackSection = (_curAttackSection) % 3 + 1;
@@ -190,29 +187,21 @@ void AMyPlayer::InvenOpen(const FInputActionValue& value)
 
 	if (isPress)
 	{
-		if (GetGameInstance()->GetSubsystem<UMyUIManager>()->IsOpen("Inven"))
-		{
-			GetGameInstance()->GetSubsystem<UMyUIManager>()->ClosePopUp("Inven");
+		// 인벤토리 UI를 연다.
+		// 1. 어떤 키를 입력해서 UI를 열었을 때 누가 열었는지 Debug하기가 쉽지 않다.
+		// 2. 어떤 키를 눌러서 꺼야하거나, 전체가 한번에 꺼져야한다면, 일일 다 부탁해야한다.
+		// => UIManager를 만들어서 한번에 관리하자.
 
-			return;
-		}
-
-		GetGameInstance()->GetSubsystem<UMyUIManager>()->ShowPopUp("Inven");
+		if (GetGameInstance()->GetSubsystem<UUIManager>()->IsOpen("Inven"))
+			GetGameInstance()->GetSubsystem<UUIManager>()->ClosePopUp("Inven");
+		else
+			GetGameInstance()->GetSubsystem<UUIManager>()->GetOrShowPopUp("Inven");
 	}
 }
 
 void AMyPlayer::Attack_Hit()
 {
 	if (IsDead()) return;
-
-	if (GetGameInstance()->GetSubsystem<UMyUIManager>()->IsOpen("HpBar"))
-	{
-		GetGameInstance()->GetSubsystem<UMyUIManager>()->ClosePopUp("HpBar");
-
-		return;
-	}
-
-	GetGameInstance()->GetSubsystem<UMyUIManager>()->ShowPopUp("HpBar");
 
 	FHitResult hitResult;
 	FCollisionQueryParams params(NAME_None, false, this);
@@ -271,7 +260,8 @@ void AMyPlayer::Drop()
 	UE_LOG(LogTemp, Error, TEXT("Drop"));
 
 	int32 curDropIndex = -1;
-	auto invenUI = Cast<UMyInvenUI>(_invenWidget);
+	// invenUI에서 현재 선택한 curIndex
+	auto invenUI = Cast<UMyInvenUI>(GetGameInstance()->GetSubsystem<UUIManager>()->GetOrShowPopUp("Inven"));
 	if(invenUI)
 		curDropIndex = invenUI->_curIndex;
 

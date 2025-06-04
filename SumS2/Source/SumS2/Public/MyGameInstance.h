@@ -7,7 +7,6 @@
 #include "MyStatComponent.h"
 
 #include "MyEffectManager.h"
-#include "MyUIManager.h"
 
 #include "MyGameInstance.generated.h"
 
