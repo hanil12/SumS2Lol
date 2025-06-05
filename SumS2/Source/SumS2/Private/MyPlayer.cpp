@@ -48,6 +48,9 @@ void AMyPlayer::PostInitializeComponents()
 void AMyPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if(_sceneUIClass)
+		UI->GetOrShowSceneUI(_sceneUIClass);
 }
 
 void AMyPlayer::Tick(float DeltaTime)

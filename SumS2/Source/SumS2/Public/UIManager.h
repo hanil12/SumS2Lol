@@ -35,14 +35,26 @@ public:
 	void ClosePopUp(FString name);
 	void ClosePopUp();
 	void CloseAll();
+
+	UUserWidget* GetOrShowSceneUI(TSubclassOf<UUserWidget> widgetClass);
+	void CloseSceneUI();
+
 private:
 	void AddUI_Constructor(FString name, FString path);
 	TSubclassOf<UUserWidget> GetUIClass(FString name);
 
 private:
 	// "Inven" , UMyInvenUI 설계도
+	UPROPERTY()
 	TMap<FString, TSubclassOf<UUserWidget>> _widgetMap;
 
 	int32 _zOrder = 1;
+	UPROPERTY()
 	TArray<UUserWidget*> _widgetStack;
+
+	UPROPERTY()
+	TSubclassOf<UUserWidget> _sceneUIClass;
+
+	UPROPERTY()
+	UUserWidget* _sceneUI;
 };

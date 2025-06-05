@@ -64,6 +64,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class AMyProjectile> _projectileClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class UUserWidget> _sceneUIClass;
+
 	bool _isInvenOpen = false;
 
 };

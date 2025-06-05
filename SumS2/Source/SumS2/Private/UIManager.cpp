@@ -56,6 +56,15 @@ UUserWidget* UUIManager::GetOrShowPopUp(FString name)
 		_widgetStack.Push(widget);
 	}
 
+	auto playerController = GetWorld()->GetFirstPlayerController();
+	if (playerController)
+	{
+		GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
+		FInputModeGameAndUI inputModeData;
+		inputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		playerController->SetInputMode(inputModeData);
+	}
+
 	return widget;
 }
 
@@ -80,6 +89,15 @@ void UUIManager::ClosePopUp(FString name)
 	{
 		_widgetStack.Remove(target);
 	}
+
+	auto playerController = GetWorld()->GetFirstPlayerController();
+	if (_widgetStack.IsEmpty() && playerController)
+	{
+		playerController->bShowMouseCursor = false;
+
+		FInputModeGameOnly inputModeData;
+		playerController->SetInputMode(inputModeData);
+	}
 }
 
 void UUIManager::ClosePopUp()
@@ -90,6 +108,15 @@ void UUIManager::ClosePopUp()
 	_widgetStack.Last()->RemoveFromParent();
 	_widgetStack.Pop();
 	_zOrder--;
+
+	auto playerController = GetWorld()->GetFirstPlayerController();
+	if (_widgetStack.IsEmpty() && playerController)
+	{
+		playerController->bShowMouseCursor = false;
+
+		FInputModeGameOnly inputModeData;
+		playerController->SetInputMode(inputModeData);
+	}
 }
 
 void UUIManager::CloseAll()
@@ -101,6 +128,45 @@ void UUIManager::CloseAll()
 
 	_widgetStack.Empty();
 	_zOrder = 1;
+
+	auto playerController = GetWorld()->GetFirstPlayerController();
+	if (playerController)
+	{
+		playerController->bShowMouseCursor = false;
+
+		FInputModeGameOnly inputModeData;
+		playerController->SetInputMode(inputModeData);
+	}
+}
+
+UUserWidget* UUIManager::GetOrShowSceneUI(TSubclassOf<UUserWidget> widgetClass)
+{
+	if (_sceneUI != nullptr && _sceneUI->GetClass() == widgetClass)
+	{
+		return _sceneUI;
+	}
+
+	if (_sceneUI != nullptr)
+	{
+		CloseSceneUI();
+	}
+
+	_sceneUI = CreateWidget(GetWorld(), widgetClass);
+	_sceneUIClass = widgetClass;
+
+	_sceneUI->AddToViewport();
+
+	return _sceneUI;
+}
+
+void UUIManager::CloseSceneUI()
+{
+	_sceneUIClass = nullptr;
+
+	_sceneUI->RemoveFromParent();
+	_sceneUI = nullptr;
+
+	return;
 }
 
 void UUIManager::AddUI_Constructor(FString name, FString path)
