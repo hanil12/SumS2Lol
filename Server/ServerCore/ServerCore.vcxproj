@@ -160,9 +160,11 @@
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="MyContainer.h" />
+    <ClInclude Include="NetAddress.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RefCountable.h" />
     <ClInclude Include="RWLock.h" />
+    <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
@@ -172,6 +174,7 @@
     <ClCompile Include="DeadLockProfiler.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
+    <ClCompile Include="NetAddress.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -180,6 +183,7 @@
     </ClCompile>
     <ClCompile Include="RefCountable.cpp" />
     <ClCompile Include="RWLock.cpp" />
+    <ClCompile Include="SocketUtils.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

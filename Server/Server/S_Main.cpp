@@ -191,9 +191,6 @@ int main()
 			DWORD recvLen = 0;
 			DWORD flags = 0;
 			::WSARecv(clientSocket, &wsabuf, 1, &recvLen, &flags, &overlappedEx->overlapped, nullptr);
-
-
-
 		}
 	}
 
