@@ -34,6 +34,9 @@ using namespace std;
 
 // NetWork
 #include "NetAddress.h"
+#include "IocpCore.h"
+#include "Session.h"
+#include "IocpEvent.h"
 
 // Utils
 #include "SocketUtils.h"

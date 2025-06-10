@@ -156,6 +156,8 @@
     <ClInclude Include="DeadLockProfiler.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GMacro.h" />
+    <ClInclude Include="IocpCore.h" />
+    <ClInclude Include="IocpEvent.h" />
     <ClInclude Include="Lock_Based_Stack.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MemoryPool.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="RefCountable.h" />
     <ClInclude Include="RWLock.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="Types.h" />
@@ -172,6 +175,8 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="CoreTLS.cpp" />
     <ClCompile Include="DeadLockProfiler.cpp" />
+    <ClCompile Include="IocpCore.cpp" />
+    <ClCompile Include="IocpEvent.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="NetAddress.cpp" />
@@ -183,6 +188,7 @@
     </ClCompile>
     <ClCompile Include="RefCountable.cpp" />
     <ClCompile Include="RWLock.cpp" />
+    <ClCompile Include="Session.cpp" />
     <ClCompile Include="SocketUtils.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>

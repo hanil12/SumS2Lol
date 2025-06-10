@@ -14,9 +14,9 @@
 // => Event Select
 // 운영체제한테, Event를 받아서 처리하고싶다.
 
-struct Session
+struct Session_
 {
-	Session(SOCKET s) : socket(s) {}
+	Session_(SOCKET s) : socket(s) {}
 
 	SOCKET socket = INVALID_SOCKET;
 	char recvBuffer[1000] = {};
@@ -46,7 +46,7 @@ void WorkThreadMain(HANDLE iocpHandle)
 	{
 		// 초기화
 		DWORD bytesTransferred = 0; // 전송된 크기
-		Session* session = nullptr;
+		Session_* session = nullptr;
 		OverlappedEx* overlappedEx = nullptr;
 
 		BOOL ret = ::GetQueuedCompletionStatus(iocpHandle, &bytesTransferred, /*Key*/(ULONG_PTR*)(&session),
@@ -88,32 +88,75 @@ int main()
 {
 	TM->Create();
 
-
-	cout << "Hello Server!" << endl;
-
 	SocketUtils::Init();
 
 	// Non Blocking
 	SOCKET listener = SocketUtils::CreateSocket();
-	ASSERT_CRASH(listener != INVALID_SOCKET);
 
 	SocketUtils::BindAnyAddress(listener, 7777);
 	SocketUtils::Listen(listener);
 
-	SOCKET clientSocket = ::accept(listener, nullptr , nullptr); // 블록킹함수
+	vector<Session_*> sessionManager;
+	HANDLE iocpHandle = ::CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
 
-	cout << "Client Accept " << endl;
+	// CP에서 완료된 정보를 감지하는 5개의 쓰레드 준비
+	for (int32 i = 0; i < 5; i++)
+	{
+		TM->Instance()->Launch([=]() { WorkThreadMain(iocpHandle); });
+	}
 
 	while (true)
 	{
+		SOCKADDR_IN clientAddr;
+		int32 addrLen = sizeof(clientAddr);
 
+		SOCKET clientSocket;
+
+		// accept 시도
+		while (true)
+		{
+			// listener가 넌블로킹 소켓
+			// ::accept => 넌블로킹 동작
+			clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen);
+			if (clientSocket == INVALID_SOCKET)
+				continue;
+
+			Session_* session = xnew<Session_>(clientSocket);
+			sessionManager.push_back(session);
+
+			cout << "Client Accept!!" << endl;
+
+			// CP에 현재 연결된 소켓을 등록 => 신호감지 해달라고 등록
+			// Key를 session의 주소로 연동
+			::CreateIoCompletionPort((HANDLE)clientSocket, iocpHandle, (ULONG_PTR)session, 0); // Completion Queue
+
+			// Recv 예약
+			WSABUF wsabuf;
+			wsabuf.buf = session->recvBuffer;
+			wsabuf.len = 1000;
+
+			OverlappedEx* overlappedEx = xnew<OverlappedEx>();
+			overlappedEx->type = IO_TYPE::READ;
+
+			DWORD recvLen = 0;
+			DWORD flags = 0;
+			::WSARecv(clientSocket, &wsabuf, 1, &recvLen, &flags, &overlappedEx->overlapped, nullptr);
+		}
+	}
+
+	for (auto session : sessionManager)
+	{
+		xdelete(session);
 	}
 
 	TM->Join();
 
+	SocketUtils::Close(listener);
 	SocketUtils::Clear();
 
 	TM->Delete();
+
+	return 0;
 
 	return 0;
 }
