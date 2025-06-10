@@ -4,6 +4,8 @@
 /// Thread를 생성해서 담아놓고, 실행할 함수를 계속 관리하는 Manager
 /// </summary>
 
+class IocpCore;
+
 class ThreadManager
 {
 private:
@@ -36,6 +38,7 @@ public:
 
 	SharedPtr<DeadLockProfiler> DeadLockProfile() { return _deadLockProfiler; }
 	SharedPtr<Memory> PoolMemory() { return _poolMemory; }
+	SharedPtr<IocpCore> GetIocpCore() { return _iocpCore; }
 
 	static void InitTLS();
 	static void DestroyTLS();
@@ -49,5 +52,6 @@ private:
 
 	SharedPtr<DeadLockProfiler> _deadLockProfiler;
 	SharedPtr<Memory> _poolMemory;
+	SharedPtr<IocpCore> _iocpCore;
 };
 

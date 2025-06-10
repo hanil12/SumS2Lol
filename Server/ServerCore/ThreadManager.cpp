@@ -12,6 +12,7 @@ ThreadManager::ThreadManager()
 
 	_deadLockProfiler = make_shared<DeadLockProfiler>();
 	_poolMemory = make_shared<Memory>();
+	_iocpCore = make_shared<IocpCore>();
 }
 
 ThreadManager::~ThreadManager()
