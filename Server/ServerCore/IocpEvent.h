@@ -15,9 +15,12 @@ public:
 
 	void Init();
 	EventType GetType() { return _eventType; }
+	void SetOwner(shared_ptr<IocpObject> object) { _owner = object; }
+	shared_ptr<IocpObject> GetOwner() { return _owner; }
 
 private:
 	EventType _eventType;
+	shared_ptr<IocpObject> _owner = nullptr;
 };
 
 class ConnectEvent : public IocpEvent
@@ -31,11 +34,6 @@ class AcceptEvent : public IocpEvent
 public:
 	AcceptEvent() : IocpEvent(EventType::ACCEPT) {}
 
-	void SetSession(Session* session) { _session = session; }
-	Session* GetSession() { return _session; }
-
-private:
-	Session* _session = nullptr;
 };
 
 class RecvEvent : public IocpEvent

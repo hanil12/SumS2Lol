@@ -41,7 +41,7 @@ int main()
 		SOCKADDR clientAddr;
 		int32 addrLen = sizeof(clientAddr);
 
-		clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen);
+		clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen); // 블록킹, 동기함수
 		if(clientSocket == INVALID_SOCKET)
 			continue;
 

@@ -9,6 +9,14 @@ void SocketUtils::Init()
 {
 	WSAData wsaData;
 	ASSERT_CRASH(::WSAStartup(MAKEWORD(2,2), OUT &wsaData) == 0);
+
+	SOCKET dummySocket = CreateSocket();
+
+	BindWindowsFunction(dummySocket, WSAID_CONNECTEX, reinterpret_cast<LPVOID*>(&ConnectEx));
+	BindWindowsFunction(dummySocket, WSAID_DISCONNECTEX, reinterpret_cast<LPVOID*>(&DisConnectEx));
+	BindWindowsFunction(dummySocket, WSAID_ACCEPTEX, reinterpret_cast<LPVOID*>(&AcceptEx));
+
+	Close(dummySocket);
 }
 
 void SocketUtils::Clear()
@@ -18,13 +26,13 @@ void SocketUtils::Clear()
 
 SOCKET SocketUtils::CreateSocket()
 {
-	return ::socket(AF_INET,SOCK_STREAM, 0);
+	return ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 }
 
 bool SocketUtils::BindWindowsFunction(SOCKET socket, GUID guid, LPVOID* fn)
 {
-	// TODO
-	return false;
+	DWORD bytes = 0;
+	return SOCKET_ERROR != ::WSAIoctl(socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guid, sizeof(guid), fn, sizeof(*fn), OUT &bytes, NULL, NULL);
 }
 
 bool SocketUtils::SetLinger(SOCKET socket, uint16 onOff, uint16 linger)

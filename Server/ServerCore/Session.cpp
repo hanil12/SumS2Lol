@@ -31,6 +31,13 @@ void Session::DisPatch(IocpEvent* iocpEvent, int32 numOfBytes)
     {
         cout << "Recv!!!" << endl;
 
+        WSABUF wsaBuf;
+        wsaBuf.buf = _recvBuffer;
+        wsaBuf.len = 1000;
+        DWORD recvLen = 0;
+        DWORD flag = 0;
+
+        ::WSARecv(_socket, &wsaBuf, 1, &recvLen, &flag, iocpEvent, nullptr);
     }
         break;
     case EventType::SEND:

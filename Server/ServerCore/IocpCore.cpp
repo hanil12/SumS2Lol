@@ -15,23 +15,25 @@ IocpCore::~IocpCore()
 
 bool IocpCore::Register(IocpObject* iocpObj)
 {
-    return ::CreateIoCompletionPort(iocpObj->GetHandle(), _iocpHandle, reinterpret_cast<ULONG_PTR>(iocpObj), 0);
+    return ::CreateIoCompletionPort(iocpObj->GetHandle(), _iocpHandle, 0, 0);
 }
 
 bool IocpCore::DisPatch(uint32 timeOutMs)
 {
     DWORD numOfBytes = 0;
-    IocpObject* iocpObject = nullptr; // Session
+    shared_ptr<IocpObject> iocpObject = nullptr; // Session
     IocpEvent* iocpEvent = nullptr;
+    ULONG_PTR key = 0;
 
     if (::GetQueuedCompletionStatus(
         _iocpHandle
         , &numOfBytes
-        , reinterpret_cast<PULONG_PTR>(&iocpObject)
+        , &key // ... 0
         , reinterpret_cast<LPOVERLAPPED*>(&iocpEvent)
         , timeOutMs
     ))
     {
+        iocpObject = iocpEvent->GetOwner();
         iocpObject->DisPatch(iocpEvent, numOfBytes);
     }
     else
