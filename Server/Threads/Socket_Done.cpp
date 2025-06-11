@@ -1,4 +1,4 @@
-
+#include "framework.h"
 // 1. Socket 1:1 프로그래밍
 // - 1:1 동기, 블록킹
 
@@ -39,6 +39,76 @@
 	// CreateIOCompletionPort => CP 생성 / CP에 소켓 연동
 	// GetQueuedCompletionStatus => 결과 처리
 
+struct Session_
+{
+	Session_(SOCKET s) : socket(s) {}
+
+	SOCKET socket = INVALID_SOCKET;
+	char recvBuffer[1000] = {};
+	char sendBuffer[1000] = "Hello Im Sever";
+	int32 recvBytes = 0;
+	int32 sendBytes = 0;
+};
+
+enum IO_TYPE
+{
+	READ,
+	WRITE,
+	ACCEPT,
+	CONNECT
+};
+
+struct OverlappedEx
+{
+	WSAOVERLAPPED overlapped = {};
+	int32 type = 0;
+};
+
+// 쓰레드가 CP 감지
+void WorkThreadMain(HANDLE iocpHandle)
+{
+	while (true)
+	{
+		// 초기화
+		DWORD bytesTransferred = 0; // 전송된 크기
+		Session_* session = nullptr;
+		OverlappedEx* overlappedEx = nullptr;
+
+		BOOL ret = ::GetQueuedCompletionStatus(iocpHandle, &bytesTransferred, /*Key*/(ULONG_PTR*)(&session),
+			(LPOVERLAPPED*)&overlappedEx, INFINITE);
+
+		if (ret == FALSE || bytesTransferred == 0)
+		{
+			// 연결 끊어줘야함.
+
+			continue;
+		}
+
+		// session, overlapped가 세팅완료
+
+		switch (overlappedEx->type)
+		{
+		case IO_TYPE::READ:
+		{
+			cout << session->recvBuffer << endl;
+
+			WSABUF wsaBuf;
+			wsaBuf.buf = session->recvBuffer;
+			wsaBuf.len = 1000;
+
+			DWORD recvLen = 0;
+			DWORD flags = 0;
+
+			// CP에 Recv를 재등록
+			::WSARecv(session->socket, &wsaBuf, 1, &recvLen, &flags, &overlappedEx->overlapped, nullptr);
+		}
+
+		default:
+			break;
+		}
+	}
+}
+
 int main()
 {
 	TM->Create();
@@ -76,7 +146,7 @@ int main()
 		return 0;
 	}
 
-	vector<Session*> sessionManager;
+	vector<Session_*> sessionManager;
 	HANDLE iocpHandle = ::CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
 
 	// CP에서 완료된 정보를 감지하는 5개의 쓰레드 준비
@@ -101,7 +171,7 @@ int main()
 			if (clientSocket == INVALID_SOCKET)
 				continue;
 
-			Session* session = xnew<Session>(clientSocket);
+			Session_* session = xnew<Session_>(clientSocket);
 			sessionManager.push_back(session);
 
 			cout << "Client Accept!!" << endl;

@@ -32,13 +32,36 @@ int main()
 		});
 	}
 
+	Session* session = xnew<Session>();
+
 	while (true)
 	{
 		// Accpet
+		SOCKET clientSocket;
+		SOCKADDR clientAddr;
+		int32 addrLen = sizeof(clientAddr);
+
+		clientSocket = ::accept(listener, (SOCKADDR*)&clientAddr, &addrLen);
+		if(clientSocket == INVALID_SOCKET)
+			continue;
 
 		// Connect
+		session->SetSocket(clientSocket);
+		NetAddress clientNetAddr(*reinterpret_cast<SOCKADDR_IN*>(&clientAddr));
+		session->SetNetAddress(clientNetAddr);
+		cout << "Connected" << endl;
+		TM->GetIocpCore()->Register(session); // IOCP에서 session을 감지하겠다.
 
 		// 일감 등록
+		// RECV 예약
+		WSABUF wsaBuf;
+		wsaBuf.buf = session->_recvBuffer;
+		wsaBuf.len = 1000;
+		DWORD recvLen = 0;
+		DWORD flag = 0;
+
+		RecvEvent* iocpEvent = xnew<RecvEvent>();
+		::WSARecv(session->GetSocket(), &wsaBuf, 1, &recvLen, &flag, iocpEvent, nullptr);
 	}
 
 	TM->Join();

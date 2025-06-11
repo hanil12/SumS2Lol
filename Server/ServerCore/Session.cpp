@@ -28,6 +28,10 @@ void Session::DisPatch(IocpEvent* iocpEvent, int32 numOfBytes)
     case EventType::ACCEPT:
         break;
     case EventType::RECV:
+    {
+        cout << "Recv!!!" << endl;
+
+    }
         break;
     case EventType::SEND:
         break;

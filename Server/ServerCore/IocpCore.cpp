@@ -15,7 +15,7 @@ IocpCore::~IocpCore()
 
 bool IocpCore::Register(IocpObject* iocpObj)
 {
-    return ::CreateIoCompletionPort(iocpObj->GetHandle(), _iocpHandle, reinterpret_cast<ULONG_PTR>(&iocpObj), 0);
+    return ::CreateIoCompletionPort(iocpObj->GetHandle(), _iocpHandle, reinterpret_cast<ULONG_PTR>(iocpObj), 0);
 }
 
 bool IocpCore::DisPatch(uint32 timeOutMs)

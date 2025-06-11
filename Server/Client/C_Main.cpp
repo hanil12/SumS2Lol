@@ -80,17 +80,32 @@ int main()
 		this_thread::sleep_for(500ms);
 
 
-		int32 recvLen = 0;
-		if (recvLen = ::recv(clientSocket, recvBuffer, sizeof(recvBuffer), 0))
+		//int32 recvLen = 0;
+		//if (recvLen = ::recv(clientSocket, recvBuffer, sizeof(recvBuffer), 0))
+		//{
+		//	if (recvLen <= 0)
+		//	{
+		//		if (::WSAGetLastError() == WSAEWOULDBLOCK)
+		//		{
+		//			continue;
+		//		}
+
+		//		cout << "Recv Error" << endl;
+		//		break;
+		//	}
+		//}
+
+		int32 sendLen = 0;
+		if (sendLen = ::send(clientSocket, sendBuffer, 1000, 0))
 		{
-			if (recvLen <= 0)
+			if (sendLen <= 0)
 			{
 				if (::WSAGetLastError() == WSAEWOULDBLOCK)
 				{
 					continue;
 				}
 
-				cout << "Recv Error" << endl;
+				cout << "Send Error" << endl;
 				break;
 			}
 		}
