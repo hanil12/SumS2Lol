@@ -45,6 +45,7 @@ bool IocpCore::DisPatch(uint32 timeOutMs)
             return false;
 
         default:
+            iocpObject = iocpEvent->GetOwner();
             iocpObject->DisPatch(iocpEvent, numOfBytes);
             break;
         }

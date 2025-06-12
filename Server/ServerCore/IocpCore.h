@@ -1,7 +1,7 @@
 #pragma once
 
 // 일감
-class IocpObject
+class IocpObject : public enable_shared_from_this<IocpObject>
 {
 public:
 	IocpObject() = default;

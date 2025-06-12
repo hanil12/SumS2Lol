@@ -36,6 +36,7 @@ bool Listener::StartAccept(NetAddress netAddress)
 	for (int32 i = 0; i < acceptCount; i++)
 	{
 		AcceptEvent* accpetEvent = xnew<AcceptEvent>(); // 
+		accpetEvent->SetOwner(shared_from_this());
 		_acceptEvents.push_back(accpetEvent);
 		RegisterAccept(accpetEvent); 
 	}
@@ -53,7 +54,7 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 	shared_ptr<Session> session = make_shared<Session>();
 
 	acceptEvent->Init();
-	acceptEvent->SetOwner(session);
+	acceptEvent->SetSession(session);
 
 	DWORD bytesRecived = 0;
 
@@ -73,7 +74,7 @@ void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 
 void Listener::ProcessAccept(AcceptEvent* acceptEvent)
 {
-	shared_ptr<Session> session = static_pointer_cast<Session>(acceptEvent->GetOwner());
+	shared_ptr<Session> session = static_pointer_cast<Session>(acceptEvent->GetSession());
 
 	if (false == SocketUtils::SetUpdateAcceptSocket(session->GetSocket(), _socket))
 	{
@@ -84,7 +85,7 @@ void Listener::ProcessAccept(AcceptEvent* acceptEvent)
 	SOCKADDR_IN socketAddress;
 	int32 sizeofSockAddr = sizeof(socketAddress);
 
-	if (SOCKET_ERROR != ::getpeername(session->GetSocket(), reinterpret_cast<SOCKADDR*>(&socketAddress), &sizeofSockAddr))
+	if (SOCKET_ERROR == ::getpeername(session->GetSocket(), reinterpret_cast<SOCKADDR*>(&socketAddress), &sizeofSockAddr))
 	{
 		RegisterAccept(acceptEvent);
 		return;

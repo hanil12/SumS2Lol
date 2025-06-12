@@ -29,11 +29,17 @@ public:
 	ConnectEvent() : IocpEvent(EventType::CONNECT) {}
 };
 
+// AcceptEvent Owner : Listener
+// AcceptEvent Seesion
 class AcceptEvent : public IocpEvent
 {
 public:
 	AcceptEvent() : IocpEvent(EventType::ACCEPT) {}
 
+	void SetSession(shared_ptr<Session> session) { _session = session; }
+	shared_ptr<Session> GetSession() { return _session; }
+
+	shared_ptr<Session> _session;
 };
 
 class RecvEvent : public IocpEvent
