@@ -11,12 +11,12 @@ Listener::~Listener()
 	}
 }
 
-bool Listener::StartAccept(NetAddress netAddress)
+bool Listener::StartAccept(shared_ptr<Service> service)
 {
 	_socket = SocketUtils::CreateSocket();
 	if(_socket == INVALID_SOCKET) return false;
 
-	if (TM->GetIocpCore()->Register(this) == false) // => IOCP에게 Lister의 이벤트를을 감지하게끔 등록
+	if (service->GetIocp()->Register(shared_from_this()) == false) // => IOCP에게 Lister의 이벤트를을 감지하게끔 등록
 		return false;
 
 	if (SocketUtils::SetReuseAddress(_socket, true) == false)
@@ -25,7 +25,7 @@ bool Listener::StartAccept(NetAddress netAddress)
 	if (SocketUtils::SetLinger(_socket, 0, 0) == false)
 		return false;
 
-	if(SocketUtils::Bind(_socket, netAddress) == false)
+	if(SocketUtils::Bind(_socket, service->GetNetAddress()) == false)
 		return false;
 
 	if(SocketUtils::Listen(_socket) == false)

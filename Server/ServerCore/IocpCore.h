@@ -20,7 +20,7 @@ public:
 
 	HANDLE GetHandle() { return _iocpHandle; }
 
-	bool Register(class IocpObject* iocpObj);
+	bool Register(shared_ptr<class IocpObject> iocpObj);
 
 	bool DisPatch(uint32 timeOutMs = INFINITE);
 

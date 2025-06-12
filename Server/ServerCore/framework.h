@@ -9,6 +9,7 @@
 #include <thread>
 #include <mutex>
 #include <future>
+#include <functional>
 #include <Windows.h>
 
 #include "Types.h"
@@ -38,6 +39,8 @@ using namespace std;
 #include "Session.h"
 #include "IocpEvent.h"
 #include "Listener.h"
+
+#include "Service.h"
 
 // Utils
 #include "SocketUtils.h"

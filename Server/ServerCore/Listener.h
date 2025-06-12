@@ -9,7 +9,7 @@ public:
 	Listener() = default;
 	~Listener();
 
-	bool StartAccept(NetAddress netAddress);
+	bool StartAccept(shared_ptr<class Service> service);
 	void CloseSocket();
 
 	void RegisterAccept(AcceptEvent* acceptEvent);

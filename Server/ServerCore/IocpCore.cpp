@@ -13,7 +13,7 @@ IocpCore::~IocpCore()
     ::CloseHandle(_iocpHandle);
 }
 
-bool IocpCore::Register(IocpObject* iocpObj)
+bool IocpCore::Register(shared_ptr<IocpObject> iocpObj)
 {
     return ::CreateIoCompletionPort(iocpObj->GetHandle(), _iocpHandle, 0, 0);
 }
