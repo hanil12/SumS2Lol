@@ -42,7 +42,7 @@ public:
 	char _sendBuffer[1000] = {};
 
 protected:
-	virtual void OnConnect() { cout << "test" << endl; }
+	virtual void OnConnect() { }
 	virtual int32 OnRecv(BYTE* buffer, int32 len) { return len; }
 	virtual void OnSend(int32 len) {}
 	virtual void OnDisConnect() {}

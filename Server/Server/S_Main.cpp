@@ -1,11 +1,6 @@
+#include "framework.h"
 
-#ifdef _DEBUG
-#pragma comment(lib,"ServerCore\\Debug\\ServerCore.lib")
-#else
-#pragma comment(lib,"ServerCore\\Release\\ServerCore.lib")
-#endif
-
-#include "../ServerCore/pch.h"
+#include "ClientSession.h"
 
 int main()
 {
@@ -28,7 +23,7 @@ int main()
 		(
 			netAddress,
 			make_shared<IocpCore>(),
-			make_shared<Session>,
+			make_shared<ClientSession>,
 			1
 		);
 
