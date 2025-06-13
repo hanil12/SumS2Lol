@@ -26,6 +26,7 @@ void Service::CloseService()
 shared_ptr<Session> Service::CreateSession()
 {
 	shared_ptr<Session> session = _sessionFactory();
+	session->SetService(shared_from_this());
 
 	if(_iocpCore->Register(session) == false)
 		return nullptr;
@@ -84,7 +85,9 @@ bool ServerService::Start()
 	if(_listener == nullptr)
 		return false;
 
-	// TODO : session, listener 등 IOCPObject들이 Service를 물고있게끔 만들어줄 예정
+	shared_ptr<ServerService> service = static_pointer_cast<ServerService>(shared_from_this());
+	if(_listener->StartAccept(service) == false)
+		return false;
 
 	return true;
 }

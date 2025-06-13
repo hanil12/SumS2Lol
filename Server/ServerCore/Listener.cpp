@@ -14,6 +14,7 @@ Listener::~Listener()
 bool Listener::StartAccept(shared_ptr<Service> service)
 {
 	_socket = SocketUtils::CreateSocket();
+	_service = service;
 	if(_socket == INVALID_SOCKET) return false;
 
 	if (service->GetIocp()->Register(shared_from_this()) == false) // => IOCP에게 Lister의 이벤트를을 감지하게끔 등록
@@ -51,7 +52,7 @@ void Listener::CloseSocket()
 
 void Listener::RegisterAccept(AcceptEvent* acceptEvent)
 {
-	shared_ptr<Session> session = make_shared<Session>();
+	shared_ptr<Session> session = _service.lock()->CreateSession();
 
 	acceptEvent->Init();
 	acceptEvent->SetSession(session);
@@ -93,9 +94,16 @@ void Listener::ProcessAccept(AcceptEvent* acceptEvent)
 
 	session->SetNetAddress(socketAddress);
 
-	cout << "Client Connect!!!" << endl;
+	OnAccept(session, acceptEvent);
 
 	RegisterAccept(acceptEvent);
+}
+
+void Listener::OnAccept(shared_ptr<Session> session, IocpEvent* iocpEvent)
+{
+	session->ProcessConnect();
+
+	RegisterAccept(reinterpret_cast<AcceptEvent*>(iocpEvent));
 }
 
 HANDLE Listener::GetHandle()

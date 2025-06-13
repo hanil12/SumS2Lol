@@ -42,6 +42,8 @@ int main()
 	{
 		if (::connect(clientSocket, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
 		{
+			int32 errorCode = ::WSAGetLastError();
+
 			if (::WSAGetLastError() == WSAEWOULDBLOCK)
 			{
 				continue;
@@ -52,7 +54,10 @@ int main()
 				break;
 			}
 
-			cout << "Socket Error : " << endl;
+			if(::WSAGetLastError() == WSAEALREADY)
+				break;
+
+			cout << "Socket Error : " << errorCode << endl;
 
 			return 0;
 		}
